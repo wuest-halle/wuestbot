@@ -1,5 +1,7 @@
 /venv
 
+.env
+
 *.code-workspace
 
 echobot.py
