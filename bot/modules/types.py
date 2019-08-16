@@ -4,17 +4,13 @@ provides the necessary data types, for now only the bot() type
 
 import json
 import requests
-import os
-import pathlib
-
-import dotenv # temporary to use .env file - to be removed when this becomes a flask app
 
 class Telebot:
 
     def __init__(self, API_TOKEN):
-
         self.API_TOKEN = API_TOKEN
         self.URL = f"https://api.telegram.org/bot{API_TOKEN}/"
+        self.last_update=""
 
     def get_url(self, url):
         response = requests.get(url)
@@ -24,11 +20,14 @@ class Telebot:
     def parse_json(self, url):
         content = self.get_url(url)
         content = json.loads(content)
-        for item in content:
-            print (item)
+        for item in content["result"]:              # these are just primitive debug prints, gonna be removed
+            print (item["message"]["text"])
+        last_id = len(content["result"]) - 1
+        if content["result"][last_id]["update_id"] != self.last_update:
+            self.last_update = content["result"][last_id]["update_id"]
     
-    def get_updates(self, offset=None):
+    def get_updates(self):
         url = self.URL + "getUpdates"
-        if offset:
-            url += f"?offset={offset}"
+        if self.last_update:
+            url += f"?offset={int(self.last_update) + 1}"
         self.parse_json(url)
