@@ -2,6 +2,7 @@
 provides the necessary data types, for now only the bot() type
 """
 
+import time
 import json
 import requests
 
@@ -11,6 +12,8 @@ class Telebot:
         self.API_TOKEN = API_TOKEN
         self.URL = f"https://api.telegram.org/bot{API_TOKEN}/"
         self.last_update=""
+
+        self.polling()
 
     def get_url(self, url):
         response = requests.get(url)
@@ -27,7 +30,12 @@ class Telebot:
             self.last_update = content["result"][last_id]["update_id"]
     
     def get_updates(self):
-        url = self.URL + "getUpdates"
+        url = self.URL + "getUpdates?timeout=100"
         if self.last_update:
-            url += f"?offset={int(self.last_update) + 1}"
+            url += f"&offset={int(self.last_update) + 1}"
         self.parse_json(url)
+
+    def polling(self):
+        while True:
+            self.get_updates()
+            time.sleep(0.5)
