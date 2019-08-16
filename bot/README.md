@@ -26,5 +26,30 @@ Also you need to obtain your own token, 'cause I won't share mine.
 That's all for now
 
 ## To Do:
+- implement responses specific to user id (so not everybody receives all messages)
+- implement parsing (b/c of special characters)
+- implement keyboard handler class for custom keyboards (in types?)
 - implement error checks in types.py/get_url(), if connection is down, telegram is down
-- implement offset for latest messages
+- change passing of API_TOKEN to Telebot constructor to retrieving it from .env
+- move last_message to .env vars maybe? (in case bot crashes or stuff)
+- implement logging
+
+### Algo for Initiating a Convo First Time:
+- user calls @<name_BOT>
+- bot looks up user_id in database
+    - if uid is not found:
+        - new entry
+        - ask for lango
+        - make entry
+    - if uid is found:
+        - look up lango:
+            - if lango is found:
+                reply to message in lango
+            - if lango is not found:
+                - whoopsie, lang not found, return lang answer
+                - save lang
+
+### Important API calls for now:
+- getUpdates
+- sendMessage
+
