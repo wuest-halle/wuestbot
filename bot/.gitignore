@@ -4,5 +4,7 @@ __pycache__/
 .env
 
 *.code-workspace
+.vscode
+
 
 echobot.py
