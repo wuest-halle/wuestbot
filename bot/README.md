@@ -26,6 +26,7 @@ Also you need to obtain your own token, 'cause I won't share mine.
 That's all for now
 
 ## To Do:
+- implement a SQLite database, that stores, which user already initiated contact w/ bot and what language they communicate in
 - implement responses specific to user id (so not everybody receives all messages)
 - implement parsing (b/c of special characters)
 - implement keyboard handler class for custom keyboards (in types?)
