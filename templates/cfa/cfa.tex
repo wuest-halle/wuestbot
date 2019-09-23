@@ -3,67 +3,83 @@
 
 % written by softbobo - September 2019
 
+% to compile: xelatex cfa.tex
+
 % TO DO
 % - insert hard facts dummies
 % - correct sizing for images in annex
 % - find proper font to set
 
 
-\documentclass[a4paper, 11pt]{article}
+\documentclass[a4paper, 11pt]{memoir}
 
-\usepackage{fontenc}
+% font specs, only works with xelatex
+\usepackage{fontspec}
+\setmainfont{LiberationSans}[
+    Extension =.ttf,
+    UprightFont = *-Regular,
+    ItalicFont = *-Italic,
+    BoldFont = *-Bold,
+    BoldItalicFont = *-BoldItalic
+]
+
+% enables multi-column usage, might omit
 \usepackage{multicol}
+
 \usepackage{graphicx}
 \usepackage{hyperref}
 
+\title{Call for Applications: Light Installation at WUEST im Stadtbad}
+
 \begin{document}
 
-%removes page numbers and stuff
-\pagestyle{empty}
+    %removes page numbers and stuff
+    \pagestyle{empty}
 
-\section*{The Event}
+    \maketitle
 
-\section*{Your Role}
+    \section*{The Event}
 
-% this is double column to save space and be better to read
-\section*{Hard Facts}
+    \section*{Your Role}
 
-\begin{multicols}{2}
+    % this is double column to save space and be better to read
+    \section*{Hard Facts}
 
-\textbf{Date:} \\
-\textbf{Doors Open:} \\
-\textbf{Concerts Between:} \\
-\textbf{Address:} \\
-\textbf{First Concert:} \\
-\href{www.duckduckgo.com}{dummy link} \\
-\textbf{Second Concert:} \\
-\href{www.duckduckgo.com}{dummy link} \\
-\textbf{Contact:} \\
+    \begin{tabular}{lr}
 
-    
-\end{multicols}
-
-\section*{WUEST}
-WUEST is a team of six individuals with diverse backgrounds in music and club 
-culture formed in early 2019. Apart from their individual projects, they 
-teamed up to pursue events which are in between music, performance, and 
-technology. In the process, they fill unusual spaces with happenings that 
-bring new perspectives to known places. This also involves pushing the boundaries 
-of well-known event formats. \\
-Up until now, the young project cooperated with the independent WUK Theater space 
-in Halle, Germany. Examples of this cooperation were the interpretation of the
-question for a Better Life as a concert and how society changes through 
-technology during the Futur event series. \\
-WUEST is responsible for the conceptualization and planning of events together 
-with its partners. As a whole, this includes conception, curation, technical 
-realisation and artist relations.
+        \textbf{Date:} & \textbf{Doors Open:} \\
+        \textbf{Concerts Between:} & \textbf{Address:} \\
+        \textbf{First Concert:} \\
+        \href{www.duckduckgo.com}{dummy link} \\
+        \textbf{Second Concert:} \\
+        \href{www.duckduckgo.com}{dummy link} \\
+        \textbf{Application Deadline:} \\
+        \textbf{Contact:} \\
 
 
-\section*{Annex: Pictures}
+    \end{tabular}
 
-\begin{figure}
-    \includegraphics[scale=1.0]{dummy_web_page.jpg}
-    \caption{SOURCE: Dummy figure}
-\end{figure}
+    \section*{WUEST}
+    WUEST is a team of six individuals with diverse backgrounds in music and club 
+    culture formed in early 2019. Apart from their individual projects, they 
+    teamed up to pursue events which are in between music, performance, and 
+    technology. In the process, they fill unusual spaces with happenings that 
+    bring new perspectives to known places. This also involves pushing the boundaries 
+    of well-known event formats. \\
+    Up until now, the young project cooperated with the independent WUK Theater space 
+    in Halle, Germany. Examples of this cooperation were the interpretation of the
+    question for a Better Life as a concert and how society changes through 
+    technology during the Futur event series. \\
+    WUEST is responsible for the conceptualization and planning of events together 
+    with its partners. As a whole, this includes conception, curation, technical 
+    realisation and artist relations.
+
+
+    \section*{Annex: Pictures}
+
+    \begin{figure}
+        \includegraphics[scale=1.0]{dummy_web_page.jpg}
+        \caption{SOURCE: Dummy figure}
+    \end{figure}
 
 \end{document}
