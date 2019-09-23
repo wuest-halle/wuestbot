@@ -8,10 +8,13 @@
 % TO DO
 % - insert hard facts dummies
 % - correct sizing for images in annex
-% - find proper font to set
+% - adjust title size, margins remove date
+% - adjust margin below title
 
 
 \documentclass[a4paper, 11pt]{memoir}
+
+\usepackage[a4paper, margin=1.5cm]{geometry}
 
 % font specs, only works with xelatex
 \usepackage{fontspec}
@@ -24,19 +27,27 @@
 ]
 
 % enables multi-column usage, might omit
-\usepackage{multicol}
+% \usepackage{multicol}
+
+\usepackage{tabularx}
 
 \usepackage{graphicx}
 \usepackage{hyperref}
 
 \title{Call for Applications: Light Installation at WUEST im Stadtbad}
+\date{}
+\setlength{\droptitle}{-2.0cm}
 
 \begin{document}
 
     %removes page numbers and stuff
     \pagestyle{empty}
 
-    \maketitle
+    \begin{center}
+        \Huge{Call for Applications: Light Installation at WUEST im Stadtbad}
+    \end{center}
+
+    % \maketitle
 
     \section*{The Event}
 
@@ -45,20 +56,23 @@
     % this is double column to save space and be better to read
     \section*{Hard Facts}
 
-    \begin{tabular}{lr}
+    \begin{tabularx}{\textwidth}{lXr}
 
         \textbf{Date:} & \textbf{Doors Open:} \\
+        %\hline
         \textbf{Concerts Between:} & \textbf{Address:} \\
+        %\hline
         \textbf{First Concert:} \\
         \href{www.duckduckgo.com}{dummy link} \\
+        %\hline
         \textbf{Second Concert:} \\
         \href{www.duckduckgo.com}{dummy link} \\
+        %\hline
         \textbf{Application Deadline:} \\
         \textbf{Contact:} \\
 
 
-    \end{tabular}
-
+    \end{tabularx}
     \section*{WUEST}
     WUEST is a team of six individuals with diverse backgrounds in music and club 
     culture formed in early 2019. Apart from their individual projects, they 
