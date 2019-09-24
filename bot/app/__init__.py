@@ -5,10 +5,6 @@ import os
 from dotenv import load_dotenv
 import telebot
 
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
 # load env variables from .env
 load_dotenv()
 
@@ -16,6 +12,7 @@ API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
 
 template_dir = os.path.abspath('../bot/templates')
+img_dir = os.path.abspath('../bot/img')
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
@@ -26,7 +23,15 @@ def send_welcome(message):
 def test(message):
 	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
 		reply = f.read()
-	bot.send_message(message.chat.id, reply, parse_mode='html')
+	bot.send_message(chat_id=message.chat.id, text=reply, parse_mode='html')
+
+# returns flyer and info on the next event when user sends /next
+@bot.message_handler(commands=['next'])
+def next_event(message):
+	with open(os.path.join(template_dir,  'next_event.html'), 'r') as f:
+		photo_caption = f.read()
+	photo_path = os.path.join(img_dir, 'next_event.jpg')
+	bot.send_photo(chat_id=message.chat.id, photo=photo_path, caption=photo_caption, parse_mode='html')
 
 
 bot.polling()
