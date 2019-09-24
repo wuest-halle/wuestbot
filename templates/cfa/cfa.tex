@@ -27,6 +27,8 @@
 ]
 
 \usepackage{tabularx}
+% manipulate captions, specifically remove numbering via \caption*{} 
+\usepackage{caption}
 
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -88,7 +90,7 @@
 
     \begin{figure}
         \includegraphics[scale=1.0]{dummy_web_page.jpg}
-        \caption{SOURCE: Dummy figure}
+        \caption*{SOURCE: Dummy figure}
     \end{figure}
 
 \end{document}
