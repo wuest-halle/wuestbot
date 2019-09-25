@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+""" TO DO:
+- proper error management if python can't parse token (applies to all html code)
+- save known chat ids in file, so they dont have to restart every time
+"""
+
 import os
 
 from dotenv import load_dotenv
@@ -30,8 +35,9 @@ def test(message):
 def next_event(message):
 	with open(os.path.join(template_dir,  'next_event.html'), 'r') as f:
 		photo_caption = f.read()
-	photo_path = os.path.join(img_dir, 'next_event.jpg')
-	bot.send_photo(chat_id=message.chat.id, photo=photo_path, caption=photo_caption, parse_mode='html')
+	with open(os.path.join(img_dir, 'next_event.jpg'), 'rb') as p:
+		picture=p.read()
+	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_mode='html')
 
 
 bot.polling()
