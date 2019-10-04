@@ -8,6 +8,11 @@
 - implement exit mode
 """
 
+""" KNOWN PITFALLS:
+- always provide commands in a list, otherwise u get NoneType errors for 
+unknown commands, even when providing a default message (not sure y though)
+"""
+
 import os
 
 from dotenv import load_dotenv
