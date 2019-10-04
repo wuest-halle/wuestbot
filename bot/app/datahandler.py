@@ -25,7 +25,9 @@ class Datahandler:
         pass
 
     def add_user(self, uid, name, is_bot):
-        pass
+        if not self.is_user(uid):
+            self.curs.execute(f'''INSERT INTO users VALUES ({uid}, {name}, {is_bot})''')
+            self.conn.commit()
     
     def is_user(self, uid):
         self.curs.execute(f'''SELECT name, is_bot FROM users WHERE id={uid}''')
@@ -39,4 +41,4 @@ class Datahandler:
         pass
 
     def __exit__(self):
-        conn.close()
+        self.conn.close()
