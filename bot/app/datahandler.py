@@ -16,7 +16,7 @@ import sqlite3
 class Datahandler:
 
     try:
-        conn = sqlite3.connect('tryout.db')
+        conn = sqlite3.connect('tryout.db', check_same_thread=False)
         curs = conn.cursor()
     except:
         print('Database cannot be reached')
