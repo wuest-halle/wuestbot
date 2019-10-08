@@ -9,6 +9,10 @@ For now, it needs to (not in particular order):
         - is_bot (bool) 
     - remove a user from the database (take care b/c of degeneration)
     - close the connection upon shutdown
+
+TO DO:
+    - check, if aplication is threadsafe. unclear, how to find out yet
+    (for now, check_same_thread is set to False in the connect object)
 """
 
 import sqlite3
@@ -26,11 +30,11 @@ class Datahandler:
 
     def add_user(self, uid, name, is_bot):
         if not self.is_user(uid):
-            self.curs.execute(f'''INSERT INTO users VALUES ({uid}, {name}, {is_bot})''')
+            self.curs.execute('INSERT INTO users VALUES (?, ?, ?)', (uid, name, is_bot))
             self.conn.commit()
     
     def is_user(self, uid):
-        self.curs.execute(f'''SELECT name, is_bot FROM users WHERE id={uid}''')
+        self.curs.execute(f'''SELECT name, is_bot FROM users WHERE id=?''', (uid, ))
         usr = self.curs.fetchall()
         return usr
 
