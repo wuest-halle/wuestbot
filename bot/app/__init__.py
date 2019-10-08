@@ -63,9 +63,21 @@ def next_event(message):
 		picture=p.read()
 	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_mode='html')
 
+@bot.message_handler(commands=['message_to_all'])
+def push_message_to_all(message):
+	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
+		reply = f.read()
+	uids = db.all_users()
+	for uid in uids:
+		print(uid[0])
+		if (uid != 123456789) and (uid != 987654321):
+			bot.send_message(chat_id=uid[0], text=reply, parse_mode='html')
+
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
+
+
 	
 # bot is continously polling the api for news
 bot.polling()
