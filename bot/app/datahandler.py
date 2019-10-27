@@ -13,6 +13,8 @@ For now, it needs to (not in particular order):
 TO DO:
     - check, if aplication is threadsafe. unclear, how to find out yet
     (for now, check_same_thread is set to False in the connect object)
+    - write errorcheck for when a uid is inserted into the db which is
+    already there (PRIMARY KEY)
 """
 
 import sqlite3
@@ -30,16 +32,18 @@ class Datahandler:
 
     def add_user(self, uid, name, is_bot):
         if not self.is_user(uid):
-            self.curs.execute('INSERT INTO users VALUES (?, ?, ?)', (uid, name, is_bot))
+            self.curs.execute("INSERT INTO users VALUES (?, ?, ?)", (uid, name, is_bot))
             self.conn.commit()
     
     def is_user(self, uid):
-        self.curs.execute(f'''SELECT name, is_bot FROM users WHERE id=?''', (uid, ))
-        usr = self.curs.fetchall()
+        self.curs.execute("SELECT name, is_bot FROM users WHERE id=?", (uid, ))
+        usr = self.curs.fetchone()
         return usr
 
     def all_users(self):
-        pass
+        self.curs.execute("SELECT id FROM users")
+        usrs = self.curs.fetchall()
+        return usrs
     
     def remove_user():
         pass

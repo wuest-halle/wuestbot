@@ -9,7 +9,7 @@ For further understanding see corresponding UML diagram.
 
 """ to do:
 - error management
-- understand, how another table might be necessary for artist - event relation
+- introduce foreign keys to playsAt table
 """
 
 import sqlite3
@@ -18,15 +18,21 @@ conn = sqlite3.connect('data.sqlite')
 curs = conn.cursor()
 
 curs.execute("""
-    create table Users (uID integer primary key, name text)
+    create table Users (uID integer primary key, uName text)
     """)
 
 curs.execute("""
-    create table Events (eID integer primary key, name text, date text, 
-    time text, desc text, admission text, picID text)
+    create table Events (eID integer primary key, eName text, date text, 
+    time text, desc text, admission text, ePicID text)
     """)
 
 curs.execute("""
-    create table Artists (name text primary key, website text, soundcloud text, 
-    bandcamp text, bio text, picID text)
+    create table Artists (aName text primary key, website text, soundcloud text, 
+    bandcamp text, bio text, aPicID text)
+    """)
+
+curs.execute("""
+    create table playsAt (aName text, eID integer, foreign key (aName, eID) 
+    references Artists (aName), Events (eID)
+    )
     """)
