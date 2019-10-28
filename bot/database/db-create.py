@@ -44,7 +44,7 @@ curs.execute("""
     """)
 
 curs.execute("""
-    create table playsAt (
+    create table PlaysAt (
     aName text, 
     eName text,
     date text, 
