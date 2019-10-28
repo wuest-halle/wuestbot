@@ -7,6 +7,10 @@ later reference and if the re-creation of the db should be necessary.
 For further understanding see corresponding UML diagram.
 """
 
+""" to do:
+- evtl checks gegen lange strings in artist bio, event desc
+"""
+
 import sqlite3
 
 conn = sqlite3.connect('data.sqlite')
