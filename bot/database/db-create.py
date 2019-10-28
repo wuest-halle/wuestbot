@@ -19,14 +19,14 @@ curs.execute("""
     """)
 
 curs.execute("""
-    create table Events (
-    eID integer primary key, 
+    create table Events ( 
     eName text, 
     date text, 
     time text, 
     desc text, 
     admission text, 
-    ePicID text)
+    ePicID text,
+    primary key (eName, date))
     """)
 
 curs.execute("""
@@ -42,8 +42,9 @@ curs.execute("""
 curs.execute("""
     create table playsAt (
     aName text, 
-    eID integer, 
+    eName text,
+    date text, 
     foreign key (aName) references Artists (aName), 
-    foreign key (eID) references Events (eID)
+    foreign key (eName, date) references Events (eName, date)
     )
     """)
