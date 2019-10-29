@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 """
-updater script for the database. every entry has to be added manually
+updater script for the database. Each Table (except Users) is represented in a 
+class, objects get created after the logic in the __main__ clause at the end
+
+written by softbobo October 2019
 """
 
 """ Do Do - Events:
@@ -16,7 +19,6 @@ so they should really be streamlined
 all:
 
 - close the connection somewhere (might be at __exit__)
-- add program logic to constructors
 """
 
 import sqlite3
