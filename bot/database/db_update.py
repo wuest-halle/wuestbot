@@ -115,11 +115,11 @@ class playsAt:
     def check_for_artist(self):
         
         curs = self.conn.cursor()
-        curs.execute("select * from Artists where aName=?", self.aName)
+        curs.execute("select * from Artists where aName=?", (self.aName, ))
         artist = curs.fetchone()
         
         if artist:
-            print("Corresponding artist found! Check: \n", (artist, ))
+            print("Corresponding artist found! Check: \n", artist)
             answ = input("Is this the right entry? [Y/n]" )
             if answ == "Y":
                 pass
