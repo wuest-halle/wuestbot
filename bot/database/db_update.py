@@ -87,7 +87,7 @@ class Artist:
             self.conn.commit()
         
         except sqlite3.IntegrityError:
-            print("Event already exists in DB")
+            print("Artist already exists in DB")
             return
         
         curs.close()
