@@ -119,7 +119,7 @@ class playsAt:
         artist = curs.fetchone()
         
         if artist:
-            print("Corresponding artist found! Check: \n", artist)
+            print("Corresponding artist found! Check: \n", (artist, ))
             answ = input("Is this the right entry? [Y/n]" )
             if answ == "Y":
                 pass
@@ -133,7 +133,7 @@ class playsAt:
     def check_for_event(self):
 
         curs = self.conn.cursor()
-        curs.execute("select * from Events where eName=? and date=?", self.eName, self.date)
+        curs.execute("select * from Events where eName=? and date=?", (self.eName, self.date))
         event = curs.fetchone()
 
         if event:
