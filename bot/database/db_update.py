@@ -38,8 +38,8 @@ class Event:
         self.desc = input("Enter description: ")
         self.ePicID = input("Enter the PicID: ")
 
-        insert_event()
-        conn.close()
+        self.insert_event()
+        self.conn.close()
     
     def insert_event(self):
         
@@ -71,9 +71,9 @@ class Artist:
         self.bio = input("Enter Bio: ")
         self.aPicID = input("Enter the PicID: ")
 
-        insert_artist()
+        self.insert_artist()
         
-        conn.close()
+        self.conn.close()
 
     def insert_artist(self):
         
@@ -106,15 +106,15 @@ class playsAt:
         self.eName = input("Enter the Event's name: ")
         self.date = input("Enter the Event's date (format DD.MM.YYYY): ")
 
-        check_for_artist()
-        check_for_event()
-        insert_plays_at()
+        self.check_for_artist()
+        self.check_for_event()
+        self.insert_plays_at()
 
-        conn.close()
+        self.conn.close()
 
     def check_for_artist(self):
         
-        curs = conn.cursor()
+        curs = self.conn.cursor()
         curs.execute("select * from Artists where aName=?", self.aName)
         artist = curs.fetchone()
         
@@ -128,11 +128,11 @@ class playsAt:
                 check_for_artist()
         else: 
             self.aName = input("Please re-enter artist-name: ")
-            check_for_artist()
+            self.check_for_artist()
 
     def check_for_event(self):
 
-        curs = conn.cursor()
+        curs = self.conn.cursor()
         curs.execute("select * from Events where eName=? and date=?", self.eName, self.date)
         event = curs.fetchone()
 
@@ -146,7 +146,7 @@ class playsAt:
                 check_for_event()
         else: 
             self.eName = input("Please re-enter event-name: ")
-            check_for_event()
+            self.check_for_event()
 
     def insert_plays_at(self):
         
@@ -175,7 +175,8 @@ if __name__ == "__main__":
         E - Event
         A - Artist
         P - Artist-Event Relation
-        C - Cancel """)
+        C - Cancel  \n
+        """)
     
         if rel_type == "E":
             ev = Event()
