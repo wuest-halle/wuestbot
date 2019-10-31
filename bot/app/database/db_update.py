@@ -7,6 +7,12 @@ class, objects get created after the logic in the __main__ clause at the end
 written by softbobo October 2019
 """
 
+""" To Do:
+- validity checks for proper date format etc
+- input functions for data
+
+"""
+
 if __name__ == "__main__":
     
     proceed = "Y"
@@ -41,3 +47,12 @@ def new_user():
         self.admission = input("Enter admission: ")
         self.desc = input("Enter description: ")
         self.ePicID = input("Enter the PicID: ")
+
+def new_event():
+
+        self.aName = input("Enter the Artist's name: ")
+        self.webs = input("Enter Website: ")
+        self.soundc = input("Enter Soundcloud account: ")
+        self.bandc = input("Enter Bandcamp Profile: ")
+        self.bio = input("Enter Bio: ")
+        self.aPicID = input("Enter the PicID: ")
