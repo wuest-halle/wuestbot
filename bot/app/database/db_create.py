@@ -8,7 +8,7 @@ For further understanding see corresponding UML diagram.
 """
 
 """ to do:
-- evtl checks gegen lange strings in artist bio, event desc
+- might check for long strings in descriptions etc
 """
 
 import sqlite3
@@ -19,7 +19,8 @@ curs = conn.cursor()
 curs.execute("""
     create table Users (
     uID integer primary key, 
-    uName text)
+    uName text,
+    isBot bool)
     """)
 
 curs.execute("""
