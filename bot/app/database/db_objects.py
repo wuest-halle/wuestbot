@@ -23,15 +23,15 @@ class Event:
     An instance of the Event relation 
     """
 
-    def __init__(self):
+    def __init__(self, e_name, date, time, admi, desc, e_pic_id):
         
         
-        self.eName = input("Enter Event-name: ")
-        self.date = input("Enter date (format DD.MM.YYYY): ")
-        self.time = input("Enter event time: ")
-        self.admission = input("Enter admission: ")
-        self.desc = input("Enter description: ")
-        self.ePicID = input("Enter the PicID: ")
+        self.e_name = e_name
+        self.date = date
+        self.time = time
+        self.admi = admi
+        self.desc = desc
+        self.e_pic_id = e_pic_id
 
         self.insert_event()
     
@@ -56,15 +56,14 @@ class Event:
         
 class Artist:
 
-    def __init__(self):
+    def __init__(self, a_name, webs, soundc, bandc, bio, a_pic_id):
 
-        
-        self.aName = input("Enter the Artist's name: ")
-        self.webs = input("Enter Website: ")
-        self.soundc = input("Enter Soundcloud account: ")
-        self.bandc = input("Enter Bandcamp Profile: ")
-        self.bio = input("Enter Bio: ")
-        self.aPicID = input("Enter the PicID: ")
+        self.a_name = a_name
+        self.webs = webs
+        self.soundc = soundc
+        self.bandc = bandc
+        self.bio = bio
+        self.aPicID = a_pic_id
 
         self.insert_artist()
         
