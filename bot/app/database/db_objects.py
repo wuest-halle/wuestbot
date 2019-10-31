@@ -160,7 +160,15 @@ class playsAt:
         curs.close()
 
 
-def get_user(u_id):
+class User:
+
+    def __init__(self, u_id, u_name, is_bot):
+
+        self.u_id = u_id
+        self.u_name = u_name
+        self.is_bot = is_bot
+
+    def get_user(u_id):
 
     conn = sqlite3.connect('data.sqlite')
     curs = conn.cursor()
@@ -176,8 +184,7 @@ def get_user(u_id):
     else:
         return False
 
-
-def add_user(u_id, u_name, is_bot):
+    def add_user(u_id, u_name, is_bot):
 
     conn = sqlite3.connect('data.sqlite')
     curs = conn.cursor()
@@ -191,14 +198,15 @@ def add_user(u_id, u_name, is_bot):
     curs.close()
     conn.close()
 
-def all_users():
+    def all_users():
 
     conn = sqlite3.connect('data.sqlite')
     curs = conn.cursor()
 
     curs.execute("select * from Users where isBot=0")
     users = curs.fetchall()
-    return users
-
-    curs.close()
+    
     conn.close()
+    curs.close()
+    
+    return users
