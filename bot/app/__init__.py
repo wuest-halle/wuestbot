@@ -21,7 +21,7 @@ import os
 from dotenv import load_dotenv
 import telebot
 
-import datahandler
+from database import datahandler
 
 # load env variables from .env
 load_dotenv()
