@@ -19,12 +19,15 @@ unknown commands, even when providing a default message (not sure y though)
 import os
 
 from dotenv import load_dotenv
+from flask import Flask
 import telebot
 
-from database import datahandler
+from app.database import datahandler
 
 # load env variables from .env
 load_dotenv()
+
+app = Flask(__name__)
 
 API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
