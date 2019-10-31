@@ -17,6 +17,8 @@ all:
 import sqlite3
 import logging
 
+DB_NAME = 'data.sqlite'
+
 class Event:
 
     """
@@ -37,7 +39,7 @@ class Event:
     
     def insert_event(self):
         
-        conn = sqlite3.connect('data.sqlite')
+        conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
         try:
@@ -70,7 +72,7 @@ class Artist:
 
     def insert_artist(self):
         
-        conn = sqlite3.connect('data.sqlite')
+        conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
         try:
@@ -95,7 +97,7 @@ class playsAt:
 
     def __init__(self):
 
-        self.conn = sqlite3.connect('data.sqlite')
+        self.conn = sqlite3.connect(DB_NAME)
         
         self.aName = input("Enter the Artist's name: ")
         self.eName = input("Enter the Event's name: ")
@@ -159,7 +161,6 @@ class playsAt:
         
         curs.close()
 
-
 class User:
 
     def __init__(self, u_id, u_name, is_bot):
@@ -170,7 +171,7 @@ class User:
 
     def get_user(u_id):
 
-    conn = sqlite3.connect('data.sqlite')
+    conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     curs.execute("select * from Users where uID=?", (u_id, ))
@@ -186,7 +187,7 @@ class User:
 
     def add_user(u_id, u_name, is_bot):
 
-    conn = sqlite3.connect('data.sqlite')
+    conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     try:
@@ -200,7 +201,7 @@ class User:
 
     def all_users():
 
-    conn = sqlite3.connect('data.sqlite')
+    conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     curs.execute("select * from Users where isBot=0")
