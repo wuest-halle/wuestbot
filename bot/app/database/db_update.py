@@ -12,16 +12,19 @@ written by softbobo October 2019
 - might make datetime() object for the date column
 
 playsAt:
-
 - the check functions are really bulky and do the same things over and over
 so they should really be streamlined
 
 all:
-
 - close the connection somewhere (might be at __exit__)
+- fix documentation strings in functions to include: 
+    - what database item
+    - which operations incl. parameters
+- add logging, catch errors to log
 """
 
 import sqlite3
+import logging
 
 class Event:
 
@@ -191,3 +194,47 @@ if __name__ == "__main__":
             exit()
 
         proceed = input("Enter more data? [Y/n]")
+
+
+def get_user(u_id):
+
+    conn = sqlite3.connect('data.sqlite')
+    curs = conn.cursor()
+
+    curs.execute("select * from Users where uID=?", (u_id, ))
+    user = curs.fetchone()
+
+    curs.close()
+    conn.close()
+
+    if user: 
+        return True
+    else:
+        return False
+
+
+def add_user(u_id, u_name, is_bot):
+
+    conn = sqlite3.connect('data.sqlite')
+    curs = conn.cursor()
+
+    try:
+        curs.execute("insert into Users values (?,?,?)" (u_id, u_name, is_bot))
+        conn.commit()
+    except Error as e:
+        loggin.error(e)
+
+    curs.close()
+    conn.close()
+
+def all_users():
+
+    conn = sqlite3.connect('data.sqlite')
+    curs = conn.cursor()
+
+    curs.execute("select * from Users where isBot=0")
+    users = curs.fetchall()
+    return users
+
+    curs.close()
+    conn.close()
