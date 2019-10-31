@@ -1,10 +1,7 @@
-""" Do Do - Events:
-- error checks for proper string formats in date, ePicID
-- might make datetime() object for the date column
+""" Do Do :
 
 playsAt:
-- the check functions are really bulky and do the same things over and over
-so they should really be streamlined
+- insert functionality into Event and Artist Classes
 
 all:
 - close the connection somewhere (might be at __exit__)
