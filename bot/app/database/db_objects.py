@@ -94,7 +94,6 @@ class playsAt:
 
     def __init__(self):
 
-        self.conn = sqlite3.connect(DB_NAME)
         
         self.aName = input("Enter the Artist's name: ")
         self.eName = input("Enter the Event's name: ")
@@ -104,11 +103,11 @@ class playsAt:
         self.check_for_event()
         self.insert_plays_at()
 
-        self.conn.close()
 
     def check_for_artist(self):
         
-        curs = self.conn.cursor()
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
         curs.execute("select * from Artists where aName=?", (self.aName, ))
         artist = curs.fetchone()
         
@@ -124,9 +123,14 @@ class playsAt:
             self.aName = input("Please re-enter artist-name: ")
             self.check_for_artist()
 
-    def check_for_event(self):
+        curs.close()
+        conn.close()
 
-        curs = self.conn.cursor()
+    def check_for_event(self):
+        
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+        
         curs.execute("select * from Events where eName=? and date=?", (self.eName, self.date))
         event = curs.fetchone()
 
@@ -142,9 +146,13 @@ class playsAt:
             self.eName = input("Please re-enter event-name: ")
             self.check_for_event()
 
+        curs.close()
+        conn.close()
+
     def insert_plays_at(self):
         
-        curs = self.conn.cursor()
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
 
         try:
             curs.execute("""
@@ -157,6 +165,7 @@ class playsAt:
             return
         
         curs.close()
+        conn.close()
 
 class User:
 
@@ -191,7 +200,7 @@ class User:
         curs.execute("insert into Users values (?,?,?)" (u_id, u_name, is_bot))
         conn.commit()
     except Error as e:
-        loggin.error(e)
+        logging.error(e)
 
     curs.close()
     conn.close()
