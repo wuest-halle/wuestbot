@@ -4,7 +4,6 @@ playsAt:
 - insert functionality into Event and Artist Classes
 
 all:
-- close the connection somewhere (might be at __exit__)
 - fix documentation strings in functions to include: 
     - what database item
     - which operations incl. parameters
@@ -45,10 +44,8 @@ class Event:
                 (self.e_name, self.date, self.time, self.admission, self.desc, \
                 self.e_pic_id))
             self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Event already exists in DB")
-            return
+        except sqlite3.IntegrityError as e:
+            logging.error(e)
         
         curs.close()
         conn.close()
@@ -66,7 +63,6 @@ class Artist:
 
         self.insert_artist()
         
-
     def insert_artist(self):
         
         conn = sqlite3.connect(DB_NAME)
@@ -75,13 +71,11 @@ class Artist:
         try:
             curs.execute("""
                 insert into Artists values (?,?,?,?,?,?)""",
-                (self.aName, self.webs, self.soundc, self.bandc, self.bio, \
+                (self.a_name, self.webs, self.soundc, self.bandc, self.bio, \
                 self.a_pic_id))
-            self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Artist already exists in DB")
-            return
+            self.conn.commit() 
+        except sqlite3.IntegrityError as e:
+            logging.error(e)
         
         curs.close()
         conn.close()
@@ -93,9 +87,8 @@ class PlaysAt:
     """
 
     def __init__(self):
-
         
-        self.aName = input("Enter the Artist's name: ")
+        self.a_name = input("Enter the Artist's name: ")
         self.e_name = input("Enter the Event's name: ")
         self.date = input("Enter the Event's date (format DD.MM.YYYY): ")
 
@@ -103,12 +96,12 @@ class PlaysAt:
         self.check_for_event()
         self.insert_plays_at()
 
-
     def check_for_artist(self):
         
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
-        curs.execute("select * from Artists where aName=?", (self.aName, ))
+        
+        curs.execute("select * from Artists where a_name=?", (self.a_name, ))
         artist = curs.fetchone()
         
         if artist:
@@ -117,10 +110,10 @@ class PlaysAt:
             if answ == "Y":
                 pass
             else:
-                self.aName = input("Please re-enter artist-name: ")
+                self.a_name = input("Please re-enter artist-name: ")
                 check_for_artist()
         else: 
-            self.aName = input("Please re-enter artist-name: ")
+            self.a_name = input("Please re-enter artist-name: ")
             self.check_for_artist()
 
         curs.close()
@@ -157,12 +150,10 @@ class PlaysAt:
         try:
             curs.execute("""
                 insert into playsAt values (?,?,?)""",
-                (self.aName, self.e_name, self.date))
+                (self.a_name, self.e_name, self.date))
             self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Connection already exists in DB")
-            return
+       except sqlite3.IntegrityError as e:
+            logging.error(e)
         
         curs.close()
         conn.close()
