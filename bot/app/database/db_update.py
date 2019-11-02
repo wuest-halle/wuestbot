@@ -70,3 +70,8 @@ def plays_at_relation():
         a_name = input("Enter the Artist's name: ")
         e_name = input("Enter the Event's name: ")
         date = input("Enter the Event's date (format DD.MM.YYYY): ")
+
+        plays_at = PlaysAt(a_name, e_name, date)
+        PlaysAt.check_for_artist()
+        PlaysAt.check_for_event()
+        PlaysAt.insert_plays_at()
