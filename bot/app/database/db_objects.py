@@ -12,6 +12,9 @@ all:
 
 import sqlite3
 import logging
+import os
+
+logging.basicConfig(os.path.abspath('../log.txt', level=logging.DEBUG))
 
 DB_NAME = 'data.sqlite'
 
