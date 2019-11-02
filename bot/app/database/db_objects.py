@@ -24,7 +24,7 @@ class Event:
     An instance of the Event relation 
     """
 
-    def __init__(self, e_name, date, time, admi, desc, e_pic_id):
+    def __init__(self, e_name, date, time, admi, desc, loca, e_pic_id):
         
         
         self.e_name = e_name
@@ -32,6 +32,7 @@ class Event:
         self.time = time
         self.admi = admi
         self.desc = desc
+        self.loca = loca
         self.e_pic_id = e_pic_id
 
         self.insert_event()
