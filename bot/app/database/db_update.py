@@ -10,8 +10,10 @@ written by softbobo October 2019
 """ To Do:
 - validity checks for proper date format etc
 - input functions for data
-
+- default values for data 
 """
+
+from db_objects import Artist, Event, PlaysAt
 
 if __name__ == "__main__":
     
@@ -39,20 +41,32 @@ if __name__ == "__main__":
 
         proceed = input("Enter more data? [Y/n]")
 
-def new_user():
-
-        self.eName = input("Enter Event-name: ")
-        self.date = input("Enter date (format DD.MM.YYYY): ")
-        self.time = input("Enter event time: ")
-        self.admission = input("Enter admission: ")
-        self.desc = input("Enter description: ")
-        self.ePicID = input("Enter the PicID: ")
-
 def new_event():
 
-        self.aName = input("Enter the Artist's name: ")
-        self.webs = input("Enter Website: ")
-        self.soundc = input("Enter Soundcloud account: ")
-        self.bandc = input("Enter Bandcamp Profile: ")
-        self.bio = input("Enter Bio: ")
-        self.aPicID = input("Enter the PicID: ")
+        e_name = input("Enter Event-name: ")
+        date = input("Enter date (format DD.MM.YYYY): ")
+        time = input("Enter event time: ")
+        admission = input("Enter admission: ")
+        desc = input("Enter description: ")
+        e_pic_id = input("Enter the PicID: ")
+
+        event = Event(e_name, date, time, admission, desc, e_pic_id)
+        event.insert_event()
+
+def new_artist():
+
+        a_name = input("Enter the Artist's name: ")
+        webs = input("Enter Website: ")
+        soundc = input("Enter Soundcloud account: ")
+        bandc = input("Enter Bandcamp Profile: ")
+        bio = input("Enter Bio: ")
+        a_pic_id = input("Enter the PicID: ")
+
+        artist = Artist(a_name, webs, soundc, bandc, bio, a_pic_id)
+        artist.insert_artist()
+
+def plays_at_relation():
+
+        a_name = input("Enter the Artist's name: ")
+        e_name = input("Enter the Event's name: ")
+        date = input("Enter the Event's date (format DD.MM.YYYY): ")
