@@ -22,9 +22,10 @@ def new_event():
         time = input("Enter event time: ")
         admission = input("Enter admission: ")
         desc = input("Enter description: ")
+        loca = input("Enter location name: ")
         e_pic_id = input("Enter the PicID: ")
 
-        event = Event(e_name, date, time, admission, desc, e_pic_id)
+        event = Event(e_name, date, time, admission, desc, loca, e_pic_id)
         event.insert_event()
 
 def new_artist():
