@@ -15,32 +15,6 @@ written by softbobo October 2019
 
 from db_objects import Artist, Event, PlaysAt
 
-if __name__ == "__main__":
-    
-    proceed = "Y"
-
-    while proceed == "Y":
-        
-        rel_type = input("""
-        What should be entered in the DB? 
-        E - Event
-        A - Artist
-        P - Artist-Event Relation
-        C - Cancel  \n
-        """)
-    
-        if rel_type == "E":
-            ev = Event()
-        elif rel_type == "A":
-            ar = Artist()
-        elif rel_type == "P":
-            pa = playsAt()
-        else:
-            print("Program is shut down")
-            exit()
-
-        proceed = input("Enter more data? [Y/n]")
-
 def new_event():
 
         e_name = input("Enter Event-name: ")
@@ -75,3 +49,29 @@ def plays_at_relation():
         PlaysAt.check_for_artist()
         PlaysAt.check_for_event()
         PlaysAt.insert_plays_at()
+
+if __name__ == "__main__":
+    
+    proceed = "Y"
+
+    while proceed == "Y":
+        
+        rel_type = input("""
+        What should be entered in the DB? 
+        E - Event
+        A - Artist
+        P - Artist-Event Relation
+        C - Cancel  \n
+        """)
+    
+        if rel_type == "E":
+            ev = new_event()
+        elif rel_type == "A":
+            ar = new_artist()
+        elif rel_type == "P":
+            pa = plays_at_relation()
+        else:
+            print("Program is shut down")
+            exit()
+
+        proceed = input("Enter more data? [Y/n]")
