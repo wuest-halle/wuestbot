@@ -194,14 +194,14 @@ class User:
 
     def get_user(u_id):
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
 
-    curs.execute("select * from Users where uID=?", (u_id, ))
-    user = curs.fetchone()
+        curs.execute("select * from Users where uID=?", (u_id, ))
+        user = curs.fetchone()
 
-    curs.close()
-    conn.close()
+        curs.close()
+        conn.close()
 
     if user: 
         return True
@@ -210,27 +210,27 @@ class User:
 
     def add_user(u_id, name, is_bot):
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
 
-    try:
-        curs.execute("insert into Users values (?,?,?)" (u_id, name, is_bot))
-        conn.commit()
-    except Error as e:
-        logging.error(e)
+        try:
+            curs.execute("insert into Users values (?,?,?)" (u_id, name, is_bot))
+            conn.commit()
+        except Error as e:
+            logging.error(e)
 
-    curs.close()
-    conn.close()
+        curs.close()
+        conn.close()
 
     def all_users():
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
-
-    curs.execute("select * from Users where isBot=0")
-    users = curs.fetchall()
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
     
-    conn.close()
-    curs.close()
-    
-    return users
+        curs.execute("select * from Users where isBot=0")
+        users = curs.fetchall()
+        
+        conn.close()
+        curs.close()
+        
+        return users
