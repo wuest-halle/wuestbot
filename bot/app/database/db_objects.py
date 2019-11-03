@@ -62,6 +62,18 @@ class Event:
         
         curs.close()
         conn.close()
+
+    def is_event(self):
+
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+
+        search = curs.execute("""select from Artists where aName=?""", (self.name))
+        
+        curs.close()
+        conn.close()
+
+        return search is not None
         
 class Artist:
 
