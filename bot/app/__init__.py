@@ -19,7 +19,7 @@ unknown commands, even when providing a default message (not sure y though)
 import os
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template
 import telebot
 
 from app.database import datahandler
