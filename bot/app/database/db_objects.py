@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 """ Do Do :
 
 playsAt:

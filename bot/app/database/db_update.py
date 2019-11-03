@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#-*- coding: utf-8 -*-
 
 """
 updater script for the database. Each Table (except Users) is represented in a 
