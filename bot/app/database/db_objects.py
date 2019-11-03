@@ -178,10 +178,18 @@ class PlaysAt:
 
 class User:
 
-    def __init__(self, u_id, u_name, is_bot):
+    """Instance of the User relation:
+
+    Arguments:
+        * u_id(str): User-ID, same as the User-ID which Telegram uses
+        * name(str): First name of the user
+        * is_bot(bool): True if the account is a bot
+    """
+
+    def __init__(self, u_id, name, is_bot):
 
         self.u_id = u_id
-        self.u_name = u_name
+        self.name = name
         self.is_bot = is_bot
 
     def get_user(u_id):
@@ -200,13 +208,13 @@ class User:
     else:
         return False
 
-    def add_user(u_id, u_name, is_bot):
+    def add_user(u_id, name, is_bot):
 
     conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     try:
-        curs.execute("insert into Users values (?,?,?)" (u_id, u_name, is_bot))
+        curs.execute("insert into Users values (?,?,?)" (u_id, name, is_bot))
         conn.commit()
     except Error as e:
         logging.error(e)
