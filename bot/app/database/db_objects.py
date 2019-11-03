@@ -68,7 +68,8 @@ class Event:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
-        search = curs.execute("""select from Artists where aName=?""", (self.name))
+        curs.execute("""select from Artists where aName=?""", (self.name))
+        search = curs.fetchone()
         
         curs.close()
         conn.close()
@@ -119,7 +120,8 @@ class Artist:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
-        search = curs.execute("""select from Artists where aName=?""", (self.name))
+        curs.execute("""select from Artists where aName=?""", (self.name))
+        search = curs.fetchone()
         
         curs.close()
         conn.close()
