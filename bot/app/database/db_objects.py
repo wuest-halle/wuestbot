@@ -197,7 +197,7 @@ class User:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
-        curs.execute("select * from Users where uID=?", (u_id, ))
+        curs.execute("select * from Users where uID=?", (self.u_id, ))
         user = curs.fetchone()
 
         curs.close()
@@ -211,7 +211,8 @@ class User:
         curs = conn.cursor()
 
         try:
-            curs.execute("insert into Users values (?,?,?)" (u_id, name, is_bot))
+            curs.execute("insert into Users values (?,?,?)" (self.u_id,\
+             self.name, self.is_bot))
             conn.commit()
         except Error as e:
             logging.error(e)
