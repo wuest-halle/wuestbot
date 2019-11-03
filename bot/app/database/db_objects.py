@@ -33,7 +33,8 @@ class Event:
         * admission (str): admission required at entry
         * description (str): short descriptive text. keep it 150 characters or less
         * location (str): where the event takes place
-        * pic_id (int): ID for pictures repository. 6 characters long, starts with 0.
+        * pic_id (str): ID for pictures repository. 6+4 characters long, 
+        starts with 0, then number, then file ending like `.jpg`
     """
 
     def __init__(self, name, date, time, admission, description, location, pic_id):
@@ -86,7 +87,8 @@ class Artist:
         * soundcloud(str): artist's soundcloud profile
         * bandcamp(str): artist's bandcamp profile
         * bio(str): short descriptive text about the artist. keep it under 150 characters
-        * pic_id(int): ID for corresponding picture. 6 characters long, begins with 1.
+        * pic_id(str): ID for corresponding in the repo. 6+4 characters long, 
+        starts with 0, then number, then file ending like `.jpg`
     """
 
     def __init__(self, name, website, soundcloud, bandcamp, bio, pic_id):
