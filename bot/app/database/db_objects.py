@@ -37,7 +37,8 @@ class Event:
         starts with 0, then number, then file ending like `.jpg`
     """
 
-    def __init__(self, name, date, time, admission, description, location, pic_id):
+    def __init__(self, name, date, time=None, admission=None, description=None,\
+        location=None, pic_id=None):
         
         self.name = name
         self.date = date
@@ -91,7 +92,8 @@ class Artist:
         starts with 0, then number, then file ending like `.jpg`
     """
 
-    def __init__(self, name, website, soundcloud, bandcamp, bio, pic_id):
+    def __init__(self, name, website=None, soundcloud=None, bandcamp=None, \
+        bio=None, pic_id=None):
 
         self.name = name
         self.website = website
