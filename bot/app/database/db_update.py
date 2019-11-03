@@ -13,7 +13,7 @@ To Do:
     * default values for data 
 """
 
-from db_objects import Artist, Event, PlaysAt
+from db_objects import event, Event, PlaysAt
 
 def new_event():
 
@@ -28,21 +28,21 @@ def new_event():
     event = Event(e_name, date, time, admission, desc, loca, e_pic_id)
     event.insert_event()
 
-def new_artist():
+def new_event():
 
-    a_name = input("Enter the Artist's name: ")
+    a_name = input("Enter the event's name: ")
     webs = input("Enter Website: ")
     soundc = input("Enter Soundcloud account: ")
     bandc = input("Enter Bandcamp Profile: ")
     bio = input("Enter Bio: ")
     a_pic_id = input("Enter the PicID: ")
     
-    artist = Artist(a_name, webs, soundc, bandc, bio, a_pic_id)
-    artist.insert_artist()
+    event = event(a_name, webs, soundc, bandc, bio, a_pic_id)
+    event.insert_event()
 
 def plays_at_relation():
 
-    a_name = find_artist()
+    a_name = find_event()
     e_name = input("Enter the Event's name: ")
     date = input("Enter the Event's date (format DD.MM.YYYY): ")
     
@@ -50,17 +50,32 @@ def plays_at_relation():
     PlaysAt.check_for_event()
     PlaysAt.insert_plays_at()
 
-def find_artist():
+def find_event():
 
     proceed = "Y"
 
     while proceed == "Y":
-        name = input("Enter artist name: ")
-        artist = Artist(name)
+        name = input("Enter event name: ")
+        event = event(name)
 
-        if artist.is_artist():
+        if event.is_event():
             print("Entry found")
             return name
+        else:
+            proceed = ("Continue querying? [Y/n] ")
+
+def find_event():
+
+    proceed = "Y"
+
+    while proceed == "Y":
+        name = input("Enter event name: ")
+        date = input("Enter event date (format DD.MM.YYYY): ")
+        event = Event(name, date)
+
+        if event.is_event():
+            print("Entry found")
+            return [name, date]
         else:
             proceed = ("Continue querying? [Y/n] ")
 
@@ -73,15 +88,15 @@ if __name__ == "__main__":
         rel_type = input("""
         What should be entered in the DB? 
         E - Event
-        A - Artist
-        P - Artist-Event Relation
+        A - event
+        P - event-Event Relation
         C - Cancel  \n
         """)
     
         if rel_type == "E":
             ev = new_event()
         elif rel_type == "A":
-            ar = new_artist()
+            ar = new_event()
         elif rel_type == "P":
             pa = plays_at_relation()
         else:
