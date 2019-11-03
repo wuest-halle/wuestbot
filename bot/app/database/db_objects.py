@@ -176,7 +176,7 @@ class User:
         self.name = name
         self.is_bot = is_bot
 
-    def user_exists(u_id):
+    def user_exists(self, u_id):
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
@@ -189,22 +189,22 @@ class User:
 
         return user is not None 
 
-    def add_user(u_id, name, is_bot):
+    def add_user(self):
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
         try:
-            curs.execute("insert into Users values (?,?,?)" (self.u_id,\
+            curs.execute("insert into Users values (?,?,?)", (self.u_id, \
                 self.name, self.is_bot))
             conn.commit()
-        except Error as e:
+        except sqlite3.IntegrityError as e:
             logging.error(e)
 
         curs.close()
         conn.close()
 
-    def all_users():
+    def all_users(self):
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
