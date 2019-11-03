@@ -1,15 +1,17 @@
 #-*- coding: utf-8 -*-
 
-""" Do Do :
+"""Classes representing database items 
 
-playsAt:
-- insert functionality into Event and Artist Classes
+To Do :
 
-all:
-- fix documentation strings in functions to include: 
-    - what database item
-    - which operations incl. parameters
-- add logging, catch errors to log
+    playsAt:
+        * insert functionality into Event and Artist Classes
+
+    all:
+        * fix documentation strings in functions to include: 
+            * what database item
+            * which operations incl. parameters
+        * add logging, catch errors to log
 """
 
 import sqlite3
