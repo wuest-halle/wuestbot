@@ -54,7 +54,7 @@ class Event:
         try:
             curs.execute("""
                 insert into Events values (?,?,?,?,?,?,?)""",
-                (self.e_name, self.date, self.time, self.admission, self.description, \
+                (self.name, self.date, self.time, self.admission, self.description, \
                 self. location, self.pic_id))
             self.conn.commit()
         except sqlite3.IntegrityError as e:
@@ -151,10 +151,10 @@ class PlaysAt:
             if answ == "Y":
                 pass
             else:
-                self.e_name = input("Please re-enter event-name: ")
+                self.event_name = input("Please re-enter event-name: ")
                 check_for_event()
         else: 
-            self.e_name = input("Please re-enter event-name: ")
+            self.event_name = input("Please re-enter event-name: ")
             self.check_for_event()
 
         curs.close()
