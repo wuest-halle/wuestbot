@@ -56,7 +56,7 @@ def find_artist():
         name = input("Enter artist name: ")
         artist = Artist(name)
 
-        if event.is_event():
+        if artist.is_artist():
             print("Entry found")
             return name
         else:
