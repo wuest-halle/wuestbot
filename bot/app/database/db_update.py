@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
+# written by softbobo October 2019
 
-"""
-updater script for the database. Each Table (except Users) is represented in a 
-class, objects get created after the logic in the __main__ clause at the end
+"""Update/Insert-Script for Items in the Database 
+Purpose:
+    This script formulates the logic behind inputs for the database, which the bot 
+    uses. It is intended for use from the command line and run locally like any 
+    script via ``./db-update.py``  
 
-written by softbobo October 2019
-"""
-
-""" To Do:
-- validity checks for proper date format etc
-- input functions for data
-- default values for data 
+To Do:
+    * validity checks for proper date format etc
+    * default values for data 
 """
 
 from db_objects import Artist, Event, PlaysAt
