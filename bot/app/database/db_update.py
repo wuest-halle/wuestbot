@@ -1,173 +1,112 @@
 #!/usr/bin/env python3
+#-*- coding: utf-8 -*-
+# written by softbobo October 2019
 
-"""
-updater script for the database. Each Table (except Users) is represented in a 
-class, objects get created after the logic in the __main__ clause at the end
-
-written by softbobo October 2019
-"""
-
-""" Do Do - Events:
-- error checks for proper string formats in date, ePicID
-- might make datetime() object for the date column
-
-playsAt:
-- the check functions are really bulky and do the same things over and over
-so they should really be streamlined
-
-all:
-- close the connection somewhere (might be at __exit__)
-- fix documentation strings in functions to include: 
-    - what database item
-    - which operations incl. parameters
-- add logging, catch errors to log
-"""
-
-import sqlite3
-import logging
-
-class Event:
-
-    """
-    An instance of the Event relation 
-    """
-
-    def __init__(self):
-        
-        self.conn = sqlite3.connect('data.sqlite')
-        
-        self.eName = input("Enter Event-name: ")
-        self.date = input("Enter date (format DD.MM.YYYY): ")
-        self.time = input("Enter event time: ")
-        self.admission = input("Enter admission: ")
-        self.desc = input("Enter description: ")
-        self.ePicID = input("Enter the PicID: ")
-
-        self.insert_event()
-        self.conn.close()
+"""Update/Insert-Script for Items in the Database 
     
-    def insert_event(self):
-        
-        curs = self.conn.cursor()
+    Purpose:
+        This script formulates the logic behind inputs for the database, which the bot 
+        uses. It is intended for use from the command line and run locally like any 
+        script via ``./db-update.py``  
 
-        try:
-            curs.execute("""
-                insert into Events values (?,?,?,?,?,?)""",
-                (self.eName, self.date, self.time, self.admission, self.desc, \
-                self.ePicID))
-            self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Event already exists in DB")
-            return
-        
-        curs.close()
-        
-class Artist:
+    To Do:
+        * validity checks for proper date format etc
+        * default values for data 
+"""
 
-    def __init__(self):
+from db_objects import Artist, Event, PlaysAt
 
-        self.conn = sqlite3.connect('data.sqlite')
-        
-        self.aName = input("Enter the Artist's name: ")
-        self.webs = input("Enter Website: ")
-        self.soundc = input("Enter Soundcloud account: ")
-        self.bandc = input("Enter Bandcamp Profile: ")
-        self.bio = input("Enter Bio: ")
-        self.aPicID = input("Enter the PicID: ")
+def new_event():
 
-        self.insert_artist()
-        
-        self.conn.close()
+    """input-wrapper for Event class
 
-    def insert_artist(self):
-        
-        curs = self.conn.cursor()
-
-        try:
-            curs.execute("""
-                insert into Artists values (?,?,?,?,?,?)""",
-                (self.aName, self.webs, self.soundc, self.bandc, self.bio, \
-                self.aPicID))
-            self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Artist already exists in DB")
-            return
-        
-        curs.close()
-
-class playsAt:
-
-    """
-    Instance represents Artist-Event connection (aka playsAt Table)
+        asks for the data, makes a new instance of event, and inserts data via the 
+        member function
     """
 
-    def __init__(self):
+    event_name = input("Enter Event-name: ")
+    date = input("Enter date (format DD.MM.YYYY): ")
+    time = input("Enter event time: ")
+    admission = input("Enter admission: ")
+    description = input("Enter description: ")
+    locaation = input("Enter location name: ")
+    event_pic_id = input("Enter the PicID: ")
+    
+    event = Event(event_name, date, time, admission, description, location, event_pic_id)
+    event.insert_event()
 
-        self.conn = sqlite3.connect('data.sqlite')
-        
-        self.aName = input("Enter the Artist's name: ")
-        self.eName = input("Enter the Event's name: ")
-        self.date = input("Enter the Event's date (format DD.MM.YYYY): ")
+def new_artist():
 
-        self.check_for_artist()
-        self.check_for_event()
-        self.insert_plays_at()
+    """input-wrapper for Artist class
 
-        self.conn.close()
+        asks for the data, makes a new instance of artist, and inserts data via the 
+        member function
+    """
 
-    def check_for_artist(self):
-        
-        curs = self.conn.cursor()
-        curs.execute("select * from Artists where aName=?", (self.aName, ))
-        artist = curs.fetchone()
-        
-        if artist:
-            print("Corresponding artist found! Check: \n", artist)
-            answ = input("Is this the right entry? [Y/n]" )
-            if answ == "Y":
-                pass
-            else:
-                self.aName = input("Please re-enter artist-name: ")
-                check_for_artist()
-        else: 
-            self.aName = input("Please re-enter artist-name: ")
-            self.check_for_artist()
+    artist_name = input("Enter the artists's name: ")
+    website = input("Enter Website: ")
+    soundcloud = input("Enter Soundcloud account: ")
+    bandcamp = input("Enter Bandcamp Profile: ")
+    bio = input("Enter Bio: ")
+    artist_pic_id = input("Enter the PicID: ")
+    
+    artist = Artist(artist_name, website, soundcloud, bandcamp, bio, artist_pic_id)
+    artist.insert_artist()
 
-    def check_for_event(self):
+def plays_at_relation():
 
-        curs = self.conn.cursor()
-        curs.execute("select * from Events where eName=? and date=?", (self.eName, self.date))
-        event = curs.fetchone()
+    artist_name = find_artist()
+    
+    try:
+        event_name, date = find_event()
+    except TypeError:
+        return
 
-        if event:
-            print("Corresponding event found! Check: \n", event)
-            answ = input("Is this the right entry? [Y/n]" )
-            if answ == "Y":
-                pass
-            else:
-                self.eName = input("Please re-enter event-name: ")
-                check_for_event()
-        else: 
-            self.eName = input("Please re-enter event-name: ")
-            self.check_for_event()
+    plays_at = PlaysAt(artist_name, event_name, date)
+    plays_at.insert_plays_at()
+    
+def find_artist():
 
-    def insert_plays_at(self):
-        
-        curs = self.conn.cursor()
+    """input-wrapper for the Artist class' find_artist() member
 
-        try:
-            curs.execute("""
-                insert into playsAt values (?,?,?)""",
-                (self.aName, self.eName, self.date))
-            self.conn.commit()
-        
-        except sqlite3.IntegrityError:
-            print("Connection already exists in DB")
-            return
-        
-        curs.close()
+        asks for the data, makes a new instance of artist, and initiates db 
+        queries as long as the user wants
+    """
+
+    proceed = "Y"
+
+    while proceed == "Y":
+        name = input("Enter artist name: ")
+        artist = Artist(name)
+
+        if artist.is_artist():
+            print("Entry found")
+            return name
+        else:
+            print("Entry not found")
+            proceed = input("Continue querying? [Y/n] ")
+
+def find_event():
+
+    """input-wrapper for the Event class' find_event() member
+
+        asks for the data, makes a new instance of Event, and initiates db 
+        queries as long as the user wants
+    """
+
+    proceed = "Y"
+
+    while proceed == "Y":
+        name = input("Enter event name: ")
+        date = input("Enter event date (format DD.MM.YYYY): ")
+        event = Event(name, date)
+
+        if event.is_event():
+            print("Entry found")
+            return [name, date]
+        else:
+            print("Entry not found")
+            proceed = input("Continue querying? [Y/n] ")
 
 if __name__ == "__main__":
     
@@ -184,57 +123,13 @@ if __name__ == "__main__":
         """)
     
         if rel_type == "E":
-            ev = Event()
+            ev = new_event()
         elif rel_type == "A":
-            ar = Artist()
+            ar = new_artist()
         elif rel_type == "P":
-            pa = playsAt()
+            pa = plays_at_relation()
         else:
             print("Program is shut down")
             exit()
 
         proceed = input("Enter more data? [Y/n]")
-
-
-def get_user(u_id):
-
-    conn = sqlite3.connect('data.sqlite')
-    curs = conn.cursor()
-
-    curs.execute("select * from Users where uID=?", (u_id, ))
-    user = curs.fetchone()
-
-    curs.close()
-    conn.close()
-
-    if user: 
-        return True
-    else:
-        return False
-
-
-def add_user(u_id, u_name, is_bot):
-
-    conn = sqlite3.connect('data.sqlite')
-    curs = conn.cursor()
-
-    try:
-        curs.execute("insert into Users values (?,?,?)" (u_id, u_name, is_bot))
-        conn.commit()
-    except Error as e:
-        loggin.error(e)
-
-    curs.close()
-    conn.close()
-
-def all_users():
-
-    conn = sqlite3.connect('data.sqlite')
-    curs = conn.cursor()
-
-    curs.execute("select * from Users where isBot=0")
-    users = curs.fetchall()
-    return users
-
-    curs.close()
-    conn.close()
