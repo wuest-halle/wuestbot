@@ -20,8 +20,8 @@ def new_event():
 
     """input-wrapper for Event class
 
-    asks for the data, makes a new instance of event, and inserts data via the 
-    member function
+        asks for the data, makes a new instance of event, and inserts data via the 
+        member function
     """
 
     event_name = input("Enter Event-name: ")
@@ -39,8 +39,8 @@ def new_artist():
 
     """input-wrapper for Artist class
 
-    asks for the data, makes a new instance of artist, and inserts data via the 
-    member function
+        asks for the data, makes a new instance of artist, and inserts data via the 
+        member function
     """
 
     artist_name = input("Enter the artists's name: ")
@@ -69,8 +69,8 @@ def find_artist():
 
     """input-wrapper for the Artist class' find_artist() member
 
-    asks for the data, makes a new instance of artist, and initiates db 
-    queries as long as the user wants
+        asks for the data, makes a new instance of artist, and initiates db 
+        queries as long as the user wants
     """
 
     proceed = "Y"
@@ -90,8 +90,8 @@ def find_event():
 
     """input-wrapper for the Event class' find_event() member
 
-    asks for the data, makes a new instance of Event, and initiates db 
-    queries as long as the user wants
+        asks for the data, makes a new instance of Event, and initiates db 
+        queries as long as the user wants
     """
 
     proceed = "Y"
