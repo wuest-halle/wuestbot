@@ -138,29 +138,6 @@ class PlaysAt:
         self.event_name = event_name
         self.date = date
 
-    def check_for_event(self):
-        
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-        
-        curs.execute("select * from Events where eName=? and date=?", (self.event_name, self.date))
-        event = curs.fetchone()
-
-        if event:
-            print("Corresponding event found! Check: \n", event)
-            answ = input("Is this the right entry? [Y/n]" )
-            if answ == "Y":
-                pass
-            else:
-                self.event_name = input("Please re-enter event-name: ")
-                check_for_event()
-        else: 
-            self.event_name = input("Please re-enter event-name: ")
-            self.check_for_event()
-
-        curs.close()
-        conn.close()
-
     def insert_plays_at(self):
         
         conn = sqlite3.connect(DB_NAME)
