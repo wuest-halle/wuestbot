@@ -37,7 +37,12 @@ img_dir = os.path.abspath('../bot/img')
 # returns a list of available commands upon conversation initiation
 # and adds new users to the database
 @bot.message_handler(commands=['start'])
-def start_conv(message):
+def start(message):
+
+	id = message.from_user.id
+	name = message.from_user.first_name
+	is_bot = message.from_user.is_bot
+
 	with open(os.path.join(template_dir, 'start.html'), 'r') as f:
 		reply = f.read()
 	bot.send_message(chat_id=message.chat.id, text=reply, parse_mode='html')
