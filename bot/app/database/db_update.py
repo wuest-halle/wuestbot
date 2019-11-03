@@ -88,8 +88,8 @@ if __name__ == "__main__":
         rel_type = input("""
         What should be entered in the DB? 
         E - Event
-        A - event
-        P - event-Event Relation
+        A - Artist
+        P - Artist-Event Relation
         C - Cancel  \n
         """)
     
