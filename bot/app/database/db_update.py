@@ -42,7 +42,7 @@ def new_artist():
 
 def plays_at_relation():
 
-    a_name = is_artist()
+    a_name = find_artist()
     e_name = input("Enter the Event's name: ")
     date = input("Enter the Event's date (format DD.MM.YYYY): ")
     
@@ -50,7 +50,7 @@ def plays_at_relation():
     PlaysAt.check_for_event()
     PlaysAt.insert_plays_at()
 
-def is_artist():
+def find_artist():
 
     proceed = "Y"
 
