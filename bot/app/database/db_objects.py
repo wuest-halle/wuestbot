@@ -28,18 +28,16 @@ class Event:
     An instance of the Event relation 
     """
 
-    def __init__(self, e_name, date, time, admi, desc, loca, e_pic_id):
+    def __init__(self, name, date, time, admission, description, location, pic_id):
         
         
-        self.e_name = e_name
+        self.name = name
         self.date = date
         self.time = time
-        self.admi = admi
-        self.desc = desc
-        self.loca = loca
-        self.e_pic_id = e_pic_id
-
-        self.insert_event()
+        self.admission = admission
+        self.description = description
+        self.location = location
+        self.pic_id = pic_id
     
     def insert_event(self):
         
@@ -49,8 +47,8 @@ class Event:
         try:
             curs.execute("""
                 insert into Events values (?,?,?,?,?,?)""",
-                (self.e_name, self.date, self.time, self.admission, self.desc, \
-                self.e_pic_id))
+                (self.e_name, self.date, self.time, self.admission, self.description, \
+                self.pic_id))
             self.conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
@@ -60,16 +58,14 @@ class Event:
         
 class Artist:
 
-    def __init__(self, a_name, webs, soundc, bandc, bio, a_pic_id):
+    def __init__(self, name, website, soundcloud, bandcamp, bio, pic_id):
 
-        self.a_name = a_name
-        self.webs = webs
-        self.soundc = soundc
-        self.bandc = bandc
+        self.name = name
+        self.website = website
+        self.soundcloud = soundcloud
+        self.bandcamp = bandcamp
         self.bio = bio
-        self.a_pic_id = a_pic_id
-
-        self.insert_artist()
+        self.pic_id = pic_id
         
     def insert_artist(self):
         
@@ -79,8 +75,8 @@ class Artist:
         try:
             curs.execute("""
                 insert into Artists values (?,?,?,?,?,?)""",
-                (self.a_name, self.webs, self.soundc, self.bandc, self.bio, \
-                self.a_pic_id))
+                (self.name, self.website, self.soundcloud, self.bandcamp, self.bio, \
+                self.pic_id))
             self.conn.commit() 
         except sqlite3.IntegrityError as e:
             logging.error(e)
@@ -94,22 +90,18 @@ class PlaysAt:
     Instance represents Artist-Event connection (aka playsAt Table)
     """
 
-    def __init__(self):
+    def __init__(self, artist_name, event_name, date):
         
-        self.a_name = input("Enter the Artist's name: ")
-        self.e_name = input("Enter the Event's name: ")
-        self.date = input("Enter the Event's date (format DD.MM.YYYY): ")
-
-        self.check_for_artist()
-        self.check_for_event()
-        self.insert_plays_at()
+        self.artist_name = artist_name
+        self.event_name = event_name
+        self.date = date
 
     def check_for_artist(self):
         
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
         
-        curs.execute("select * from Artists where a_name=?", (self.a_name, ))
+        curs.execute("select * from Artists where name=?", (self.name, ))
         artist = curs.fetchone()
         
         if artist:
@@ -118,10 +110,10 @@ class PlaysAt:
             if answ == "Y":
                 pass
             else:
-                self.a_name = input("Please re-enter artist-name: ")
+                self.name = input("Please re-enter artist-name: ")
                 check_for_artist()
         else: 
-            self.a_name = input("Please re-enter artist-name: ")
+            self.name = input("Please re-enter artist-name: ")
             self.check_for_artist()
 
         curs.close()
@@ -132,7 +124,7 @@ class PlaysAt:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
         
-        curs.execute("select * from Events where e_name=? and date=?", (self.e_name, self.date))
+        curs.execute("select * from Events where eName=? and date=?", (self.event_name, self.date))
         event = curs.fetchone()
 
         if event:
@@ -158,7 +150,7 @@ class PlaysAt:
         try:
             curs.execute("""
                 insert into playsAt values (?,?,?)""",
-                (self.a_name, self.e_name, self.date))
+                (self.artist_name, self.event_name, self.date))
             self.conn.commit()
        except sqlite3.IntegrityError as e:
             logging.error(e)
