@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template
 import telebot
 
-from app.database import datahandler
+from app.database import db_objects
 
 # load env variables from .env
 load_dotenv()
@@ -32,9 +32,6 @@ app = Flask(__name__)
 API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
 
-db = datahandler.Datahandler()
-
-template_dir = os.path.abspath('../bot/templates')
 img_dir = os.path.abspath('../bot/img')
 
 # returns a list of available commands upon conversation initiation
