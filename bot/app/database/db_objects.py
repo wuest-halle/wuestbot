@@ -192,7 +192,7 @@ class User:
         self.name = name
         self.is_bot = is_bot
 
-    def get_user(u_id):
+    def user_exists(u_id):
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
@@ -226,11 +226,11 @@ class User:
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
-    
+
         curs.execute("select * from Users where isBot=0")
         users = curs.fetchall()
-        
+
         conn.close()
         curs.close()
-        
+
         return users
