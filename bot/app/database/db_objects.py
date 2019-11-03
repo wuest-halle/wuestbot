@@ -56,7 +56,7 @@ class Event:
                 insert into Events values (?,?,?,?,?,?,?)""",
                 (self.name, self.date, self.time, self.admission, self.description, \
                 self.location, self.pic_id))
-            self.conn.commit()
+            conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
         
@@ -108,7 +108,7 @@ class Artist:
                 insert into Artists values (?,?,?,?,?,?)""",
                 (self.name, self.website, self.soundcloud, self.bandcamp, self.bio, \
                 self.pic_id))
-            self.conn.commit() 
+            conn.commit() 
         except sqlite3.IntegrityError as e:
             logging.error(e)
         
@@ -149,7 +149,7 @@ class PlaysAt:
             curs.execute("""
                 insert into playsAt values (?,?,?)""",
                 (self.artist_name, self.event_name, self.date))
-            self.conn.commit()
+            conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
         
