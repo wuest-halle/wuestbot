@@ -37,7 +37,7 @@ def new_artist():
     bio = input("Enter Bio: ")
     a_pic_id = input("Enter the PicID: ")
     
-    artist = artist(a_name, webs, soundc, bandc, bio, a_pic_id)
+    artist = Artist(a_name, webs, soundc, bandc, bio, a_pic_id)
     artist.insert_artist()
 
 def plays_at_relation():
