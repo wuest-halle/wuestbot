@@ -212,7 +212,7 @@ class User:
 
         try:
             curs.execute("insert into Users values (?,?,?)" (self.u_id,\
-             self.name, self.is_bot))
+                self.name, self.is_bot))
             conn.commit()
         except Error as e:
             logging.error(e)
