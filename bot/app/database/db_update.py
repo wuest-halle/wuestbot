@@ -51,8 +51,6 @@ def plays_at_relation():
     PlaysAt.check_for_event()
     PlaysAt.insert_plays_at()
 
-def call_artist()
-
 if __name__ == "__main__":
     
     proceed = "Y"
