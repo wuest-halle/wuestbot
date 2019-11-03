@@ -170,7 +170,7 @@ class PlaysAt:
                 insert into playsAt values (?,?,?)""",
                 (self.artist_name, self.event_name, self.date))
             self.conn.commit()
-       except sqlite3.IntegrityError as e:
+        except sqlite3.IntegrityError as e:
             logging.error(e)
         
         curs.close()
@@ -203,10 +203,7 @@ class User:
         curs.close()
         conn.close()
 
-    if user: 
-        return True
-    else:
-        return False
+        return user if not None 
 
     def add_user(u_id, name, is_bot):
 
