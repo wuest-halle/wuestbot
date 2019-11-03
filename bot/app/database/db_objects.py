@@ -203,7 +203,7 @@ class User:
         curs.close()
         conn.close()
 
-        return user if not None 
+        return true if user is not None 
 
     def add_user(u_id, name, is_bot):
 
