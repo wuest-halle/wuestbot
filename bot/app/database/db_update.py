@@ -3,56 +3,75 @@
 # written by softbobo October 2019
 
 """Update/Insert-Script for Items in the Database 
-Purpose:
-    This script formulates the logic behind inputs for the database, which the bot 
-    uses. It is intended for use from the command line and run locally like any 
-    script via ``./db-update.py``  
+    
+    Purpose:
+        This script formulates the logic behind inputs for the database, which the bot 
+        uses. It is intended for use from the command line and run locally like any 
+        script via ``./db-update.py``  
 
-To Do:
-    * validity checks for proper date format etc
-    * default values for data 
+    To Do:
+        * validity checks for proper date format etc
+        * default values for data 
 """
 
 from db_objects import Artist, Event, PlaysAt
 
 def new_event():
 
-    e_name = input("Enter Event-name: ")
+    """input-wrapper for Event class
+
+    asks for the data, makes a new instance of event, and inserts data via the 
+    member function
+    """
+
+    event_name = input("Enter Event-name: ")
     date = input("Enter date (format DD.MM.YYYY): ")
     time = input("Enter event time: ")
     admission = input("Enter admission: ")
-    desc = input("Enter description: ")
-    loca = input("Enter location name: ")
-    e_pic_id = input("Enter the PicID: ")
+    description = input("Enter description: ")
+    locaation = input("Enter location name: ")
+    event_pic_id = input("Enter the PicID: ")
     
-    event = Event(e_name, date, time, admission, desc, loca, e_pic_id)
+    event = Event(event_name, date, time, admission, description, location, event_pic_id)
     event.insert_event()
 
 def new_artist():
 
-    a_name = input("Enter the artists's name: ")
-    webs = input("Enter Website: ")
-    soundc = input("Enter Soundcloud account: ")
-    bandc = input("Enter Bandcamp Profile: ")
+    """input-wrapper for Artist class
+
+    asks for the data, makes a new instance of artist, and inserts data via the 
+    member function
+    """
+
+    artist_name = input("Enter the artists's name: ")
+    website = input("Enter Website: ")
+    soundcloud = input("Enter Soundcloud account: ")
+    bandcamp = input("Enter Bandcamp Profile: ")
     bio = input("Enter Bio: ")
-    a_pic_id = input("Enter the PicID: ")
+    artist_pic_id = input("Enter the PicID: ")
     
-    artist = Artist(a_name, webs, soundc, bandc, bio, a_pic_id)
+    artist = Artist(artist_name, website, soundcloud, bandcamp, bio, artist_pic_id)
     artist.insert_artist()
 
 def plays_at_relation():
 
-    a_name = find_artist()
+    artist_name = find_artist()
     
     try:
-        e_name, date = find_event()
+        event_name, date = find_event()
     except TypeError:
         return
 
-    plays_at = PlaysAt(a_name, e_name, date)
+    plays_at = PlaysAt(artist_name, event_name, date)
     plays_at.insert_plays_at()
     
 def find_artist():
+
+    """input-wrapper for the Artist class' find_artist() member
+
+    asks for the data, makes a new instance of artist, and initiates db 
+    queries as long as the user wants
+    """
 
     proceed = "Y"
 
@@ -68,6 +87,12 @@ def find_artist():
             proceed = input("Continue querying? [Y/n] ")
 
 def find_event():
+
+    """input-wrapper for the Event class' find_event() member
+
+    asks for the data, makes a new instance of Event, and initiates db 
+    queries as long as the user wants
+    """
 
     proceed = "Y"
 
