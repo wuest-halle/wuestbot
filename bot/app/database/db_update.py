@@ -43,11 +43,15 @@ def new_artist():
 def plays_at_relation():
 
     a_name = find_artist()
-    e_name, date = find_event()
     
+    try:
+        e_name, date = find_event()
+    except TypeError:
+        return
+
     plays_at = PlaysAt(a_name, e_name, date)
     plays_at.insert_plays_at()
-
+    
 def find_artist():
 
     proceed = "Y"
