@@ -126,29 +126,6 @@ class PlaysAt:
         self.event_name = event_name
         self.date = date
 
-    def check_for_artist(self):
-        
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-        
-        curs.execute("select * from Artists where name=?", (self.name, ))
-        artist = curs.fetchone()
-        
-        if artist:
-            print("Corresponding artist found! Check: \n", artist)
-            answ = input("Is this the right entry? [Y/n]" )
-            if answ == "Y":
-                pass
-            else:
-                self.name = input("Please re-enter artist-name: ")
-                check_for_artist()
-        else: 
-            self.name = input("Please re-enter artist-name: ")
-            self.check_for_artist()
-
-        curs.close()
-        conn.close()
-
     def check_for_event(self):
         
         conn = sqlite3.connect(DB_NAME)
