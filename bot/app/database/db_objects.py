@@ -65,6 +65,17 @@ class Event:
         
 class Artist:
 
+    """An Instance of the Artist relation
+
+    Arguments:
+        * name(str): artist's name
+        * website(str): artist's website
+        * soundcloud(str): artist's soundcloud profile
+        * bandcamp(str): artist's bandcamp profile
+        * bio(str): short descriptive text about the artist. keep it under 150 characters
+        * pic_id(int): ID for corresponding picture. 6 characters long, begins with 1.
+    """
+
     def __init__(self, name, website, soundcloud, bandcamp, bio, pic_id):
 
         self.name = name
