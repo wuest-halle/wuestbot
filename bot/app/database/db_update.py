@@ -61,7 +61,7 @@ def find_artist():
             return name
         else:
             print("Entry not found")
-            proceed = ("Continue querying? [Y/n] ")
+            proceed = input("Continue querying? [Y/n] ")
 
 def find_event():
 
@@ -77,7 +77,7 @@ def find_event():
             return [name, date]
         else:
             print("Entry not found")
-            proceed = ("Continue querying? [Y/n] ")
+            proceed = input("Continue querying? [Y/n] ")
 
 if __name__ == "__main__":
     
