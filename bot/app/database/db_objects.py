@@ -24,12 +24,19 @@ DB_NAME = 'data.sqlite'
 
 class Event:
 
-    """
-    An instance of the Event relation 
+    """An instance of the Event relation 
+
+    Arguments:
+        * name (str): event's name
+        * date (str): event's date
+        * time (str): event's start time
+        * admission (str): admission required at entry
+        * description (str): short descriptive text. keep it 150 characters or less
+        * location (str): where the event takes place
+        * pic_id (int): ID for pictures repository. 6 characters long, starts with 0.
     """
 
     def __init__(self, name, date, time, admission, description, location, pic_id):
-        
         
         self.name = name
         self.date = date
