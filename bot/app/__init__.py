@@ -19,10 +19,10 @@ unknown commands, even when providing a default message (not sure y though)
 import os
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template
 import telebot
 
-from app.database import datahandler
+from app.database import db_objects
 
 # load env variables from .env
 load_dotenv()
@@ -32,20 +32,23 @@ app = Flask(__name__)
 API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
 
-db = datahandler.Datahandler()
-
-template_dir = os.path.abspath('../bot/templates')
 img_dir = os.path.abspath('../bot/img')
 
-# returns a list of available commands upon conversation initiation
-# and adds new users to the database
 @bot.message_handler(commands=['start'])
-def start_conv(message):
-	with open(os.path.join(template_dir, 'start.html'), 'r') as f:
-		reply = f.read()
-	bot.send_message(chat_id=message.chat.id, text=reply, parse_mode='html')
-	db.add_user(uid=message.from_user.id, name=message.from_user.first_name,\
-		is_bot=message.from_user.is_bot)
+def start(message):
+
+	u_id = message.from_user.id
+	name = message.from_user.first_name
+	is_bot = message.from_user.is_bot
+
+	user = db_objects.User(u_id, name, is_bot)
+
+	if not user.user_exists(u_id):
+		user.add_user(u_id, name, is_bot)
+
+	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
+		parse_mode='html')
+
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
