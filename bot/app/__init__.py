@@ -58,13 +58,13 @@ def start(message):
 		user.add_user(u_id, name, is_bot)
 
 	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
-		parse_MODE='html')
+		parse_mode='html')
 
 @bot.message_handler(commands=['test'])
 def test(message):
 	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
 		reply = f.read()
-	bot.send_message(chat_id=message.chat.id, text=reply, parse_MODE='html')
+	bot.send_message(chat_id=message.chat.id, text=reply, parse_mode='html')
 
 # returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
@@ -73,7 +73,7 @@ def next_event(message):
 		photo_caption = f.read()
 	with open(os.path.join(img_dir, 'next_event.jpg'), 'rb') as p:
 		picture=p.read()
-	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_MODE='html')
+	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
 def push_message_to_all(message):
@@ -83,7 +83,7 @@ def push_message_to_all(message):
 	for uid in uids:
 		print(uid[0])
 		if (uid != 123456789) and (uid != 987654321):
-			bot.send_message(chat_id=uid[0], text=reply, parse_MODE='html')
+			bot.send_message(chat_id=uid[0], text=reply, parse_mode='html')
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
