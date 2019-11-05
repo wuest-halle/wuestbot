@@ -25,6 +25,8 @@ pip install -r requirements.txt
 ```
 
 ## Database
+The database schema can be recreated at any time via `bot/app/database/db_create.py`.
+Database population is twofold: users are automatically added via the `\start` command upon first conversation initilization. Events, artists and their relations are added via `db_update.py` also residing in the `app/database` subdirectory. It provides a very small CLI to insert new data, using the classes provided in `db_objects.py`.
 
 The EMR of the database is as follows:
 
