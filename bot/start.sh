@@ -21,5 +21,5 @@ source $DB_DIR/db_create.py
 
 # startup server
 exec gunicorn $NAME:app \
-    -b $HOST:$PORT
-    -w $NUM_WORKERS
+    -b $HOST:$PORT \
+    -w $NUM_WORKERS \
