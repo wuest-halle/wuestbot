@@ -77,6 +77,24 @@ class Event:
         conn.close()
 
         return search is not None
+    
+    def get_max_event(self):
+
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+
+        try:
+            curs.execute("""select max(eventID) from Events""")
+            event_id = curs.fetchone()
+            if event_id is not None:
+                event_id + 1
+        except:
+            event_id = 000000 
+
+        curs.close()
+        conn.close()  
+
+        return event_id
         
 class Artist:
 
