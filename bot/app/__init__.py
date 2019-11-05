@@ -39,11 +39,11 @@ bot = telebot.TeleBot(API_TOKEN)
 img_dir = os.path.abspath('../bot/img')
 
 
-if MODE == 'dev':
-	bot.polling()
-else if MODE == 'prod':
+if MODE == 'prod':
 	bot.remove_webhook()
 	bot.set_webhook(url=WEBHOOK_URL, certificate=SSL_CERT)
+else:
+	bot.polling()
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
