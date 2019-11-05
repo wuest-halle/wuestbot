@@ -35,6 +35,8 @@ class Event:
         * location (str): where the event takes place
         * pic_id (str): ID for pictures repository. 6+4 characters long, 
         starts with 0, then number, then file ending like `.jpg`
+
+    The primary key, eventID is added automatically via the query in get_max_event() 
     """
 
     def __init__(self, name, date, time=None, admission=None, description=None,\
