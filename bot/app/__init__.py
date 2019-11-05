@@ -12,7 +12,7 @@
 """
 
 """ KNOWN PITFALLS:
-- always provide commands in a list, otherwise u get NoneType errors for 
+- always provide commands in a list, otherwise u get NoneType errors for
 unknown commands, even when providing a default message (not sure y though)
 """
 
@@ -34,7 +34,7 @@ bot = telebot.TeleBot(API_TOKEN)
 
 img_dir = os.path.abspath('../bot/img')
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start', 'help'])
 def start(message):
 
 	u_id = message.from_user.id
@@ -48,11 +48,6 @@ def start(message):
 
 	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
 		parse_mode='html')
-
-
-@bot.message_handler(commands=['help'])
-def send_help(message):
-	bot.reply_to(message, "Howdy, how are you doing?")
 
 @bot.message_handler(commands=['test'])
 def test(message):
@@ -84,6 +79,6 @@ def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
 
-	
+
 # bot is continously polling the api for news
 bot.polling()
