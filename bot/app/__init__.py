@@ -32,7 +32,7 @@ app = Flask(__name__)
 API_TOKEN = os.getenv('API_TOKEN')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 SSL_CERT = os.getenv('SSL_CERT')
-MODE = os.getenv('MODE')
+MODE = os.getenv('MODE', 'dev')
 
 bot = telebot.TeleBot(API_TOKEN)
 
