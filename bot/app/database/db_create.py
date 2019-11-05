@@ -33,14 +33,14 @@ except sqlite3.OperationalError as e:
 try:
     curs.execute("""
         create table Events ( 
+        eventID integer primary key,
         eName text, 
         date text, 
         time text, 
         desc text, 
         admission text, 
         ePicID text,
-        loca text,
-        primary key (eName, date))
+        loca text
         """)
 except sqlite3.OperationalError as e:
     logging.error(e)
