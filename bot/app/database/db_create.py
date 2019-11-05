@@ -13,6 +13,7 @@ For further understanding see corresponding UML diagram.
 
 import sqlite3
 import logging
+import os
 
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
