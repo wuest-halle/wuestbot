@@ -88,8 +88,3 @@ def push_message_to_all(message):
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
-
-
-
-# bot is continously polling the api for news
-bot.polling()
