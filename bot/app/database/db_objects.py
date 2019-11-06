@@ -35,6 +35,8 @@ class Event:
         * location (str): where the event takes place
         * pic_id (str): ID for pictures repository. 6+4 characters long, 
         starts with 0, then number, then file ending like `.jpg`
+
+    The primary key, eventID is added automatically via the query in get_max_event() 
     """
 
     def __init__(self, name, date, time=None, admission=None, description=None,\
@@ -53,10 +55,12 @@ class Event:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
+        event_id = self.get_max_event()
+
         try:
             curs.execute("""
-                insert into Events values (?,?,?,?,?,?,?)""",
-                (self.name, self.date, self.time, self.admission, self.description, \
+                insert into Events values (?,?,?,?,?,?,?,?)""",
+                (event_id, self.name, self.date, self.time, self.admission, self.description, \
                 self.location, self.pic_id))
             conn.commit()
         except sqlite3.IntegrityError as e:
@@ -77,6 +81,24 @@ class Event:
         conn.close()
 
         return search is not None
+    
+    def get_max_event(self):
+
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+
+        try:
+            curs.execute("""select max(eventID) from Events""")
+            event_id = curs.fetchone()
+            if event_id is not None:
+                event_id + 1
+        except:
+            event_id = 000000 
+
+        curs.close()
+        conn.close()  
+
+        return event_id
         
 class Artist:
 
