@@ -55,8 +55,6 @@ class Event:
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
-        event_id = self.get_max_event()
-
         try:
             curs.execute("""
                 insert into Events values (?,?,?,?,?,?,?)""",
