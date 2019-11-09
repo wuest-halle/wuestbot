@@ -52,11 +52,23 @@ def start(message):
 # returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
 def next_event(message):
-	with open(os.path.join(template_dir,  'next_event.html'), 'r') as f:
-		photo_caption = f.read()
-	with open(os.path.join(img_dir, 'next_event.jpg'), 'rb') as p:
-		picture=p.read()
-	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_mode='html')
+
+	u_id = message.from_user.id
+
+	next_event = db_objects.get_max_event()
+
+	e_name = next_event[1]
+	date = next_event[2]
+	time = next_event[3]
+	admission = next_event[4]
+	description = next_event[5]
+	location = next_event[6]
+	photo_id = next_event[7]
+
+	template = render_template('next_event.html', \
+		e_name=e_name, date=date, time=time, admission=admission, location=location)
+
+	bot.send_message(chat_id=u_id, text=template, parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
 def push_message_to_all(message):
