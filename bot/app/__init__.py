@@ -63,7 +63,7 @@ def next_event(message):
 	admission = next_event[4]
 	description = next_event[5]
 	location = next_event[6]
-	photo_id = next_event[7]
+	photo_id = os.path.join(img_dir, next_event[7])
 
 	template = render_template('next_event.html', \
 		e_name=e_name, date=date, time=time, admission=admission, location=location)
