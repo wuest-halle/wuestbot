@@ -32,7 +32,7 @@ app = Flask(__name__)
 API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
 
-img_dir = os.path.abspath('../bot/img')
+img_dir = os.path.abspath('../bot/app/img')
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
@@ -47,7 +47,6 @@ def start(message):
 		user.add_user()
 
 	with app.app_context():
-		response = make_response(render_template('start.html', name=name))
 		bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
 			parse_mode='html')
 
@@ -67,10 +66,11 @@ def next_event(message):
 	location = next_event[6]
 	photo_id = os.path.join(img_dir, next_event[7])
 
-	# bot.send_photo(chat_id=u_id, photo=photo_id)
-	bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
-		e_name=e_name, date=date, time=time, admission=admission, location=location), \
-		parse_mode='html')
+	with app.app_context():
+		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
+			e_name=e_name, date=date, time=time, admission=admission, location=location), \
+			parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
 def push_message_to_all(message):
