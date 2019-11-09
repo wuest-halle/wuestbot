@@ -57,7 +57,7 @@ class Event:
 
         try:
             curs.execute("""
-                insert into Events values (?,?,?,?,?,?,?)""",
+                insert into Events values (null,?,?,?,?,?,?,?)""",
                 (self.name, self.date, self.time, self.admission, self.description, \
                 self.location, self.pic_id))
             conn.commit()
@@ -219,7 +219,7 @@ class User:
 
         return users
 
-def get_max_event():
+def get_next_event():
 
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
@@ -227,7 +227,10 @@ def get_max_event():
         curs.execute("""select max(eventID) from Events""")
         event_id = curs.fetchone()
 
+        curs.execute("""select * from Events where eventID=?""", (event_id, ))
+        next_event = curs.fetchone()
+
         curs.close()
         conn.close()  
 
-        return event_id
+        return next_event
