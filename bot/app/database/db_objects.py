@@ -227,7 +227,7 @@ def get_next_event():
         curs.execute("""select max(eventID) from Events""")
         event_id = curs.fetchone()
 
-        curs.execute("""select * from Events where eventID=?""", (event_id, ))
+        curs.execute("""select * from Events where eventID=?""", event_id)
         next_event = curs.fetchone()
 
         curs.close()
