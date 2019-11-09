@@ -59,8 +59,8 @@ class Event:
 
         try:
             curs.execute("""
-                insert into Events values (?,?,?,?,?,?,?,?)""",
-                (event_id, self.name, self.date, self.time, self.admission, self.description, \
+                insert into Events values (?,?,?,?,?,?,?)""",
+                (self.name, self.date, self.time, self.admission, self.description, \
                 self.location, self.pic_id))
             conn.commit()
         except sqlite3.IntegrityError as e:
