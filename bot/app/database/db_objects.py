@@ -79,19 +79,6 @@ class Event:
         conn.close()
 
         return search is not None
-    
-    def get_max_event(self):
-
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-
-        curs.execute("""select max(eventID) from Events""")
-        event_id = curs.fetchone()
-
-        curs.close()
-        conn.close()  
-
-        return event_id
         
 class Artist:
 
@@ -231,3 +218,16 @@ class User:
         curs.close()
 
         return users
+
+def get_max_event():
+
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+
+        curs.execute("""select max(eventID) from Events""")
+        event_id = curs.fetchone()
+
+        curs.close()
+        conn.close()  
+
+        return event_id
