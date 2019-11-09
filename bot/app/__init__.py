@@ -44,7 +44,7 @@ def start(message):
 	user = db_objects.User(u_id, name, is_bot)
 
 	if not user.user_exists(u_id):
-		user.add_user(u_id, name, is_bot)
+		user.add_user()
 
 	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
 		parse_mode='html')
@@ -65,11 +65,10 @@ def next_event(message):
 	location = next_event[6]
 	photo_id = os.path.join(img_dir, next_event[7])
 
-	template = render_template('next_event.html', \
-		e_name=e_name, date=date, time=time, admission=admission, location=location)
-
-	bot.send_photo(chat_id=u_id, photo=photo_id)
-	bot.send_message(chat_id=u_id, text=template, parse_mode='html')
+	# bot.send_photo(chat_id=u_id, photo=photo_id)
+	bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
+		e_name=e_name, date=date, time=time, admission=admission, location=location), \
+		parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
 def push_message_to_all(message):
