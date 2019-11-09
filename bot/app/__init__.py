@@ -68,6 +68,7 @@ def next_event(message):
 	template = render_template('next_event.html', \
 		e_name=e_name, date=date, time=time, admission=admission, location=location)
 
+	bot.send_photo(chat_id=u_id, photo=photo_id)
 	bot.send_message(chat_id=u_id, text=template, parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
