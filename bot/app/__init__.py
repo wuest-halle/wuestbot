@@ -55,7 +55,7 @@ def next_event(message):
 
 	u_id = message.from_user.id
 
-	next_event = db_objects.get_max_event()
+	next_event = db_objects.get_next_event()
 
 	e_name = next_event[1]
 	date = next_event[2]
