@@ -40,7 +40,7 @@ try:
         desc text, 
         admission text, 
         ePicID text,
-        loca text
+        loca text)
         """)
 except sqlite3.OperationalError as e:
     logging.error(e)
