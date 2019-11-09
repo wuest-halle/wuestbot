@@ -19,7 +19,7 @@ unknown commands, even when providing a default message (not sure y though)
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
 import telebot
 
 from app.database import db_objects
@@ -46,8 +46,10 @@ def start(message):
 	if not user.user_exists(u_id):
 		user.add_user()
 
-	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
-		parse_mode='html')
+	with app.app_context():
+		response = make_response(render_template('start.html', name=name))
+		bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
+			parse_mode='html')
 
 # returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
