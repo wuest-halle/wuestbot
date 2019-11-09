@@ -1,5 +1,8 @@
-<b>WUEST im Stadtbad</b>
-<b>Date:</b> 07 Dec 2019
-<b>Iku Sakan</b> (Osaka, Japan)
-<a href="https://ikusakan.bandcamp.com/album/human-wave-music">Human Wave Music</a>
-<b>Admission</b> 7€ Presale, 9€ Doors
+<b>{{ e_name }}</b>
+<b>Date: </b> {{ date }} {% if time %}<b>Time: </b> {{ time }} {% endif %}
+{% if location %} <b>Location: </b> {{ location }} {% endif %}
+{% if description %} description {% endif %}
+{% for a_name in artists %}
+<b>{{ a_name }}</b>
+{% endfor %}
+{% if admission %} <b>Admission: </b> {{ admission }} {% endif %}
