@@ -221,6 +221,9 @@ class User:
 
 def get_next_event():
 
+    """Retrieves the next upcoming event from the db, returns an Event object
+    """
+
     conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
     
