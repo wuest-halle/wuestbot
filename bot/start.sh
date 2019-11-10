@@ -11,7 +11,7 @@ HOST=127.0.0.1
 PORT=5000
 
 # Number of gunicorn Workers
-NUM_WORKERS=2
+NUM_WORKERS=1
 
 # Databank directory
 DB_DIR=app/database
