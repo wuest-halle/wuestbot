@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # startup script for wuestbot on gunicorn
 
 # Project Name
