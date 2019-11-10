@@ -65,12 +65,14 @@ def next_event(message):
 	description = next_event[5]
 	location = next_event[6]
 	photo_id = os.path.join(img_dir, next_event[7])
+	
+	artists = db_objects.get_artists_event(e_name)
 
 	with app.app_context():
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
-			e_name=e_name, date=date, time=time, admission=admission, location=location), \
-			parse_mode='html')
+			e_name=e_name, date=date, time=time, admission=admission, location=location, \
+			description=description, artists=artists), parse_mode='html')
 
 @bot.message_handler(commands=['message_to_all'])
 def push_message_to_all(message):
