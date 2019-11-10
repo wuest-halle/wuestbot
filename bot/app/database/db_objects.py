@@ -20,7 +20,7 @@ import os
 
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
-DB_NAME = '/app/database/data.sqlite'
+DB_NAME = 'app/database/data.sqlite'
 
 class Event:
 
