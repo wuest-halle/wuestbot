@@ -234,3 +234,16 @@ def get_next_event():
         conn.close()  
 
         return next_event
+
+def get_artists_event(e_name):
+
+    conn = sqlite3.connect(DB_NAME)
+    curs = conn.cursor()
+
+    curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
+    artists = curs.fetchall()
+
+    curs.close()
+    conn.close()  
+
+    return artists
