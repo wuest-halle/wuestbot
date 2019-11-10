@@ -20,7 +20,7 @@ import os
 
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
-DB_NAME = 'data.sqlite'
+DB_NAME = '/app/database/data.sqlite'
 
 class Event:
 
@@ -251,7 +251,7 @@ def get_artists_event(e_name):
 
     curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
     artists = curs.fetchall()
-    artists = [a_name[0] for a_name in artists]
+    artists = [artist[0] for artist in artists]
 
     curs.close()
     conn.close()  
