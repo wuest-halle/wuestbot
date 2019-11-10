@@ -8,7 +8,7 @@ NAME="wuestbot"
 HOST=127.0.0.1
 
 # Port to listen on
-PORT=443
+PORT=5000
 
 # Number of gunicorn Workers
 NUM_WORKERS=2
