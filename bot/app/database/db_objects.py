@@ -251,6 +251,7 @@ def get_artists_event(e_name):
 
     curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
     artists = curs.fetchall()
+    artists = [a_name[0] for a_name in artists]
 
     curs.close()
     conn.close()  
