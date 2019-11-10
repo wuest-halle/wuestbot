@@ -29,7 +29,7 @@ def new_event():
     time = input("Enter event time: ")
     admission = input("Enter admission: ")
     description = input("Enter description: ")
-    locaation = input("Enter location name: ")
+    location = input("Enter location name: ")
     event_pic_id = input("Enter the PicID: ")
     
     event = Event(event_name, date, time, admission, description, location, event_pic_id)
@@ -123,11 +123,11 @@ if __name__ == "__main__":
         """)
     
         if rel_type == "E":
-            ev = new_event()
+            new_event()
         elif rel_type == "A":
-            ar = new_artist()
+            new_artist()
         elif rel_type == "P":
-            pa = plays_at_relation()
+            plays_at_relation()
         else:
             print("Program is shut down")
             exit()

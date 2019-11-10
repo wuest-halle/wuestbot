@@ -35,6 +35,8 @@ class Event:
         * location (str): where the event takes place
         * pic_id (str): ID for pictures repository. 6+4 characters long, 
         starts with 0, then number, then file ending like `.jpg`
+
+    The primary key, eventID is added automatically via the query in get_max_event() 
     """
 
     def __init__(self, name, date, time=None, admission=None, description=None,\
@@ -77,6 +79,19 @@ class Event:
         conn.close()
 
         return search is not None
+    
+    def get_max_event(self):
+
+        conn = sqlite3.connect(DB_NAME)
+        curs = conn.cursor()
+
+        curs.execute("""select max(eventID) from Events""")
+        event_id = curs.fetchone()
+
+        curs.close()
+        conn.close()  
+
+        return event_id
         
 class Artist:
 
