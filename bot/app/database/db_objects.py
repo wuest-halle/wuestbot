@@ -237,6 +237,12 @@ def get_next_event():
 
 def get_artists_event(e_name):
 
+    """Retrieves all artists playing at a certain event, returns a list
+
+    Arguments:
+        * e_name (str): name of the event to look for
+    """
+
     conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
