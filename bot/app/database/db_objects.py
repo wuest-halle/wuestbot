@@ -221,19 +221,19 @@ class User:
 
 def get_next_event():
 
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-
-        curs.execute("""select max(eventID) from Events""")
-        event_id = curs.fetchone()
-
-        curs.execute("""select * from Events where eventID=?""", event_id)
-        next_event = curs.fetchone()
-
-        curs.close()
-        conn.close()  
-
-        return next_event
+    conn = sqlite3.connect(DB_NAME)
+    curs = conn.cursor()
+    
+    curs.execute("""select max(eventID) from Events""")
+    event_id = curs.fetchone()
+    
+    curs.execute("""select * from Events where eventID=?""", event_id)
+    next_event = curs.fetchone()
+    
+    curs.close()
+    conn.close()  
+    
+    return next_event
 
 def get_artists_event(e_name):
 
