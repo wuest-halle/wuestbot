@@ -16,6 +16,9 @@ NUM_WORKERS=2
 # Databank directory
 DB_DIR=app/database
 
+# start venv
+source venv/bin/activate
+
 # create database
 source $DB_DIR/db_create.py
 
