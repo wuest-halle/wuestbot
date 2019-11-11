@@ -20,7 +20,7 @@ DB_DIR=app/database
 source venv/bin/activate
 
 # create database
-source $DB_DIR/db_create.py
+# source $DB_DIR/db_create.py
 
 # startup server
 exec gunicorn $NAME:app \
