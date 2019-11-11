@@ -75,7 +75,10 @@ def next_event(message):
 
 	u_id = message.from_user.id
 
-	next_event = db_objects.get_next_event()
+	try:
+		next_event = db_objects.get_next_event()
+	except:
+		return render_template('none.html')
 
 	e_name = next_event[1]
 	date = next_event[2]
@@ -108,7 +111,10 @@ def artist(message, name):
 
 	u_id = message.user.id
 
-	artist = db_objects.get_artist(name)
+	try:
+		artist = db_objects.get_artist(name)
+	except:
+		return render_template('none.html')
 
 	a_name = artist[0]
 	website = artist[1]
