@@ -88,16 +88,6 @@ def next_event(message):
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
 			description=description, artists=artists), parse_mode='html')
 
-@bot.message_handler(commands=['message_to_all'])
-def push_message_to_all(message):
-	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
-		reply = f.read()
-	uids = db.all_users()
-	for uid in uids:
-		print(uid[0])
-		if (uid != 123456789) and (uid != 987654321):
-			bot.send_message(chat_id=uid[0], text=reply, parse_mode='html')
-
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
