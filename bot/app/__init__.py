@@ -36,11 +36,14 @@ img_dir = os.path.abspath('../bot/app/img')
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
 
-	"""start and help message handler function
+	"""Start and help message handler function
 
-		upon sending /start or /help all available commands are returned. 
-		in the background the user's id is checked against the db and added,
-		if there is no entry for the user yet
+	Upon sending /start or /help all available commands are returned. 
+	In the background the user's id is checked against the db and added,
+	if there is no entry for the user yet.
+
+	Arguments:
+		message: telebot's message object
 	"""
 
 	u_id = message.from_user.id
@@ -61,10 +64,13 @@ def next_event(message):
 
 	"""/next message handler function
 
-		upon sending the /next command the event's graphic and all available
-		info from the db are returned.
-		artists are represented with hyperlinks. upon pressing one of those,
-		the artist message handler is triggered
+	Upon sending the /next command the event's graphic and all available
+	info from the db are returned.
+	Artists are represented with hyperlinks. By pressing one of those,
+	the artist message handler is triggered
+
+	Arguments:
+		message: telebot's message object
 	"""
 
 	u_id = message.from_user.id
@@ -92,8 +98,12 @@ def artist(message, name):
 
 	"""/artist message handler function
 
-		upon sending the /artist command this function queries the db for 
-		the corresponding artist and returns facts about it
+	Upon sending the /artist command this function queries the db for 
+	the corresponding artist and returns facts about it.
+
+	Arguments:
+		message: telebot's message object
+		name: the artist's name
 	"""
 
 	u_id = message.user.id
