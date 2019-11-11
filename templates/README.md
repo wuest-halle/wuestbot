@@ -1,1 +1,0 @@
-This is a host of document structures for common use within the WUEST project.
