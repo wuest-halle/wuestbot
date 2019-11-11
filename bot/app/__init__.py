@@ -36,6 +36,13 @@ img_dir = os.path.abspath('../bot/app/img')
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
 
+	"""start and help message handler function
+
+		upon sending /start or /help all available commands are returned. 
+		in the background the user's id is checked against the db and added,
+		if there is no entry for the user yet
+	"""
+
 	u_id = message.from_user.id
 	name = message.from_user.first_name
 	is_bot = message.from_user.is_bot
@@ -52,6 +59,14 @@ def start(message):
 # returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
 def next_event(message):
+
+	"""/next message handler function
+
+		upon sending the /next command the event's graphic and all available
+		info from the db are returned.
+		artists are represented with hyperlinks. upon pressing one of those,
+		the artist message handler is triggered
+	"""
 
 	u_id = message.from_user.id
 
