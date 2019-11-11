@@ -20,53 +20,41 @@ logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 conn = sqlite3.connect('data.sqlite')
 curs = conn.cursor()
 
-try:
-    curs.execute("""
-        create table Users (
-        uID integer primary key, 
-        uName text,
-        isBot bool)
-        """)
-except sqlite3.OperationalError as e:
-    logging.error(e)
+curs.execute("""
+    create table Users if not exists(
+    uID integer primary key, 
+    uName text,
+    isBot bool)
+    """)
 
-try:
-    curs.execute("""
-        create table Events ( 
-        eventID integer primary key,
-        eName text, 
-        date text, 
-        time text, 
-        desc text, 
-        admission text, 
-        ePicID text,
-        loca text)
-        """)
-except sqlite3.OperationalError as e:
-    logging.error(e)
+curs.execute("""
+    create table Events if not exists( 
+    eventID integer primary key,
+    eName text, 
+    date text, 
+    time text, 
+    desc text, 
+    admission text, 
+    ePicID text,
+    loca text,
+    """)
 
-try:
-    curs.execute("""
-        create table Artists (
-        aName text primary key, 
-        website text, 
-        soundcloud text, 
-        bandcamp text, 
-        bio text, 
-        aPicID text)
-        """)
-except sqlite3.OperationalError as e:
-    logging.error(e)
+curs.execute("""
+    create table Artists if not exists(
+    aName text primary key, 
+    website text, 
+    soundcloud text, 
+    bandcamp text, 
+    bio text, 
+    aPicID text)
+    """)
 
-try:
-    curs.execute("""
-        create table PlaysAt (
-        aName text, 
-        eName text,
-        date text, 
-        foreign key (aName) references Artists (aName), 
-        foreign key (eName, date) references Events (eName, date)
-        )
-        """)
-except sqlite3.OperationalError as e:
-    logging.error(e)
+curs.execute("""
+    create table PlaysAt if not exists(
+    aName text, 
+    eName text,
+    date text, 
+    foreign key (aName) references Artists (aName), 
+    foreign key (eName, date) references Events (eName, date)
+    )
+    """)
