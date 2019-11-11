@@ -26,24 +26,12 @@ from app.database import db_objects
 
 # load env variables from .env
 load_dotenv()
+API_TOKEN = os.getenv('API_TOKEN')
 
 app = Flask(__name__)
-
-API_TOKEN = os.getenv('API_TOKEN')
-WEBHOOK_URL = os.getenv('WEBHOOK_URL')
-SSL_CERT = os.getenv('SSL_CERT')
-MODE = os.getenv('MODE', 'dev')
-
 bot = telebot.TeleBot(API_TOKEN)
 
 img_dir = os.path.abspath('../bot/app/img')
-
-
-if MODE == 'prod':
-	bot.remove_webhook()
-	bot.set_webhook(url=WEBHOOK_URL, certificate=SSL_CERT)
-else:
-	bot.polling()
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
@@ -98,3 +86,5 @@ def push_message_to_all(message):
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
+
+bot.polling()
