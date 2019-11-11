@@ -56,7 +56,6 @@ def start(message):
 		bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
 			parse_mode='html')
 
-# returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
 def next_event(message):
 
