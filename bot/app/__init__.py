@@ -87,6 +87,32 @@ def next_event(message):
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
 			description=description, artists=artists), parse_mode='html')
 
+@bot.message_handler(commands=['artist'])
+def artist(message, name):
+
+	"""/artist message handler function
+
+		upon sending the /artist command this function queries the db for 
+		the corresponding artist and returns facts about it
+	"""
+
+	u_id = message.user.id
+
+	artist = db_objects.get_artist(name)
+
+	a_name = artist[0]
+	website = artist[1]
+	soundcloud = artist[2]
+	bandcamp = artist[3]
+	bio = artist[4]
+	photo_id = artist[5]
+
+	with app.app_context():
+		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		bot.send_message(chat_id=u_id, text=render_template('artist.html', \
+			a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
+			parse_mode='html')
+
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
