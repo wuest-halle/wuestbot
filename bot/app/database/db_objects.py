@@ -257,3 +257,22 @@ def get_artists_event(e_name):
     conn.close()  
 
     return artists
+
+def get_artist(a_name):
+
+    """Retrieves artist from db, returns a list
+
+    Arguments:
+        * a_name (str): name of the artist to look for
+    """
+
+    conn = sqlite3.connect(DB_NAME)
+    curs = conn.cursor()
+
+    curs.execute("select * from Artists where aName=?", (a_name, ))
+    artist = curs.fetchone()
+
+    curs.close()
+    conn.close()  
+
+    return artist
