@@ -88,13 +88,13 @@ def next_event(message):
 	location = next_event.location
 	photo_id = os.path.join(img_dir, next_event.pic_id)
 	
-	artists = db_objects.get_artists_event(e_name)
+	atists_playing = db_objects.get_artists_event(e_name)
 
 	with app.app_context():
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
-			description=description, artists=artists), parse_mode='html')
+			description=description, artists=artists_playing), parse_mode='html')
 
 @bot.message_handler(commands=['artist'])
 def artist(message, name):
