@@ -116,12 +116,12 @@ def artist(message, name):
 	except:
 		return render_template('none.html')
 
-	a_name = artist[0]
-	website = artist[1]
-	soundcloud = artist[2]
-	bandcamp = artist[3]
-	bio = artist[4]
-	photo_id = artist[5]
+	a_name = artist.name
+	website = artist.website
+	soundcloud = artist.soundcloud
+	bandcamp = artist.bandcamp
+	bio = artist.bio
+	photo_id = artist.pic_id
 
 	with app.app_context():
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
