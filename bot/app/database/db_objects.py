@@ -275,19 +275,33 @@ def get_artists_event(e_name):
 
 def get_artist(a_name):
 
-    """Retrieves artist from db, returns a list
+    """Retrieves artist from db
 
     Arguments:
         a_name (str): name of the artist to look for
+
+    Returns:
+        Artist object
     """
 
     conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     curs.execute("select * from Artists where aName=?", (a_name, ))
-    artist = curs.fetchone()
+    temp = curs.fetchone()
 
-    curs.close()
-    conn.close()  
+    try:
+        artist = Artist(*temp)
 
-    return artist
+        curs.close()
+        conn.close()  
+
+        return artist
+
+    except:
+        logging.error()
+
+        curs.close()
+        conn.close()  
+
+        return None
