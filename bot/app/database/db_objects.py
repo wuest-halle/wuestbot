@@ -245,8 +245,8 @@ def get_next_event():
 
         return next_event
     
-    except:
-        logging.error()
+    except Exception as e:
+        logging.error(e)
 
         curs.close()
         conn.close() 
@@ -280,8 +280,8 @@ def get_artists_event(e_name):
 
         return relations
 
-    except:
-        logging.error()
+    except Exception as e:
+        logging.error(e)
 
         curs.close()
         conn.close()  
@@ -313,8 +313,8 @@ def get_artist(a_name):
 
         return artist
 
-    except:
-        logging.error()
+    except Exception as e:
+        logging.error(e)
 
         curs.close()
         conn.close()  
