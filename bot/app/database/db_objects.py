@@ -258,20 +258,35 @@ def get_artists_event(e_name):
     """Retrieves all artists playing at a certain event, returns a list
 
     Arguments:
-        * e_name (str): name of the event to look for
+        e_name (str): name of the event to look for
+
+    Returns:
+        A list of PlaysAt Objects
     """
 
     conn = sqlite3.connect(DB_NAME)
     curs = conn.cursor()
 
     curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
-    artists = curs.fetchall()
-    artists = [artist[0] for artist in artists]
+    temp = curs.fetchall()
+    relations = []
 
-    curs.close()
-    conn.close()  
+    try:
+        for relation in temp:
+            relations.append(PlaysAt(*relation))
 
-    return artists
+        curs.close()
+        conn.close()  
+
+        return relations
+
+    except:
+        logging.error()
+
+        curs.close()
+        conn.close()  
+
+        return None
 
 def get_artist(a_name):
 
