@@ -2,7 +2,7 @@
 <b>Date: </b> {{ date }} {% if time %}<b>Time: </b> {{ time }} {% endif %}
 {% if location %}<b>Location: </b> {{ location }} {% endif %}
 {% if description %}{{ description }}{% endif %}
-{% for artist in artists %}
-{{ artist }}
-{% endfor %}
+{% if artists %}{% for artist in artists %}
+{{ artist.artist_name }}
+{% endfor %} {% endif %}
 {% if admission %}<b>Admission: </b>{{ admission }}{% endif %}
