@@ -231,7 +231,9 @@ def get_next_event():
     event_id = curs.fetchone()
     
     curs.execute("""select * from Events where eventID=?""", event_id)
-    next_event = curs.fetchone()
+    temp = [item for item in curs.fetchone()]
+    del temp[0]
+    next_event = Event(*temp)
     
     curs.close()
     conn.close()  
@@ -263,7 +265,7 @@ def get_artist(a_name):
     """Retrieves artist from db, returns a list
 
     Arguments:
-        * a_name (str): name of the artist to look for
+        a_name (str): name of the artist to look for
     """
 
     conn = sqlite3.connect(DB_NAME)
