@@ -233,12 +233,22 @@ def get_next_event():
     curs.execute("""select * from Events where eventID=?""", event_id)
     temp = [item for item in curs.fetchone()]
     del temp[0]
-    next_event = Event(*temp)
+
+    try:
+        next_event = Event(*temp)
     
-    curs.close()
-    conn.close()  
+        curs.close()
+        conn.close()  
+
+        return next_event
     
-    return next_event
+    except:
+        logging.error()
+
+        curs.close()
+        conn.close() 
+
+        return None
 
 def get_artists_event(e_name):
 
