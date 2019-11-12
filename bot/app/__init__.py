@@ -80,13 +80,13 @@ def next_event(message):
 	except:
 		return render_template('none.html')
 
-	e_name = next_event[1]
-	date = next_event[2]
-	time = next_event[3]
-	admission = next_event[4]
-	description = next_event[5]
-	location = next_event[6]
-	photo_id = os.path.join(img_dir, next_event[7])
+	e_name = next_event.name
+	date = next_event.date
+	time = next_event.time
+	admission = next_event.admission
+	description = next_event.description
+	location = next_event.location
+	photo_id = os.path.join(img_dir, next_event.pic_id)
 	
 	artists = db_objects.get_artists_event(e_name)
 
