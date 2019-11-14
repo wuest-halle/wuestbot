@@ -227,31 +227,20 @@ def get_next_event():
         Event object
     """
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
-    
-    curs.execute("""select max(eventID) from Events""")
-    event_id = curs.fetchone()
-    
-    curs.execute("""select * from Events where eventID=?""", event_id)
-    temp = [item for item in curs.fetchone()]
-    del temp[0]
-
-    try:
-        next_event = Event(*temp)
-    
-        curs.close()
-        conn.close()  
-
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
+        
+        curs.execute("""select max(eventID) from Events""")
+        event_id = curs.fetchone()
+        
+        curs.execute("""select * from Events where eventID=?""", event_id)
+        next_event = None
+        
+        try:
+            next_event = Event(*curs.fetchone()[1:])
+        except Exception as e:
+            logging.error(e)
         return next_event
-    
-    except Exception as e:
-        logging.error(e)
-
-        curs.close()
-        conn.close() 
-
-        return None
 
 def get_artists_event(e_name):
 
@@ -263,29 +252,23 @@ def get_artists_event(e_name):
     Returns:
         A list of PlaysAt Objects
     """
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
+        curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
+        result = curs.fetchall()
+        result = [item[0] for item in result]
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
+        if not result:
+            logging.debug(f"no artists for event '{e_name}'")
+            return None
 
-    curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
-    temp = curs.fetchall()
-    temp = [item[0] for item in temp] 
-
-    try:
-        artists = [get_artist(artist) for artist in temp]
-
-        curs.close()
-        conn.close()  
-
+        artists = None
+        try:
+            artists = [get_artist(artist) for artist in result]
+        except Exception as e:
+            logging.error(e)
+        
         return artists
-
-    except Exception as e:
-        logging.error(e)
-
-        curs.close()
-        conn.close()  
-
-        return None
 
 def get_artist(a_name):
 
@@ -298,24 +281,16 @@ def get_artist(a_name):
         Artist object
     """
 
-    conn = sqlite3.connect(DB_NAME)
-    curs = conn.cursor()
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
 
-    curs.execute("select * from Artists where aName=?", (a_name, ))
-    temp = curs.fetchone()
-
-    try:
-        artist = Artist(*temp)
-
-        curs.close()
-        conn.close()  
-
-        return artist
-
-    except Exception as e:
-        logging.error(e)
-
-        curs.close()
-        conn.close()  
-
-        return None
+        try:
+            curs.execute("select * from Artists where aName=?", (a_name, ))
+            artist = Artist(*curs.fetchone())
+    
+            return artist
+    
+        except Exception as e:
+            logging.error(e)
+    
+            return None
