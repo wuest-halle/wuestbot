@@ -95,7 +95,8 @@ def next_event(message):
 		artists_playing.append(artist.name)
 
 	with app.app_context():
-		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		if photo_id:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
 			description=description, artists=artists_playing), parse_mode='html')
@@ -128,7 +129,8 @@ def artist(message, name):
 	photo_id = artist.pic_id
 
 	with app.app_context():
-		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		if photo_id:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('artist.html', \
 			a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
 			parse_mode='html')
