@@ -73,28 +73,28 @@ def next_event(message):
 		message: telebot's message object
 	"""
 
-	u_id = message.from_user.id
-
-	try:
-		next_event = db_objects.get_next_event()
-	except:
-		return render_template('none.html')
-
-	e_name = next_event.name
-	date = next_event.date
-	time = next_event.time
-	admission = next_event.admission
-	description = next_event.description
-	location = next_event.location
-	photo_id = os.path.join(img_dir, next_event.pic_id)
-	
-	artists_temp = db_objects.get_artists_event(e_name)
-	artists_playing = []
-	
-	for artist in artists_temp:
-		artists_playing.append(artist.name)
-
 	with app.app_context():
+		u_id = message.from_user.id
+	
+		try:
+			next_event = db_objects.get_next_event()
+		except:
+			return render_template('none.html')
+	
+		e_name = next_event.name
+		date = next_event.date
+		time = next_event.time
+		admission = next_event.admission
+		description = next_event.description
+		location = next_event.location
+		photo_id = os.path.join(img_dir, next_event.pic_id)
+		
+		artists_temp = db_objects.get_artists_event(e_name)
+		artists_playing = []
+		
+		for artist in artists_temp:
+			artists_playing.append(artist.name)
+	
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
@@ -113,21 +113,22 @@ def artist(message, name):
 		name: the artist's name
 	"""
 
-	u_id = message.user.id
-
-	try:
-		artist = db_objects.get_artist(name)
-	except:
-		return render_template('none.html')
-
-	a_name = artist.name
-	website = artist.website
-	soundcloud = artist.soundcloud
-	bandcamp = artist.bandcamp
-	bio = artist.bio
-	photo_id = artist.pic_id
-
 	with app.app_context():
+	
+		u_id = message.user.id
+	
+		try:
+			artist = db_objects.get_artist(name)
+		except:
+			return render_template('none.html')
+	
+		a_name = artist.name
+		website = artist.website
+		soundcloud = artist.soundcloud
+		bandcamp = artist.bandcamp
+		bio = artist.bio
+		photo_id = artist.pic_id
+
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
 		bot.send_message(chat_id=u_id, text=render_template('artist.html', \
 			a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
