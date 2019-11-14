@@ -88,7 +88,11 @@ def next_event(message):
 	location = next_event.location
 	photo_id = os.path.join(img_dir, next_event.pic_id)
 	
-	atists_playing = db_objects.get_artists_event(e_name)
+	artists_temp = db_objects.get_artists_event(e_name)
+	artists_playing = []
+	
+	for artist in artists_temp:
+		artists_playing.append(artist.name)
 
 	with app.app_context():
 		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))

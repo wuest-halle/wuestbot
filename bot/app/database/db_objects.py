@@ -269,16 +269,15 @@ def get_artists_event(e_name):
 
     curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
     temp = curs.fetchall()
-    relations = []
+    temp = [item[0] for item in temp] 
 
     try:
-        for relation in temp:
-            relations.append(PlaysAt(*relation))
+        artists = [get_artist(artist) for artist in temp]
 
         curs.close()
         conn.close()  
 
-        return relations
+        return artists
 
     except Exception as e:
         logging.error(e)
