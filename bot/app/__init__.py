@@ -17,6 +17,7 @@ unknown commands, even when providing a default message (not sure y though)
 """
 
 import os
+import logging
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
@@ -25,6 +26,9 @@ import telebot
 from app.database import db_objects
 
 # load env variables from .env
+
+logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
+
 load_dotenv()
 API_TOKEN = os.getenv('API_TOKEN')
 
@@ -94,11 +98,18 @@ def next_event(message):
 		
 		for artist in artists_temp:
 			artists_playing.append(artist.name)
-	
-		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
-		bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
+
+		try:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		except Exception as e:
+			logging.error(e)
+
+		try:
+			bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
 			description=description, artists=artists_playing), parse_mode='html')
+		except Exception as e:
+			logging.error(e)
 
 @bot.message_handler(commands=['artist'])
 def artist(message, name):
@@ -116,12 +127,12 @@ def artist(message, name):
 	with app.app_context():
 	
 		u_id = message.user.id
-	
+
 		try:
 			artist = db_objects.get_artist(name)
 		except:
 			return render_template('none.html')
-	
+
 		a_name = artist.name
 		website = artist.website
 		soundcloud = artist.soundcloud
@@ -129,10 +140,18 @@ def artist(message, name):
 		bio = artist.bio
 		photo_id = artist.pic_id
 
-		bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
-		bot.send_message(chat_id=u_id, text=render_template('artist.html', \
-			a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
-			parse_mode='html')
+
+		try:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		except Exception as e:
+			logging.error(e)
+
+		try:
+			bot.send_message(chat_id=u_id, text=render_template('artist.html', \
+				a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
+				parse_mode='html')
+		except Exception as e:
+			logging.error(e)
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
