@@ -20,7 +20,7 @@ import os
 
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
-DB_NAME = 'data.sqlite'
+DB_NAME = 'app/database/data.sqlite'
 
 class Event:
 
@@ -57,7 +57,7 @@ class Event:
 
         try:
             curs.execute("""
-                insert into Events values (?,?,?,?,?,?,?)""",
+                insert into Events values (null,?,?,?,?,?,?,?)""",
                 (self.name, self.date, self.time, self.admission, self.description, \
                 self.location, self.pic_id))
             conn.commit()
@@ -79,19 +79,6 @@ class Event:
         conn.close()
 
         return search is not None
-    
-    def get_max_event(self):
-
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-
-        curs.execute("""select max(eventID) from Events""")
-        event_id = curs.fetchone()
-
-        curs.close()
-        conn.close()  
-
-        return event_id
         
 class Artist:
 
@@ -231,3 +218,80 @@ class User:
         curs.close()
 
         return users
+
+def get_next_event():
+
+    """Retrieves the next upcoming event from the db
+
+    Returns:
+        Event object
+    """
+
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
+        
+        curs.execute("""select max(eventID) from Events""")
+        event_id = curs.fetchone()
+        
+        curs.execute("""select * from Events where eventID=?""", event_id)
+        next_event = None
+        
+        try:
+            next_event = Event(*curs.fetchone()[1:])
+        except Exception as e:
+            logging.error(e)
+        return next_event
+
+def get_artists_event(e_name):
+
+    """Retrieves all artists playing at a certain event, returns a list
+
+    Arguments:
+        e_name (str): name of the event to look for
+
+    Returns:
+        A list of PlaysAt Objects
+    """
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
+        curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
+        result = curs.fetchall()
+
+        if not result:
+            logging.debug(f"no artists for event '{e_name}'")
+            return None
+
+        result = [item[0] for item in result]
+        
+        artists = None
+        try:
+            artists = [get_artist(artist) for artist in result]
+        except Exception as e:
+            logging.error(e)
+        
+        return artists
+
+def get_artist(a_name):
+
+    """Retrieves artist from db
+
+    Arguments:
+        a_name (str): name of the artist to look for
+
+    Returns:
+        Artist object
+    """
+
+    with sqlite3.connect(DB_NAME) as conn:
+        curs = conn.cursor()
+
+        try:
+            curs.execute("select * from Artists where aName=?", (a_name, ))
+            artist = Artist(*curs.fetchone())
+    
+            return artist
+    
+        except Exception as e:
+            logging.error(e)
+    
+            return None

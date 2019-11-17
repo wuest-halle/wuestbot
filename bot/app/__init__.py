@@ -6,7 +6,7 @@
 - how to push news to clients when new info is available?
 - introduce error management for everything which isn't a proper command
 - implement proper configuration, that knows all the paths and database 'n stuff
-- implement exit mode
+- implement exit MODE
 - use a webhook instead of polling
 - implement helpful help command
 """
@@ -17,6 +17,7 @@ unknown commands, even when providing a default message (not sure y though)
 """
 
 import os
+import logging
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
@@ -25,17 +26,29 @@ import telebot
 from app.database import db_objects
 
 # load env variables from .env
+
+logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
+
 load_dotenv()
+API_TOKEN = os.getenv('API_TOKEN')
 
 app = Flask(__name__)
-
-API_TOKEN = os.getenv('API_TOKEN')
 bot = telebot.TeleBot(API_TOKEN)
 
-img_dir = os.path.abspath('../bot/img')
+img_dir = os.path.abspath('../bot/app/img')
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
+
+	"""Start and help message handler function
+
+	Upon sending /start or /help all available commands are returned. 
+	In the background the user's id is checked against the db and added,
+	if there is no entry for the user yet.
+
+	Arguments:
+		message: telebot's message object
+	"""
 
 	u_id = message.from_user.id
 	name = message.from_user.first_name
@@ -44,41 +57,105 @@ def start(message):
 	user = db_objects.User(u_id, name, is_bot)
 
 	if not user.user_exists(u_id):
-		user.add_user(u_id, name, is_bot)
+		user.add_user()
 
-	bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
-		parse_mode='html')
+	with app.app_context():
+		bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
+			parse_mode='html')
 
-@bot.message_handler(commands=['test'])
-def test(message):
-	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
-		reply = f.read()
-	bot.send_message(chat_id=message.chat.id, text=reply, parse_mode='html')
-
-# returns flyer and info on the next event when user sends /next
 @bot.message_handler(commands=['next'])
 def next_event(message):
-	with open(os.path.join(template_dir,  'next_event.html'), 'r') as f:
-		photo_caption = f.read()
-	with open(os.path.join(img_dir, 'next_event.jpg'), 'rb') as p:
-		picture=p.read()
-	bot.send_photo(chat_id=message.chat.id, photo=picture, caption=photo_caption, parse_mode='html')
 
-@bot.message_handler(commands=['message_to_all'])
-def push_message_to_all(message):
-	with open(os.path.join(template_dir, 'test.html'), 'r') as f:
-		reply = f.read()
-	uids = db.all_users()
-	for uid in uids:
-		print(uid[0])
-		if (uid != 123456789) and (uid != 987654321):
-			bot.send_message(chat_id=uid[0], text=reply, parse_mode='html')
+	"""/next message handler function
+
+	Upon sending the /next command the event's graphic and all available
+	info from the db are returned.
+	Artists are represented with hyperlinks. By pressing one of those,
+	the artist message handler is triggered
+
+	Arguments:
+		message: telebot's message object
+	"""
+
+	with app.app_context():
+		u_id = message.from_user.id
+	
+		try:
+			next_event = db_objects.get_next_event()
+		except:
+			return render_template('none.html')
+	
+		e_name = next_event.name
+		date = next_event.date
+		time = next_event.time
+		admission = next_event.admission
+		description = next_event.description
+		location = next_event.location
+		photo_id = os.path.join(img_dir, next_event.pic_id)
+		
+		artists_temp = db_objects.get_artists_event(e_name)
+		artists_playing = []
+		
+		for artist in artists_temp:
+			artists_playing.append(artist.name)
+
+		try:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		except Exception as e:
+			logging.error(e)
+
+		try:
+			bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
+			e_name=e_name, date=date, time=time, admission=admission, location=location, \
+			description=description, artists=artists_playing), parse_mode='html')
+		except Exception as e:
+			logging.error(e)
+			return render_template('none.html')
+
+@bot.message_handler(commands=['artist'])
+def artist(message, name):
+
+	"""/artist message handler function
+
+	Upon sending the /artist command this function queries the db for 
+	the corresponding artist and returns facts about it.
+
+	Arguments:
+		message: telebot's message object
+		name: the artist's name
+	"""
+
+	with app.app_context():
+	
+		u_id = message.user.id
+
+		artist = db_objects.get_artist(name)
+		if not artist:
+			return render_template('none.html')
+
+		a_name = artist.name
+		website = artist.website
+		soundcloud = artist.soundcloud
+		bandcamp = artist.bandcamp
+		bio = artist.bio
+		photo_id = artist.pic_id
+
+
+		try:
+			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
+		except Exception as e:
+			logging.error(e)
+
+		try:
+			bot.send_message(chat_id=u_id, text=render_template('artist.html', \
+				a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
+				parse_mode='html')
+		except Exception as e:
+			logging.error(e)
+			return render_template('none.html')
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
-
-
-# bot is continously polling the api for news
 bot.polling()
