@@ -256,12 +256,13 @@ def get_artists_event(e_name):
         curs = conn.cursor()
         curs.execute("select aName from PlaysAt where eName=?", (e_name, ))
         result = curs.fetchall()
-        result = [item[0] for item in result]
 
         if not result:
             logging.debug(f"no artists for event '{e_name}'")
             return None
 
+        result = [item[0] for item in result]
+        
         artists = None
         try:
             artists = [get_artist(artist) for artist in result]
