@@ -36,7 +36,8 @@ curs.execute("""
     desc text, 
     admission text, 
     ePicID text,
-    loca text)
+    loca text,
+    unique (eName, date))
     """)
 
 curs.execute("""
