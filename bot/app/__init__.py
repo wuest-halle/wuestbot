@@ -94,10 +94,11 @@ def next_event(message):
 		photo_id = os.path.join(img_dir, next_event.pic_id)
 		
 		artists_temp = db_objects.get_artists_event(e_name)
-		artists_playing = []
 		
-		for artist in artists_temp:
-			artists_playing.append(artist.name)
+		if artists_temp:
+			artists = [artist.name for artist in artists_temp]
+		else:
+			artists = []
 
 		try:
 			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
@@ -107,7 +108,7 @@ def next_event(message):
 		try:
 			bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
-			description=description, artists=artists_playing), parse_mode='html')
+			description=description, artists=artists), parse_mode='html')
 		except Exception as e:
 			logging.error(e)
 			return render_template('none.html')
