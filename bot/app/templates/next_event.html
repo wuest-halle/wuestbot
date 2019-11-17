@@ -3,6 +3,6 @@
 {% if location %}<b>Location: </b> {{ location }} {% endif %}
 {% if description %}{{ description }}{% endif %}
 {% if artists %}{% for artist in artists %}
-{{ artist.artist_name }}
+{{ artist }}
 {% endfor %} {% endif %}
 {% if admission %}<b>Admission: </b>{{ admission }}{% endif %}

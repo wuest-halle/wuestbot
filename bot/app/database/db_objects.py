@@ -281,17 +281,13 @@ def get_artist(a_name):
     Returns:
         Artist object
     """
-
     with sqlite3.connect(DB_NAME) as conn:
         curs = conn.cursor()
-
+        artist = None
         try:
             curs.execute("select * from Artists where aName=?", (a_name, ))
             artist = Artist(*curs.fetchone())
-    
-            return artist
-    
         except Exception as e:
             logging.error(e)
-    
-            return None
+
+    return artist 
