@@ -109,6 +109,7 @@ def next_event(message):
 			e_name=e_name, date=date, time=time, admission=admission, location=location, \
 			description=description, artists=artists_playing), parse_mode='html')
 		except Exception as e:
+			return render_template('none.html')
 			logging.error(e)
 
 @bot.message_handler(commands=['artist'])
@@ -150,6 +151,7 @@ def artist(message, name):
 				a_name=a_name, website=website, soundcloud=soundcloud, bandcamp=bandcamp, bio=bio), \
 				parse_mode='html')
 		except Exception as e:
+			return render_template('none.html')
 			logging.error(e)
 
 @bot.message_handler(func=lambda message: True)
