@@ -128,9 +128,8 @@ def artist(message, name):
 	
 		u_id = message.user.id
 
-		try:
-			artist = db_objects.get_artist(name)
-		except:
+		artist = db_objects.get_artist(name)
+		if not artist:
 			return render_template('none.html')
 
 		a_name = artist.name
