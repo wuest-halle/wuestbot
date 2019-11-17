@@ -21,14 +21,14 @@ conn = sqlite3.connect('data.sqlite')
 curs = conn.cursor()
 
 curs.execute("""
-    create table Users if not exists(
+    create table if not exists Users(
     uID integer primary key, 
     uName text,
     isBot bool)
     """)
 
 curs.execute("""
-    create table Events if not exists( 
+    create table if not exists Events( 
     eventID integer primary key,
     eName text, 
     date text, 
@@ -36,11 +36,12 @@ curs.execute("""
     desc text, 
     admission text, 
     ePicID text,
-    loca text)
+    loca text,
+    unique (eName, date))
     """)
 
 curs.execute("""
-    create table Artists if not exists(
+    create table if not exists Artists(
     aName text primary key, 
     website text, 
     soundcloud text, 
@@ -50,7 +51,7 @@ curs.execute("""
     """)
 
 curs.execute("""
-    create table PlaysAt if not exists(
+    create table if not exists PlaysAt(
     aName text, 
     eName text,
     date text, 
