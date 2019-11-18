@@ -42,7 +42,7 @@ def start(message):
 
 	"""Start and help message handler function
 
-	Upon sending /start or /help all available commands are returned. 
+	Upon sending /start or /help all available commands are returned.
 	In the background the user's id is checked against the db and added,
 	if there is no entry for the user yet.
 
@@ -56,7 +56,7 @@ def start(message):
 
 	user = db_objects.User(u_id, name, is_bot)
 
-	if not user.user_exists(u_id):
+	if not user.exists_in_db(u_id):
 		user.add_user()
 
 	with app.app_context():
@@ -79,12 +79,12 @@ def next_event(message):
 
 	with app.app_context():
 		u_id = message.from_user.id
-	
+
 		try:
 			next_event = db_objects.get_next_event()
 		except:
 			return render_template('none.html')
-	
+
 		e_name = next_event.name
 		date = next_event.date
 		time = next_event.time
@@ -92,9 +92,9 @@ def next_event(message):
 		description = next_event.description
 		location = next_event.location
 		photo_id = os.path.join(img_dir, next_event.pic_id)
-		
+
 		artists_temp = db_objects.get_artists_event(e_name)
-		
+
 		if artists_temp:
 			artists = [artist.name for artist in artists_temp]
 		else:
@@ -118,7 +118,7 @@ def artist(message, name):
 
 	"""/artist message handler function
 
-	Upon sending the /artist command this function queries the db for 
+	Upon sending the /artist command this function queries the db for
 	the corresponding artist and returns facts about it.
 
 	Arguments:
@@ -127,8 +127,8 @@ def artist(message, name):
 	"""
 
 	with app.app_context():
-	
-		u_id = message.user.id
+
+		u_id = message.from_user.id
 
 		artist = db_objects.get_artist(name)
 		if not artist:
@@ -155,8 +155,34 @@ def artist(message, name):
 			logging.error(e)
 			return render_template('none.html')
 
+@bot.message_handler(commands=['delete', 'cancel', 'remove'])
+def delete(message):
+	"""Deletes a user from the database."""
+	error = "Sorry, something went wrong..."
+	with app.app_context():
+		user = db_objects.User.get_user(message.from_user.id)
+
+		# Check if user exists.
+		if not user:
+			bot.reply_to(message, error)
+			return
+
+		bye = ('We\'re sad to see you go! :(\n'
+				'You have been deleted from our message list '
+				'and will not be informed about future events. If you '
+				'would like to subscribe again, please ping me with /start')
+		# Delete user.
+		if user.delete_from_db():
+			bot.reply_to(message, bye)
+		else:
+			bot.reply_to(message, error)
+
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
-bot.polling()
+def run():
+	bot.polling()
+
+if __name__=="__main__":
+	run()

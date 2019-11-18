@@ -16,8 +16,10 @@ cd wuestbot
 2. Create a new Python venv:
 
 ``` bash
-python -m venv venv
+python3 -m venv venv
+source venv/bin/activate
 ```
+
 3. Install the dependencies:
 
 ``` bash
@@ -25,9 +27,17 @@ pip install -r requirements.txt
 ```
 
 ## Startup
-The app runs on a `gunicorn` server which is set up via the `start.sh` script. This also sets up the database. 
+The app runs on a `gunicorn` server which is set up via the `start.sh` script. This also sets up the database.
+
+Alternatively you can set up the db manually:
+
+```shell
+cd bot/app/database
+./db_create.py
+```
 
 ## Database
+
 The database schema can be recreated at any time via `bot/app/database/db_create.py`.
 Database population is twofold: users are automatically added via the `\start` command upon first conversation initilization. Events, artists and their relations are added via `db_update.py` also residing in the `app/database` subdirectory. It provides a very small CLI to insert new data, using the classes provided in `db_objects.py`. Manual inputs to the db have to look like this:
 
