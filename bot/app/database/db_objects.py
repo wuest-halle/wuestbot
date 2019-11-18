@@ -81,6 +81,7 @@ class Event:
 
         return search is not None
 
+
 class Artist:
 
     """An Instance of the Artist relation
@@ -135,6 +136,7 @@ class Artist:
 
         return search is not None
 
+
 class PlaysAt:
 
     """
@@ -163,6 +165,7 @@ class PlaysAt:
         curs.close()
         conn.close()
 
+
 class User:
 
     """Instance of the User relation:
@@ -187,7 +190,7 @@ class User:
             return curs.fetchone()
 
     def exists_in_db(u_id):
-        return User.exists_in_db(u_id)
+        return User.get_user(u_id) is not None
 
     def add_user(self):
 
