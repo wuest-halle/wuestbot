@@ -14,10 +14,10 @@ For further understanding see corresponding UML diagram.
 import sqlite3
 import logging
 import os
-from app.database.db_objects import db_name
+from database.db_objects import db_name
 
 
-logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
+logging.basicConfig(filename=os.path.abspath('log.txt'), level=logging.DEBUG)
 
 def create_db(db_name):
     conn = sqlite3.connect(db_name)

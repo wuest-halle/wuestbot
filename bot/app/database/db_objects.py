@@ -21,7 +21,7 @@ import os
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
 def db_name():
-    return os.path.abspath(os.environ.get("DB_NAME", 'app/database/data.sqlite'))
+    return os.path.abspath(os.environ.get("DB_NAME", 'database/data.sqlite'))
 
 class Event:
 
