@@ -12,21 +12,26 @@ For further understanding see corresponding UML diagram.
 """
 
 import sqlite3
-from app.database.db_objects import DB_NAME
+import logging
+import os
+from app.database.db_objects import db_name
+
+
+logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
 def create_db(db_name):
     conn = sqlite3.connect(db_name)
     curs = conn.cursor()
 
     curs.execute("""
-        create table Users (
+        create table if not exists Users (
         uID integer primary key,
         uName text,
         isBot bool)
         """)
 
     curs.execute("""
-        create table Events (
+        create table if not exists Events (
         eName text,
         date text,
         time text,
@@ -34,11 +39,11 @@ def create_db(db_name):
         admission text,
         ePicID text,
         loca text,
-        primary key (eName, date))
+        unique (eName, date))
         """)
 
     curs.execute("""
-        create table Artists (
+        create table if not exists Artists (
         aName text primary key,
         website text,
         soundcloud text,
@@ -48,7 +53,7 @@ def create_db(db_name):
         """)
 
     curs.execute("""
-        create table PlaysAt (
+        create table if not exists PlaysAt (
         aName text,
         eName text,
         date text,
@@ -58,4 +63,5 @@ def create_db(db_name):
         """)
 
 if __name__ == "__main__":
-    create_db(DB_NAME)
+    print(f"setting up {db_name()}")
+    create_db(db_name())

@@ -20,7 +20,8 @@ import os
 
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
-DB_NAME = 'app/database/data.sqlite'
+def db_name():
+    return os.path.abspath(os.environ.get("DB_NAME", 'app/database/data.sqlite'))
 
 class Event:
 
@@ -36,7 +37,7 @@ class Event:
         * pic_id (str): ID for pictures repository. 6+4 characters long,
         starts with 0, then number, then file ending like `.jpg`
 
-    The primary key, eventID is added automatically via the query in get_max_event() 
+    The primary key, eventID is added automatically via the query in get_max_event()
     """
 
     def __init__(self, name, date, time=None, admission=None, description=None,\
@@ -226,13 +227,13 @@ def get_next_event():
 
     with sqlite3.connect(DB_NAME) as conn:
         curs = conn.cursor()
-        
+
         curs.execute("""select max(eventID) from Events""")
         event_id = curs.fetchone()
-        
+
         curs.execute("""select * from Events where eventID=?""", event_id)
         next_event = None
-        
+
         try:
             next_event = Event(*curs.fetchone()[1:])
         except Exception as e:
@@ -259,13 +260,13 @@ def get_artists_event(e_name):
             return None
 
         result = [item[0] for item in result]
-        
+
         artists = None
         try:
             artists = [get_artist(artist) for artist in result]
         except Exception as e:
             logging.error(e)
-        
+
         return artists
 
 def get_artist(a_name):
@@ -287,4 +288,4 @@ def get_artist(a_name):
         except Exception as e:
             logging.error(e)
 
-    return artist 
+    return artist
