@@ -42,7 +42,7 @@ def start(message):
 
 	"""Start and help message handler function
 
-	Upon sending /start or /help all available commands are returned. 
+	Upon sending /start or /help all available commands are returned.
 	In the background the user's id is checked against the db and added,
 	if there is no entry for the user yet.
 
@@ -79,12 +79,12 @@ def next_event(message):
 
 	with app.app_context():
 		u_id = message.from_user.id
-	
+
 		try:
 			next_event = db_objects.get_next_event()
 		except:
 			return render_template('none.html')
-	
+
 		e_name = next_event.name
 		date = next_event.date
 		time = next_event.time
@@ -92,9 +92,9 @@ def next_event(message):
 		description = next_event.description
 		location = next_event.location
 		photo_id = os.path.join(img_dir, next_event.pic_id)
-		
+
 		artists_temp = db_objects.get_artists_event(e_name)
-		
+
 		if artists_temp:
 			artists = [artist.name for artist in artists_temp]
 		else:
@@ -118,7 +118,7 @@ def artist(message, name):
 
 	"""/artist message handler function
 
-	Upon sending the /artist command this function queries the db for 
+	Upon sending the /artist command this function queries the db for
 	the corresponding artist and returns facts about it.
 
 	Arguments:
@@ -127,7 +127,7 @@ def artist(message, name):
 	"""
 
 	with app.app_context():
-	
+
 		u_id = message.user.id
 
 		artist = db_objects.get_artist(name)
