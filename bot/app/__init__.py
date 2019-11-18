@@ -159,4 +159,8 @@ def artist(message, name):
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
-bot.polling()
+def run():
+	bot.polling()
+
+if __name__=="__main__":
+	run()
