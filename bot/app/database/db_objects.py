@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-"""Classes representing database items 
+"""Classes representing database items
 
 To Do :
 
@@ -8,7 +8,7 @@ To Do :
         * insert functionality into Event and Artist Classes
 
     all:
-        * fix documentation strings in functions to include: 
+        * fix documentation strings in functions to include:
             * what database item
             * which operations incl. parameters
         * add logging, catch errors to log
@@ -24,7 +24,7 @@ DB_NAME = 'app/database/data.sqlite'
 
 class Event:
 
-    """An instance of the Event relation 
+    """An instance of the Event relation
 
     Arguments:
         * name (str): event's name
@@ -33,15 +33,15 @@ class Event:
         * admission (str): admission required at entry
         * description (str): short descriptive text. keep it 150 characters or less
         * location (str): where the event takes place
-        * pic_id (str): ID for pictures repository. 6+4 characters long, 
+        * pic_id (str): ID for pictures repository. 6+4 characters long,
         starts with 0, then number, then file ending like `.jpg`
 
-    The primary key, eventID is added automatically via the query in get_max_event() 
+    The primary key, eventID is added automatically via the query in get_max_event()
     """
 
     def __init__(self, name, date, time=None, admission=None, description=None,\
         location=None, pic_id=None):
-        
+
         self.name = name
         self.date = date
         self.time = time
@@ -49,9 +49,9 @@ class Event:
         self.description = description
         self.location = location
         self.pic_id = pic_id
-    
+
     def insert_event(self):
-        
+
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
@@ -63,7 +63,7 @@ class Event:
             conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
-        
+
         curs.close()
         conn.close()
 
@@ -74,12 +74,12 @@ class Event:
 
         curs.execute("""select * from Events where eName=? and date=?""", (self.name, self.date))
         search = curs.fetchone()
-        
+
         curs.close()
         conn.close()
 
         return search is not None
-        
+
 class Artist:
 
     """An Instance of the Artist relation
@@ -90,7 +90,7 @@ class Artist:
         * soundcloud(str): artist's soundcloud profile
         * bandcamp(str): artist's bandcamp profile
         * bio(str): short descriptive text about the artist. keep it under 150 characters
-        * pic_id(str): ID for corresponding in the repo. 6+4 characters long, 
+        * pic_id(str): ID for corresponding in the repo. 6+4 characters long,
         starts with 0, then number, then file ending like `.jpg`
     """
 
@@ -103,9 +103,9 @@ class Artist:
         self.bandcamp = bandcamp
         self.bio = bio
         self.pic_id = pic_id
-        
+
     def insert_artist(self):
-        
+
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
@@ -114,10 +114,10 @@ class Artist:
                 insert into Artists values (?,?,?,?,?,?)""",
                 (self.name, self.website, self.soundcloud, self.bandcamp, self.bio, \
                 self.pic_id))
-            conn.commit() 
+            conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
-        
+
         curs.close()
         conn.close()
 
@@ -128,7 +128,7 @@ class Artist:
 
         curs.execute("""select * from Artists where aName=?""", (self.name, ))
         search = curs.fetchone()
-        
+
         curs.close()
         conn.close()
 
@@ -141,13 +141,13 @@ class PlaysAt:
     """
 
     def __init__(self, artist_name, event_name, date):
-        
+
         self.artist_name = artist_name
         self.event_name = event_name
         self.date = date
 
     def insert_plays_at(self):
-        
+
         conn = sqlite3.connect(DB_NAME)
         curs = conn.cursor()
 
@@ -158,7 +158,7 @@ class PlaysAt:
             conn.commit()
         except sqlite3.IntegrityError as e:
             logging.error(e)
-        
+
         curs.close()
         conn.close()
 
@@ -178,18 +178,60 @@ class User:
         self.name = name
         self.is_bot = is_bot
 
-    def user_exists(self, u_id):
+    @classmethod
+    def get_user(cls, u_id):
+        """Retrieves a User from the database.
 
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
+        Args:
+            uid (string): The user ID given by Telegram
 
-        curs.execute("select * from Users where uID=?", (self.u_id, ))
-        user = curs.fetchone()
+        Returns:
+            A User object or None, if not found in the DB.
+        """
 
-        curs.close()
-        conn.close()
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
 
-        return user is not None 
+            curs.execute("select * from Users where uID=?", (u_id, ))
+
+            user = None
+            try:
+                user = User(*curs.fetchone())
+            except Exception as e:
+                logging.error(e)
+
+            return user
+
+    @classmethod
+    def exists_in_db(cls, u_id):
+        """Checks if a user ID is present in the database.
+
+        Args:
+            u_id (str): The user ID to be checked.
+
+        Returns:
+            True if the user exists, False otherwise.
+        """
+
+        return User.get_user(u_id) is not None
+
+    def delete_from_db(self):
+        """Deletes a user from the database.
+
+        Checks first if the user exists.
+
+        Returns:
+            True if user has been deleted, False otherwise.
+        """
+
+        if not User.exists_in_db(self.u_id):
+            return False
+
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
+            curs.execute("DELETE FROM Users WHERE uID=?", (self.u_id, ))
+            conn.commit()
+            return not User.exists_in_db(self.u_id)
 
     def add_user(self):
 
@@ -229,13 +271,13 @@ def get_next_event():
 
     with sqlite3.connect(DB_NAME) as conn:
         curs = conn.cursor()
-        
+
         curs.execute("""select max(eventID) from Events""")
         event_id = curs.fetchone()
-        
+
         curs.execute("""select * from Events where eventID=?""", event_id)
         next_event = None
-        
+
         try:
             next_event = Event(*curs.fetchone()[1:])
         except Exception as e:
@@ -262,13 +304,13 @@ def get_artists_event(e_name):
             return None
 
         result = [item[0] for item in result]
-        
+
         artists = None
         try:
             artists = [get_artist(artist) for artist in result]
         except Exception as e:
             logging.error(e)
-        
+
         return artists
 
 def get_artist(a_name):
@@ -290,4 +332,4 @@ def get_artist(a_name):
         except Exception as e:
             logging.error(e)
 
-    return artist 
+    return artist
