@@ -18,10 +18,11 @@ unknown commands, even when providing a default message (not sure y though)
 
 import os
 import logging
+import telebot
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
-import telebot
+from traceback import print_exc
 
 from app.database import db_objects
 
@@ -30,16 +31,107 @@ from app.database import db_objects
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
 load_dotenv()
-API_TOKEN = os.getenv('API_TOKEN')
+API_TOKEN = os.getenv('API_TOKEN', '')
+ADMINS = os.getenv('ADMINS', '')
 
 app = Flask(__name__)
 bot = telebot.TeleBot(API_TOKEN)
 
 img_dir = os.path.abspath('../bot/app/img')
 
+def pex(msg):
+	"""Log and error and print the traceback."""
+
+	logging.error(msg)
+	print_exc()
+
+def get_admin_ids(env):
+	"""Extracts admin IDs from a string.
+
+	Admin IDs should be passed as environment variables like so:
+	ADMINS=12345,812354,123013
+
+	This function will split the string and return the IDs as a list. Empty
+	parts of the string will be ignored.
+
+	Args:
+		env (str): A string containing the admin IDs, separated by commas.
+
+	Returns:
+		ids (list): A list of Telegram IDs of the Admins, or an empty list if
+			parsing was unsuccessful.
+	"""
+
+	if not env or not isinstance(env, str):
+		return []
+
+	return [i for i in env.split(',') if i]
+
+def send_template(u_id, template):
+	"""Sends a template message via Telebot.
+
+	The template must be given rendered.
+
+	Args:
+		template_name (str): The randered template to send.
+	"""
+	with app.app_context():
+		bot.send_message(u_id,
+			text=template,
+			parse_mode='html'
+		)
+
+def send_next_event(u_id):
+	"""Sends the event with the highest eventID.
+
+	Args:
+		u_id (str): The chat ID to send the event to.
+	"""
+	with app.app_context():
+		try:
+			event = db_objects.Event.next()
+		except Exception as e:
+			pex(f"unable to retrieve next event: {e}")
+			send_template(u_id, render_template('none.html'))
+			return
+
+		# Nothing scheduled.
+		if not event:
+			send_template(u_id, render_template('404.html'))
+			return
+
+		# Send the picture, if possible.
+		# TODO: refactor, this should not throw an exception if the
+		# picture can't be found.
+		event.pic_id = os.path.join(img_dir, event.pic_id)
+		try:
+			bot.send_photo(
+				chat_id=u_id,
+				photo=open(event.pic_id, 'rb')
+			)
+		except Exception as e:
+			pex(f"Unable to send photo: {e}")
+
+		try:
+			send_template(
+				u_id,
+				render_template(
+					'next_event.html',
+					e_name=event.name,
+					date=event.date,
+					time=event.time,
+					admission=event.admission,
+					location=event.location,
+					description=event.description,
+					artists=event.artists
+				)
+			)
+		except Exception as e:
+			pex(f"unable to send message: {e}")
+			send_template(u_id, render_template('none.html'))
+
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
-
 	"""Start and help message handler function
 
 	Upon sending /start or /help all available commands are returned.
@@ -60,8 +152,7 @@ def start(message):
 		user.add_user()
 
 	with app.app_context():
-		bot.send_message(chat_id=u_id, text=render_template('start.html', name=name), \
-			parse_mode='html')
+		send_template(u_id, render_template('start.html', name=name))
 
 @bot.message_handler(commands=['next'])
 def next_event(message):
@@ -77,43 +168,69 @@ def next_event(message):
 		message: telebot's message object
 	"""
 
+	send_next_event(message.from_user.id)
+
+@bot.message_handler(commands=['delete', 'cancel', 'remove'])
+def delete(message):
+	"""Deletes a user from the database."""
+	u_id = message.from_user.id
 	with app.app_context():
-		u_id = message.from_user.id
+		user = db_objects.User.get_user(u_id)
 
-		try:
-			next_event = db_objects.get_next_event()
-		except:
-			return render_template('none.html')
+		# Check if user exists.
+		if not user:
+			send_template(u_id, render_template('404.html'))
+			return
 
-		e_name = next_event.name
-		date = next_event.date
-		time = next_event.time
-		admission = next_event.admission
-		description = next_event.description
-		location = next_event.location
-		photo_id = os.path.join(img_dir, next_event.pic_id)
+		bye = ('We\'re sad to see you go! :(\n'
+				'You have been deleted from our message list '
+				'and will not be informed about future events. If you '
+				'would like to subscribe again, please ping me with /start')
 
-		artists_temp = db_objects.get_artists_event(e_name)
-
-		if artists_temp:
-			artists = [artist.name for artist in artists_temp]
+		# Delete user.
+		if user.delete_from_db():
+			send_template(u_id, bye)
 		else:
-			artists = []
+			send_template(u_id, render_template('none.html'))
 
-		try:
-			bot.send_photo(chat_id=u_id, photo=open(photo_id, 'rb'))
-		except Exception as e:
-			logging.error(e)
+@bot.message_handler(commands=['push'])
+def push(message):
+	"""Sends a message to each user in the DB.
 
-		try:
-			bot.send_message(chat_id=u_id, text=render_template('next_event.html', \
-			e_name=e_name, date=date, time=time, admission=admission, location=location, \
-			description=description, artists=artists), parse_mode='html')
-		except Exception as e:
-			logging.error(e)
-			return render_template('none.html')
+	Only 'admins' should be allowed to push, so a list of Telegram IDs
+	can be provided via an environment variable:
+	ADMINS=12345,3523423,8452349
 
-@bot.message_handler(commands=['artist'])
+	For now, this only sends the next event. In the future it can be
+	extended by an argument to push a specific part such as:
+		>>> /push next-event
+		>>> /push event <name>
+		>>> /push artist <name>
+	"""
+
+	caller_id = message.from_user.id
+	with app.app_context():
+		# Admin check. Templates during those checks will be sent to
+		# the caller, not to the users.
+		admins = get_admin_ids(ADMINS)
+		if not admins:
+			logging.error("No admins provided")
+			send_template(caller_id, render_template('none.html'))
+		if str(caller_id) not in admins:
+			logging.warn(f"Not authorized: '{caller_id}' not in {admins}")
+			send_template(caller_id, render_template('404.html'))
+
+		# Retrieve all users and send a message to them.
+		users = db_objects.User.all_in_db()
+		if not users:
+			send_template(caller_id, 'No users found.')
+			return
+		for user in users:
+			logging.debug(f"sending to: {user.u_id}")
+			send_next_event(user.u_id)
+
+# TODO: remove this comment when /artist is properly implemented
+# @bot.message_handler(commands=['artist'])
 def artist(message, name):
 
 	"""/artist message handler function
@@ -132,7 +249,7 @@ def artist(message, name):
 
 		artist = db_objects.get_artist(name)
 		if not artist:
-			return render_template('none.html')
+			return render_template('404.html')
 
 		a_name = artist.name
 		website = artist.website
@@ -155,34 +272,10 @@ def artist(message, name):
 			logging.error(e)
 			return render_template('none.html')
 
-@bot.message_handler(commands=['delete', 'cancel', 'remove'])
-def delete(message):
-	"""Deletes a user from the database."""
-	error = "Sorry, something went wrong..."
-	with app.app_context():
-		user = db_objects.User.get_user(message.from_user.id)
-
-		# Check if user exists.
-		if not user:
-			bot.reply_to(message, error)
-			return
-
-		bye = ('We\'re sad to see you go! :(\n'
-				'You have been deleted from our message list '
-				'and will not be informed about future events. If you '
-				'would like to subscribe again, please ping me with /start')
-		# Delete user.
-		if user.delete_from_db():
-			bot.reply_to(message, bye)
-		else:
-			bot.reply_to(message, error)
-
 @bot.message_handler(func=lambda message: True)
 def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
-def run():
-	bot.polling()
 
-if __name__=="__main__":
-	run()
+logging.info("Polling ...")
+bot.polling()

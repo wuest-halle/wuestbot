@@ -11,19 +11,19 @@ To Do :
         * fix documentation strings in functions to include:
             * what database item
             * which operations incl. parameters
-        * add logging, catch errors to log
 """
 
 import sqlite3
 import logging
 import os
 
+from traceback import print_exc
+
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
-DB_NAME = 'app/database/data.sqlite'
+DB_NAME = os.path.abspath('app/database/data.sqlite')
 
 class Event:
-
     """An instance of the Event relation
 
     Arguments:
@@ -49,36 +49,77 @@ class Event:
         self.description = description
         self.location = location
         self.pic_id = pic_id
+        # TODO: put this in constructor. Also make it possible to
+        # automatically create necessary relation.
+        self.artists = None
 
     def insert_event(self):
+        """Insert the object into the DB."""
 
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
 
-        try:
-            curs.execute("""
-                insert into Events values (null,?,?,?,?,?,?,?)""",
-                (self.name, self.date, self.time, self.admission, self.description, \
-                self.location, self.pic_id))
-            conn.commit()
-        except sqlite3.IntegrityError as e:
-            logging.error(e)
+            try:
+                curs.execute("""
+                    insert into Events values (null,?,?,?,?,?,?,?)""",
+                    (self.name, self.date, self.time, self.admission, self.description, \
+                    self.location, self.pic_id))
+                conn.commit()
+            except sqlite3.IntegrityError as e:
+                logging.error(e)
+                print_exc()
 
-        curs.close()
-        conn.close()
 
     def is_event(self):
+        """Checks if the object exists in the database.
 
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
+        Returns:
+            bool
+        """
 
-        curs.execute("""select * from Events where eName=? and date=?""", (self.name, self.date))
-        search = curs.fetchone()
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
+            curs.execute("""select * from Events where eName=? and date=?""", (self.name, self.date))
+            search = curs.fetchone()
 
-        curs.close()
-        conn.close()
+            return search is not None
 
-        return search is not None
+    @classmethod
+    def next(cls):
+        """Retrieves the next upcoming event from the db.
+
+        Returns:
+            Event object, or None if event doesn't exist.
+        """
+
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
+
+            # Get event from DB.
+            curs.execute("""select max(eventID) from Events""")
+            event_id = curs.fetchone()
+            curs.execute("""select * from Events where eventID=?""", event_id)
+            result = curs.fetchone()
+            if not result:
+                return None
+
+            # Unpack DB result into Event object.
+            try:
+                event = Event(*result[1:])
+            except Exception as e:
+                logging.error(f"unable to unpack into Event: {e}")
+                print_exc()
+                return None
+
+            # Retrieve and set Artists for Event.
+            artists_temp = get_artists_event(event.name)
+            if artists_temp:
+                event.artists = [a.name for a in artists_temp]
+            else:
+                event.artists = []
+
+            return event
+
 
 class Artist:
 
@@ -134,6 +175,7 @@ class Artist:
 
         return search is not None
 
+
 class PlaysAt:
 
     """
@@ -161,6 +203,7 @@ class PlaysAt:
 
         curs.close()
         conn.close()
+
 
 class User:
 
@@ -191,14 +234,16 @@ class User:
 
         with sqlite3.connect(DB_NAME) as conn:
             curs = conn.cursor()
-
             curs.execute("select * from Users where uID=?", (u_id, ))
+            result = curs.fetchone()
+            if not result:
+                return None
 
-            user = None
             try:
-                user = User(*curs.fetchone())
+                user = User(*result)
             except Exception as e:
                 logging.error(e)
+                print_exc()
 
             return user
 
@@ -215,10 +260,28 @@ class User:
 
         return User.get_user(u_id) is not None
 
-    def delete_from_db(self):
-        """Deletes a user from the database.
+    @classmethod
+    def all_in_db(cls):
+        """Retrieves all users from the DB.
 
-        Checks first if the user exists.
+        Returns:
+            A list of User objects, or None.
+        """
+
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
+            curs.execute("select * from Users where isBot=0")
+            result = curs.fetchall()
+            if not result:
+                return None
+
+            users = [User(*e) for e in result]
+            return users
+
+    def delete_from_db(self):
+        """Deletes the user from the database.
+
+        Checks if the user exists first.
 
         Returns:
             True if user has been deleted, False otherwise.
@@ -234,65 +297,29 @@ class User:
             return not User.exists_in_db(self.u_id)
 
     def add_user(self):
+        """Adds a User to the database."""
 
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
+        with sqlite3.connect(DB_NAME) as conn:
+            curs = conn.cursor()
+            try:
+                curs.execute("insert into Users values (?,?,?)", (self.u_id, \
+                    self.name, self.is_bot))
+                conn.commit()
+            except sqlite3.IntegrityError as e:
+                # TODO: print with app.pex()
+                logging.error(e)
+                print_exc()
 
-        try:
-            curs.execute("insert into Users values (?,?,?)", (self.u_id, \
-                self.name, self.is_bot))
-            conn.commit()
-        except sqlite3.IntegrityError as e:
-            logging.error(e)
-
-        curs.close()
-        conn.close()
-
-    def all_users(self):
-
-        conn = sqlite3.connect(DB_NAME)
-        curs = conn.cursor()
-
-        curs.execute("select * from Users where isBot=0")
-        users = curs.fetchall()
-
-        conn.close()
-        curs.close()
-
-        return users
-
-def get_next_event():
-
-    """Retrieves the next upcoming event from the db
-
-    Returns:
-        Event object
-    """
-
-    with sqlite3.connect(DB_NAME) as conn:
-        curs = conn.cursor()
-
-        curs.execute("""select max(eventID) from Events""")
-        event_id = curs.fetchone()
-
-        curs.execute("""select * from Events where eventID=?""", event_id)
-        next_event = None
-
-        try:
-            next_event = Event(*curs.fetchone()[1:])
-        except Exception as e:
-            logging.error(e)
-        return next_event
 
 def get_artists_event(e_name):
 
-    """Retrieves all artists playing at a certain event, returns a list
+    """Retrieves all artists playing at a certain event.
 
     Arguments:
         e_name (str): name of the event to look for
 
     Returns:
-        A list of PlaysAt Objects
+        A list of PlaysAt Objects, or None.
     """
     with sqlite3.connect(DB_NAME) as conn:
         curs = conn.cursor()
@@ -309,7 +336,9 @@ def get_artists_event(e_name):
         try:
             artists = [get_artist(artist) for artist in result]
         except Exception as e:
+            # TODO: print with app.pex()
             logging.error(e)
+            print_exc()
 
         return artists
 
@@ -323,6 +352,7 @@ def get_artist(a_name):
     Returns:
         Artist object
     """
+
     with sqlite3.connect(DB_NAME) as conn:
         curs = conn.cursor()
         artist = None
@@ -330,6 +360,8 @@ def get_artist(a_name):
             curs.execute("select * from Artists where aName=?", (a_name, ))
             artist = Artist(*curs.fetchone())
         except Exception as e:
+            # TODO: print with app.pex()
             logging.error(e)
+            print_exc()
 
-    return artist
+        return artist

@@ -27,13 +27,48 @@ pip install -r requirements.txt
 ```
 
 ## Startup
-The app runs on a `gunicorn` server which is set up via the `start.sh` script. This also sets up the database.
 
-Alternatively you can set up the db manually:
+First configure your environment:
+
+```shell
+cat > .env <<EOF
+# The API token to authenticate against Telegram
+API_TOKEN=abcd123
+# The Telegam user / chat IDs that are allowed to push messages
+# to all users in the database
+ADMINS=1235123,67342347,89945234
+EOF
+```
+
+Use `start.sh` to setup the database and create a `gunicorn` server in front
+of the bot:
+
+```shell
+./start.sh
+```
+
+Alternatively you can set up the DB manually:
 
 ```shell
 cd bot/app/database
 ./db_create.py
+```
+
+## Populating the DB
+
+You can enter data by running `app/database/db_update.py`:
+
+```shell
+# Needs to be run from the wuestbot/bot directory.
+$ ./app/database/db_update.py
+
+        What should be entered in the DB?
+        E - Event
+        A - Artist
+        P - Artist-Event Relation
+        C - Cancel
+
+
 ```
 
 ## Database
