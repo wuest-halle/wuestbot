@@ -1,6 +1,10 @@
 from flask_restful import Resource
 from flask import make_response
 
+from log import Logger
+
+LOGGER = Logger(__name__)
+
 class Healthz(Resource):
     """Used to check health state"""
 

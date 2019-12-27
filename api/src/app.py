@@ -5,9 +5,14 @@ from flask_restful import Api
 from prometheus_flask_exporter import PrometheusMetrics
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 
+from log import Logger
 from resources.healthz import Healthz
 
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'info')
+Logger.LOG_LEVEL = LOG_LEVEL
+LOGGER = Logger("root")
+
 
 app = Flask(__name__)
 app.config['ERROR_404_HELP'] = False
