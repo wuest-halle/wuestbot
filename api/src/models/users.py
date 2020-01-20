@@ -5,8 +5,8 @@ class Users(db.Model):
     __tablename__ = 'Users'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(120), nullable=false)
-    is_bot = db.Column(db.Bool, nullable=false)
+    first_name = db.Column(db.String(120), nullable=False)
+    is_bot = db.Column(db.Boolean, nullable=False)
 
     def save(self):
 
