@@ -45,6 +45,15 @@ db.init_app(app)
 
 @app.shell_context_processor
 def shell_context():
+
+    """Creates the context for the `flask shell` command
+
+    This function passes a dictionary back to the shell_context_processor 
+    decorator function. The dict contains objects from the app and provides 
+    them to the interpreter. This is useful for quick iteration testing 
+    of new code without starting a new development instance
+    """
+
     return {'db': db, 'User': User}
 
 if __name__ == "__main__":
