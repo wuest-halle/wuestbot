@@ -1,6 +1,6 @@
 from db import db
 
-class Users(db.Model):
+class User(db.Model):
     """Class representing a single instance of an user record
 
     Arguments:
@@ -71,7 +71,6 @@ class Users(db.Model):
         with self.retrieve_single_user(id) as former_user:
             self.delete_user(former_user.id)
             self.save(cls)
-
 
     @staticmethod
     def retrieve_all_users():
