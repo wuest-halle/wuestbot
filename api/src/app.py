@@ -22,6 +22,7 @@ api = Api(blueprint)
 
 if ENVIRONMENT == 'development':
     metrics = PrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 else:
     metrics = GunicornInternalPrometheusMetrics(app)
 
