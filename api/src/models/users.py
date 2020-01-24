@@ -15,6 +15,9 @@ class User(db.Model):
     first_name = db.Column(db.String(120), nullable=False)
     is_bot = db.Column(db.Boolean, nullable=False)
 
+    def __repr__(self):
+        return f<User {self.first_name}, ID {self.id}>
+
     def save(self):
     """Saves a single user to the database"""
 
