@@ -41,10 +41,11 @@ def page_not_found(e):
 api.add_resource(Healthz, "/healthz")
 app.register_blueprint(blueprint)
 
+db.init_app(app)
+
 @app.shell_context_processor
 def shell_context():
     return {'db': db, 'User': User}
 
 if __name__ == "__main__":
-    db.init_app(app)
     app.run(host="127.0.0.1", port=5000, debug=True)
