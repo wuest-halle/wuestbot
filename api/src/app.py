@@ -8,6 +8,9 @@ from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMet
 from log import Logger
 from resources.healthz import Healthz
 
+from db import db
+from models.users import User 
+
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'info')
 Logger.LOG_LEVEL = LOG_LEVEL
@@ -23,6 +26,7 @@ api = Api(blueprint)
 if ENVIRONMENT == 'development':
     metrics = PrometheusMetrics(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     metrics = GunicornInternalPrometheusMetrics(app)
 
@@ -37,7 +41,10 @@ def page_not_found(e):
 api.add_resource(Healthz, "/healthz")
 app.register_blueprint(blueprint)
 
+@app.shell_context_processor
+def shell_context():
+    return {'db': db, 'User': User}
+
 if __name__ == "__main__":
-    from db import db
     db.init_app(app)
     app.run(host="127.0.0.1", port=5000, debug=True)
