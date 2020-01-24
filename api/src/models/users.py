@@ -12,7 +12,7 @@ class User(db.Model):
     __tablename__ = 'Users'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(120), nullable=False)
+    first_name = db.Column(db.String(120), index=True, nullable=False)
     is_bot = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
