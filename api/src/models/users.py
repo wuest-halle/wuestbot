@@ -1,3 +1,5 @@
+
+
 from db import db
 
 from log import Logger
@@ -11,6 +13,10 @@ class User(db.Model):
         * id (int) = the user's unique ID, equivalent to Telegram's ID
         * name (str) = user's first name
         * is_bot (bool) = whether the user is a chatbot or not
+    
+    To Do:
+        * introduce handling/logging to get() if user id is not found
+        * fix get_all() method (does not retrieve anything, query.get_all() does not work)
     """
 
     __tablename__ = 'Users'
