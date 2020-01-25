@@ -1,5 +1,3 @@
-
-
 from db import db
 
 from log import Logger
