@@ -23,7 +23,7 @@ class User(db.Model):
     is_bot = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return 'f<User {self.name}, ID {self.id}>'
+        return f'<User {self.name}, ID {self.id}>'
 
     def save(self):
         """Saves a single user to the database"""
