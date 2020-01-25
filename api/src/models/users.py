@@ -1,5 +1,9 @@
 from db import db
 
+from log import Logger
+
+LOGGER = Logger(__name__)
+
 class User(db.Model):
     """Class representing a single instance of an user record
 
@@ -25,6 +29,8 @@ class User(db.Model):
             db.session.add(self)
             db.session.commit()
         except Exception as e:
+            log.error(f"""Encountered following exception while trying to save 
+                user {self.id, self.first_name} to the DB {e}""")
             return
             
     @classmethod
