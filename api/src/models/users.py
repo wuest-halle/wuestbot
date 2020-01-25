@@ -16,7 +16,6 @@ class User(db.Model):
     
     To Do:
         * introduce handling/logging to get() if user id is not found
-        * fix get_all() method (does not retrieve anything, query.get_all() does not work)
     """
 
     __tablename__ = 'Users'
@@ -98,4 +97,4 @@ class User(db.Model):
             List of User objects
         """
 
-        return User.query.get_all()
+        return User.query.all()
