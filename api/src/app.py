@@ -15,6 +15,7 @@ ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'info')
 Logger.LOG_LEVEL = LOG_LEVEL
 LOGGER = Logger("root")
+DATABASE_DIR = os.getenv('DATABASE_DIR')
 
 
 app = Flask(__name__)
@@ -29,6 +30,8 @@ if ENVIRONMENT == 'development':
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     metrics = GunicornInternalPrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR or os.path('data.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.errorhandler(404)
 @metrics.do_not_track()
@@ -57,7 +60,7 @@ def shell_context():
     them to the interpreter. This is useful for quick iteration testing 
     of new code without starting a new development instance
     """
-
+    create_tables()
     return {'db': db, 'User': User}
 
 if __name__ == "__main__":
