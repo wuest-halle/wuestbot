@@ -28,7 +28,7 @@ class User(db.Model):
             return
             
     @classmethod
-    def retrieve_single_user(cls,id):
+    def get(cls,id):
         """Classmethod, retrieves a single user from the DB
 
         Arguments:
@@ -41,7 +41,7 @@ class User(db.Model):
         return cls.query.get(id)
     
     @classmethod
-    def delete_user(cls, id): 
+    def delete(cls, id): 
         """Classmethod, deletes single user record from the DB
 
         Arguments:
@@ -56,7 +56,7 @@ class User(db.Model):
             db.session.commit()
 
     @classmethod
-    def update_user(cls, id, first_name, is_bot):
+    def update(cls, id, first_name, is_bot):
         """Classmethod, updates attributes of a single user's record
 
         Works with a dirty hack right now: It deletes the record of the user with 
@@ -76,7 +76,7 @@ class User(db.Model):
             self.save(cls)
 
     @staticmethod
-    def retrieve_all_users():
+    def get_all():
         """Static method, retrieves all users from the DB
 
         Arguments:
