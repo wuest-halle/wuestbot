@@ -41,11 +41,15 @@ def page_not_found(e):
 api.add_resource(Healthz, "/healthz")
 app.register_blueprint(blueprint)
 
+@app.before_first_request
+def create_tables():
+    """Creates all tables on app startup"""
+    db.create_all()
+
 db.init_app(app)
 
 @app.shell_context_processor
 def shell_context():
-
     """Creates the context for the `flask shell` command
 
     This function passes a dictionary back to the shell_context_processor 
