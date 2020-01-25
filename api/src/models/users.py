@@ -9,18 +9,18 @@ class User(db.Model):
 
     Arguments:
         * id (int) = the user's unique ID, equivalent to Telegram's ID
-        * first_name (str) = user's first name
+        * name (str) = user's first name
         * is_bot (bool) = whether the user is a chatbot or not
     """
 
     __tablename__ = 'Users'
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(120), index=True, nullable=False)
+    name = db.Column(db.String(120), index=True, nullable=False)
     is_bot = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return 'f<User {self.first_name}, ID {self.id}>'
+        return 'f<User {self.name}, ID {self.id}>'
 
     def save(self):
         """Saves a single user to the database"""
@@ -30,7 +30,7 @@ class User(db.Model):
             db.session.commit()
         except Exception as e:
             log.error(f"""Encountered following exception while trying to save 
-                user {self.id, self.first_name} to the DB {e}""")
+                user {self.id, self.name} to the DB {e}""")
             return
             
     @classmethod
@@ -62,7 +62,7 @@ class User(db.Model):
             db.session.commit()
 
     @classmethod
-    def update(cls, id, first_name, is_bot):
+    def update(cls, id, name, is_bot):
         """Classmethod, updates attributes of a single user's record
 
         Works with a dirty hack right now: It deletes the record of the user with 
@@ -70,7 +70,7 @@ class User(db.Model):
 
         Arguments:
             * id: id of the user which should be updated
-            * first_name: new name of the user
+            * name: new name of the user
             * is_bot: new status of the user as bot
 
         Returns:
