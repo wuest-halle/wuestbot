@@ -11,10 +11,15 @@ TO DO:
 import pytest
 
 from app import app
+from db import db
 from models.users import User
 
 class TestUser():
 
+    def test_table_exists(client):
+        """Tests, if table Users is existing"""
+
+        assert "Users" in db.metadata.tables, "Table 'Users' does not exist"
 
 
 
