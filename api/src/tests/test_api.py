@@ -11,7 +11,7 @@ from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIReques
 
 from app import app
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def client():
     # Allow exceptions to propagate
     app.config['TESTING'] = True
