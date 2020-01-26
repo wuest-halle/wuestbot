@@ -46,8 +46,12 @@ app.register_blueprint(blueprint)
 
 @app.before_first_request
 def create_tables():
-    """Creates all tables on app startup"""
+    
+    # create all tables on app startup
     db.create_all()
+    
+    # commit them, so they are saved and visible to the app
+    db.session.commit()
 
 db.init_app(app)
 
