@@ -58,6 +58,3 @@ class TestUser():
         User.delete(1)
 
         assert not User.get(1), "Deletion of user record failed"
-
-
-
