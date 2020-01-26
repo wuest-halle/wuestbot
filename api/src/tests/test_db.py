@@ -29,12 +29,12 @@ class TestUser():
         assert test_user, "Creation of test user failed"
     
     def test_get(client):
-        """Tests, if user record can be retrieved"""
+        """Tests, if a single user record can be retrieved"""
         
         assert User.get(1), "Retrieval of user record failed"
 
     def test_update(client):
-        """Tests, if User record can be updated"""
+        """Tests, if a single User record can be updated"""
         id = 1
         name = "user_test"
         is_bot = True
@@ -45,6 +45,12 @@ class TestUser():
         assert test_user.name == name, "Updating user's name failed"
         assert test_user.is_bot == is_bot, "updating users is_bot attribute failed"
 
+    def test_delete(client):
+        """Tests, if a single user record can be deleted"""
+
+        User.delete(1)
+
+        assert not User.get(1), "Deletion of user record failed"
 
 
 
