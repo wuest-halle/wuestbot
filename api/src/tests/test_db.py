@@ -1,11 +1,6 @@
 """Provides classes to test different DB functionalities
 
 TO DO:
-    * test for User table (exists)
-    * test creation and insertion of User object
-    * test update of User object
-    * test list return of all Users
-    * test deletion of User record
 """
 
 import pytest
@@ -25,7 +20,7 @@ class TestUser():
         """Tests, if User object can be created and saved"""
 
         test_user = User(id=1, name="test_user", is_bot=False)
-        assert test_user, "Creation of test user failed"
+        assert test_user, "Creation of test user Object failed"
         with app.app_context():
             test_user.save()
     
