@@ -11,7 +11,7 @@ help:
 .PHONY: test
 ## test: run unit tests
 test:
-	cd src/ && $(PY) -m pytest -s -x
+	cd src/ && $(PY) -m pytest -s -x -v
 
 .PHONY: run
 ## run: calls run/dev to start the API locally
