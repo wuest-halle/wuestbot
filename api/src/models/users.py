@@ -82,7 +82,7 @@ class User(db.Model):
             nothing
         """
 
-        db.session.query(User).filter(User.id == id).update({"name": User.name, "is_bot": User.is_bot})
+        User.query.filter_by(id=id).update({'id': id, 'name': name, 'is_bot': is_bot})
 
     @staticmethod
     def get_all():
