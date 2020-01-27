@@ -10,6 +10,7 @@ from openapi_core.shortcuts import ResponseValidator
 from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIRequest
 
 from app import app
+from db import db
 
 @pytest.fixture(scope="module")
 def client():
