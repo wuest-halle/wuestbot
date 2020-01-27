@@ -80,10 +80,7 @@ class User(db.Model):
             nothing
         """
 
-        with cls.get(id) as former_user:
-            cls.delete(former_user.id)
-            cls.save(cls)
-
+        db.session.query(User).filter(User.id == id).update({"name": User.name, "is_bot": User.is_bot})
     @staticmethod
     def get_all():
         """Static method, retrieves all users from the DB
