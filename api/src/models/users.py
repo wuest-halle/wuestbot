@@ -15,6 +15,7 @@ class User(db.Model):
     To Do:
         * introduce handling/logging to get() if user id is not found
         * write checks if actual temporary testing db is being used
+        * change update(), so that an User object is given as Argument
     """
 
     __tablename__ = 'Users'
