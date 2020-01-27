@@ -16,6 +16,7 @@ class User(db.Model):
         * introduce handling/logging to get() if user id is not found
         * write checks if actual temporary testing db is being used
         * change update(), so that an User object is given as Argument
+        * introduce error handling to update(), if record to be updated is not found
     """
 
     __tablename__ = 'Users'
@@ -69,9 +70,6 @@ class User(db.Model):
     @staticmethod
     def update(id, name, is_bot):
         """Classmethod, updates attributes of a single user's record
-
-        Works with a dirty hack right now: It deletes the record of the user with 
-        the provided ID and then saves a new record with provided parameters
 
         Arguments:
             * id: id of the user which should be updated
