@@ -52,8 +52,8 @@ class User(db.Model):
 
         return cls.query.get(id)
     
-    @classmethod
-    def delete(cls, id): 
+    @staticmethod
+    def delete(id): 
         """Classmethod, deletes single user record from the DB
 
         Arguments:
@@ -63,9 +63,9 @@ class User(db.Model):
             nothing
         """
         
-        with cls.get(id) as user:
-            db.session.delete(user)
-            db.session.commit()
+        user = User.query.get(id)
+        db.session.delete(user)
+        db.session.commit()
 
     @staticmethod
     def update(id, name, is_bot):
