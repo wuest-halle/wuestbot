@@ -60,7 +60,7 @@ class User(db.Model):
             nothing
         """
         
-        with self.retrieve_single_user(id) as user:
+        with cls.get(id) as user:
             db.session.delete(user)
             db.session.commit()
 
@@ -80,9 +80,9 @@ class User(db.Model):
             nothing
         """
 
-        with self.retrieve_single_user(id) as former_user:
-            self.delete_user(former_user.id)
-            self.save(cls)
+        with cls.get(id) as former_user:
+            cls.delete(former_user.id)
+            cls.save(cls)
 
     @staticmethod
     def get_all():
