@@ -64,8 +64,8 @@ class User(db.Model):
             db.session.delete(user)
             db.session.commit()
 
-    @classmethod
-    def update(cls, id, name, is_bot):
+    @staticmethod
+    def update(id, name, is_bot):
         """Classmethod, updates attributes of a single user's record
 
         Works with a dirty hack right now: It deletes the record of the user with 
@@ -81,6 +81,7 @@ class User(db.Model):
         """
 
         db.session.query(User).filter(User.id == id).update({"name": User.name, "is_bot": User.is_bot})
+
     @staticmethod
     def get_all():
         """Static method, retrieves all users from the DB
