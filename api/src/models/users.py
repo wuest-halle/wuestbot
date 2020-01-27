@@ -32,7 +32,7 @@ class User(db.Model):
             db.session.add(self)
             db.session.commit()
         except Exception as e:
-            log.error(f"""Encountered following exception while trying to save 
+            LOGGER.error(msg=f"""Encountered following exception while trying to save 
                 user {self.id, self.name} to the DB {e}""")
             return
             
