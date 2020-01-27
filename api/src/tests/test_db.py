@@ -32,7 +32,8 @@ class TestUser():
     def test_get(client):
         """Tests, if a single user record can be retrieved"""
         
-        assert User.get(1), "Retrieval of user record failed"
+        with app.app_context():
+            assert User.get(1), "Retrieval of user record failed"
 
     def test_update(client):
         """Tests, if a single User record can be updated"""
@@ -40,8 +41,9 @@ class TestUser():
         name = "user_test"
         is_bot = True
 
-        User.update(id, name, is_bot)
-        test_user = User.get(1)
+        with app.app_context():
+            User.update(id, name, is_bot)
+            test_user = User.get(1)
 
         assert test_user.name == name, "Updating user's name failed"
         assert test_user.is_bot == is_bot, "updating users is_bot attribute failed"
@@ -49,13 +51,15 @@ class TestUser():
     def test_get_all(client):
         """Tests, if all user records can be retrieved in a list"""
 
-        test_users = User.get_all()
+        with app.app_context():
+            test_users = User.get_all()
         
         assert type(test_users) is list, "Return data type for getting all Users is not a list"
 
     def test_delete(client):
         """Tests, if a single user record can be deleted"""
 
-        User.delete(1)
+        with app.app_context():
+            User.delete(1)
 
         assert not User.get(1), "Deletion of user record failed"
