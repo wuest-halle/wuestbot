@@ -25,8 +25,9 @@ class TestUser():
         """Tests, if User object can be created and saved"""
 
         test_user = User(id=1, name="test_user", is_bot=False)
-        test_user.save()
         assert test_user, "Creation of test user failed"
+        with app.app_context():
+            test_user.save()
     
     def test_get(client):
         """Tests, if a single user record can be retrieved"""
