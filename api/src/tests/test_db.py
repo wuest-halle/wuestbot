@@ -61,5 +61,4 @@ class TestUser():
 
         with app.app_context():
             User.delete(1)
-
-        assert not User.get(1), "Deletion of user record failed"
+            assert User.get(1) is None, "Deletion of user record failed"
