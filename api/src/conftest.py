@@ -1,6 +1,7 @@
 """Provides all fixtures for the testing framework
 
 TO DO:
+    * find out, if test db is actually used
     * change to factory function for creation of test instance once written in app.py
     * add database fixture
     * add database session fixture (for scoped transactions in tests)
@@ -63,12 +64,14 @@ def test_app(request):
 @pytest.fixture(scope="session")
 def database(test_app, request):
     """Test database to perform all ops on, cleaned after tests have been finished"""
+    
     def teardown():
         db.drop_all()
 
-    db.app = test_app
+    # Create all tables
     db.create_all()
 
+    # Drop all tables via teardown() method
     request.addfinalizier(teardown)
 
     return db
