@@ -6,6 +6,7 @@ TO DO:
     * add database session fixture (for scoped transactions in tests)
     * move override settings to file
     * set testing db to permanent file
+    * write function for migrations once they're set up
 """
 import os
 import tempfile
