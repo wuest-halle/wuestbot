@@ -7,15 +7,15 @@ from openapi_core import create_spec
 from openapi_core.shortcuts import ResponseValidator
 from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIRequest
 
-def test_healthz(client):
+def test_healthz(test_app, client):
     """Test the /healthz endpoint."""
 
     path = '/v1/healthz'
     rv = client.get(path)
 
     # Validate request and response against OpenAPI spec
-    with app.test_request_context(path):
-        with open(app.config['OPENAPI_SPEC']) as stream:
+    with test_app.test_request_context(path):
+        with open(test_app.config['OPENAPI_SPEC']) as stream:
             spec = create_spec(safe_load(stream))
 
         openapi_response = FlaskOpenAPIResponse(rv)
