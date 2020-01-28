@@ -14,6 +14,7 @@ import tempfile
 import pytest
 from flask import Flask
 
+from app import app
 from db import db
 
 # provide testing settings in a dict
@@ -33,7 +34,7 @@ def test_app(request):
     which is going to be torn down after finishing. """
 
     # create testing instance
-    test_app = Flask(__name__)
+    test_app = app
 
     # bind database engine to testing app
     db.init_app(test_app)
