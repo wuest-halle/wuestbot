@@ -1,6 +1,4 @@
-import pytest
-import os
-import tempfile
+"""Provides all tests for API-related functions"""
 
 from yaml import safe_load
 
@@ -8,29 +6,6 @@ from flask import request
 from openapi_core import create_spec
 from openapi_core.shortcuts import ResponseValidator
 from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIRequest
-
-from app import app
-from db import db
-
-@pytest.fixture(scope="module")
-def client():
-    # Allow exceptions to propagate
-    app.config['TESTING'] = True
-
-    # Create a temporary sqlite3 database
-    db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-
-    # Create a temporary prometheus_multiproc_dir
-    mpd_fd = tempfile.mkdtemp()
-    os.environ['prometheus_multiproc_dir'] = mpd_fd
-
-    with app.test_client() as client:
-        yield client
-
-    # Cleanup the temporary database and folder
-    os.close(db_fd)
-    os.rmdir(mpd_fd)
-    os.unlink(app.config['DATABASE'])
 
 def test_healthz(client):
     """Test the /healthz endpoint."""
