@@ -1,8 +1,7 @@
 """Provides all fixtures for the testing framework
 
 TO DO:
-    * add teardown to application fixture
-    * rewrite client fixture
+    * change to factory function for creation of test instance once written in app.py
     * add database fixture
     * add database session fixture (for scoped transactions in tests)
     * move override settings to file
@@ -55,7 +54,9 @@ def test_app(request):
     def teardown():
         os.rmdir(mpd_fd)
         ctx.pop()
+    
     request.addfinalizer(teardown)
+    
     return test_app
 
 @pytest.fixture(scope="session")
