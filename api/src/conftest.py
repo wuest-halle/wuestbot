@@ -20,14 +20,6 @@ from db import db
 
 # provide testing settings in a dict
 # this is probably being moved to a file later 
-SETTINGS = {
-    'ENV': 'testing',
-    'TESTING': True,
-    'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
-    'SQLALCHEMY_TRACK_MODIFICATIONS': False,
-    'OPENAPI_SPEC': 'openapi/spec.yml'
-}
-
 
 @pytest.fixture(scope="session")
 def test_app(request):
@@ -39,6 +31,17 @@ def test_app(request):
 
     # bind database engine to testing app
     db.init_app(test_app)
+
+    # retrieve test settings
+    db_fd, DATABASE_DIR = tempfile.mkstemp()
+
+    SETTINGS = {
+        'ENV': 'testing',
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///' + DATABASE_DIR,
+        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+        'OPENAPI_SPEC': 'openapi/spec.yml'
+    }
 
     # override default settings with test settings 
     test_app.config.from_mapping(SETTINGS)
@@ -54,6 +57,7 @@ def test_app(request):
 
     # Teardown block after finishing tests
     def teardown():
+        os.unlink(DATABASE_DIR)
         os.rmdir(mpd_fd)
         ctx.pop()
     
