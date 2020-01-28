@@ -61,6 +61,19 @@ def test_app(request):
     return test_app
 
 @pytest.fixture(scope="session")
+def database(test_app, request):
+    """Test database to perform all ops on, cleaned after tests have been finished"""
+    def teardown():
+        db.drop_all()
+
+    db.app = test_app
+    db.create_all()
+
+    request.addfinalizier(teardown)
+
+    return db
+
+@pytest.fixture(scope="session")
 def client(test_app):
     """session-wide client"""
 
