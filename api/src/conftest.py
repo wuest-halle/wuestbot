@@ -38,8 +38,8 @@ def test_app(request):
     test_app.config.from_mapping(SETTINGS)
 
     # establish application context
-    with test_app.app_context() as ctx:
-        ctx.push()
+    ctx = test_app.app_context()
+    ctx.push()
 
     # Create a temporary prometheus_multiproc_dir
     # artefact from first fixture prototype, not sure yet if this is the right place 
