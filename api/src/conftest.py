@@ -1,13 +1,4 @@
 """Provides all fixtures for the testing framework
-
-TO DO:
-    * find out, if test db is actually used
-    * change to factory function for creation of test instance once written in app.py
-    * add database fixture
-    * add database session fixture (for scoped transactions in tests)
-    * move override settings to file
-    * set testing db to permanent file
-    * write function for migrations once they're set up
 """
 import os
 import tempfile
@@ -79,6 +70,10 @@ def database(test_app, request):
     request.addfinalizier(teardown)
 
     return db
+
+@pytest.fixture(scope="function")
+def session(test_app, db):
+
 
 @pytest.fixture(scope="session")
 def client(test_app):

@@ -11,12 +11,6 @@ class User(db.Model):
         * id (int) = the user's unique ID, equivalent to Telegram's ID
         * name (str) = user's first name
         * is_bot (bool) = whether the user is a chatbot or not
-    
-    To Do:
-        * introduce handling/logging to get() if user id is not found
-        * write checks if actual temporary testing db is being used
-        * change update(), so that an User object is given as Argument
-        * introduce error handling to update(), if record to be updated is not found
     """
 
     __tablename__ = 'Users'
