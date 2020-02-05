@@ -73,7 +73,7 @@ def database(test_app, request):
 
 @pytest.fixture(scope="function")
 def session(test_app, db):
-
+    pass
 
 @pytest.fixture(scope="session")
 def client(test_app):
