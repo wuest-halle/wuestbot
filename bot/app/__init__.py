@@ -167,8 +167,11 @@ def next_event(message):
 	Arguments:
 		message: telebot's message object
 	"""
+	u_id = message.from_user.id
 
-	send_next_event(message.from_user.id)
+	with app.app_context():
+		bot.send_message(u_id, render_template('intermediate.html'))
+	# send_next_event(message.from_user.id)
 
 @bot.message_handler(commands=['delete', 'cancel', 'remove'])
 def delete(message):
@@ -227,7 +230,7 @@ def push(message):
 			return
 		for user in users:
 			logging.debug(f"sending to: {user.u_id}")
-			send_next_event(user.u_id)
+			send_template(user.u_id, render_template('intermediate.html'))
 
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
