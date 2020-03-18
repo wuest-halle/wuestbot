@@ -9,7 +9,10 @@ from openapi_core import create_spec
 from openapi_core.shortcuts import ResponseValidator
 from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIRequest
 
-from app import app
+from src import create_app
+
+# create an app instance on just for tests
+app = create_app()
 
 @pytest.fixture
 def client():
@@ -54,7 +57,7 @@ def test_healthz(client):
 
 def test_404(client):
     """Test custom 404 handler."""
-
+    
     rv = client.get('/foo')
     assert rv.content_type == "text/plain"
     assert rv.status_code == 404
