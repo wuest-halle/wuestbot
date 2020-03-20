@@ -55,3 +55,33 @@ def create_app():
     app.register_blueprint(blueprint) 
     
     return app
+
+
+"""
+LEGACY CODE - REVIEW AND INTEGRATE
+
+from db import db
+from models.users import User 
+
+DATABASE_DIR = os.getenv('DATABASE_DIR')
+
+if ENVIRONMENT == 'development':
+    metrics = PrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+else:
+    metrics = GunicornInternalPrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR or os.path('data.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+@app.before_first_request
+def create_tables():
+    
+    # create all tables on app startup
+    db.create_all()
+    
+    # commit them, so they are saved and visible to the app
+    db.session.commit()
+
+db.init_app(app)
+"""
