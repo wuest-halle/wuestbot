@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import make_response
 
-from log import Logger
+from src.log import Logger
 
 LOGGER = Logger(__name__)
 

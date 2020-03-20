@@ -30,7 +30,7 @@ def test_healthz(test_app, client):
 
 def test_404(client):
     """Test custom 404 handler."""
-
+    
     rv = client.get('/foo')
     assert rv.content_type == "text/plain"
     assert rv.status_code == 404
