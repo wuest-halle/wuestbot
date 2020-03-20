@@ -13,6 +13,8 @@ from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMet
 from src.log import Logger
 from src.resources.healthz import Healthz
 
+from src.db import db
+
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'info')
 Logger.LOG_LEVEL = LOG_LEVEL
@@ -40,8 +42,18 @@ def create_app():
     # create app instance and configure it from file
     app = Flask(__name__)
     app.config.from_envvar('CONFFILE')
+
+    @app.before_first_request
+    def create_tables():
+
+        # create all tables on app startup
+        db.create_all()
+
+        # commit them, so they are saved and visible to the app
+        db.session.commit()
     
     # initialize extensions
+    db.init_app(app)
     metrics.init_app(app)
     api.init_app(blueprint)
 
@@ -59,11 +71,8 @@ def create_app():
 
 """
 LEGACY CODE - REVIEW AND INTEGRATE
-
-from db import db
 from models.users import User 
 
-DATABASE_DIR = os.getenv('DATABASE_DIR')
 
 if ENVIRONMENT == 'development':
     metrics = PrometheusMetrics(app)
@@ -71,15 +80,4 @@ if ENVIRONMENT == 'development':
 else:
     metrics = GunicornInternalPrometheusMetrics(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR or os.path('data.db')
-
-@app.before_first_request
-def create_tables():
-    
-    # create all tables on app startup
-    db.create_all()
-    
-    # commit them, so they are saved and visible to the app
-    db.session.commit()
-
-db.init_app(app)
 """

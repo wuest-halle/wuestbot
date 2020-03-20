@@ -6,7 +6,7 @@ import tempfile
 import pytest
 from flask import Flask
 
-from app import app
+from run import app
 from db import db
 
 # provide testing settings in a dict
