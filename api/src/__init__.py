@@ -68,11 +68,9 @@ DATABASE_DIR = os.getenv('DATABASE_DIR')
 if ENVIRONMENT == 'development':
     metrics = PrometheusMetrics(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     metrics = GunicornInternalPrometheusMetrics(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR or os.path('data.db')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.before_first_request
 def create_tables():
