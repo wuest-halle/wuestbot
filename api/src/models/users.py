@@ -1,4 +1,4 @@
-from db import db
+from src import db
 
 from log import Logger
 
