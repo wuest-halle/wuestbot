@@ -6,8 +6,7 @@ import tempfile
 import pytest
 from flask import Flask
 
-from run import app
-from db import db
+from src import create_app, db
 
 # provide testing settings in a dict
 # this is probably being moved to a file later 
@@ -18,24 +17,7 @@ def test_app(request):
     which is going to be torn down after finishing. """
 
     # create testing instance
-    test_app = app
-
-    # bind database engine to testing app
-    db.init_app(test_app)
-
-    # retrieve test settings
-    db_fd, DATABASE_DIR = tempfile.mkstemp()
-
-    SETTINGS = {
-        'ENV': 'testing',
-        'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': 'sqlite:///' + DATABASE_DIR,
-        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
-        'OPENAPI_SPEC': 'openapi/spec.yml'
-    }
-
-    # override default settings with test settings 
-    test_app.config.from_mapping(SETTINGS)
+    test_app = create_app()
 
     # establish application context
     ctx = test_app.app_context()
@@ -48,7 +30,6 @@ def test_app(request):
 
     # Teardown block after finishing tests
     def teardown():
-        os.unlink(DATABASE_DIR)
         os.rmdir(mpd_fd)
         ctx.pop()
     
@@ -56,20 +37,20 @@ def test_app(request):
     
     return test_app
 
-@pytest.fixture(scope="session")
-def database(test_app, request):
-    """Test database to perform all ops on, cleaned after tests have been finished"""
-    
-    def teardown():
-        db.drop_all()
-
-    # Create all tables
-    db.create_all()
-
-    # Drop all tables via teardown() method
-    request.addfinalizier(teardown)
-
-    return db
+#@pytest.fixture(scope="session")
+#def database(test_app, request):
+#    """Test database to perform all ops on, cleaned after tests have been finished"""
+#    
+#    def teardown():
+#        db.drop_all()
+#
+#    # Create all tables
+#    db.create_all()
+#
+#    # Drop all tables via teardown() method
+#    request.addfinalizier(teardown)
+#
+#    return db
 
 @pytest.fixture(scope="function")
 def session(test_app, db):

@@ -3,7 +3,7 @@
 
 import pytest
 
-from db import db
+from src import db
 from models.users import User
 
 class TestUser():
