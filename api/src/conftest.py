@@ -37,24 +37,33 @@ def test_app(request):
     
     return test_app
 
-#@pytest.fixture(scope="session")
-#def database(test_app, request):
-#    """Test database to perform all ops on, cleaned after tests have been finished"""
-#    
-#    def teardown():
-#        db.drop_all()
-#
-#    # Create all tables
-#    db.create_all()
-#
-#    # Drop all tables via teardown() method
-#    request.addfinalizier(teardown)
-#
-#    return db
+@pytest.fixture(scope="session")
+def database(test_app, request):
+    """Test database to perform all ops on, cleaned after tests have been finished"""
+
+    # Create all tables
+    db.create_all()
+
+    return db
+
+    db.drop_all()
 
 @pytest.fixture(scope="function")
-def session(test_app, db):
-    pass
+def session(test_app, database):
+    """Creates a scoped session for every test"""
+    conn = db.engine.connect()
+    trans = conn.begin()
+
+    session = db.create_scoped_session()
+
+    db.session = session
+
+    yield session
+
+    trans.rollback()
+    conn.close()
+    session.remove()
+
 
 @pytest.fixture(scope="session")
 def client(test_app):
