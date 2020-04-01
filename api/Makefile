@@ -14,7 +14,6 @@ help:
 test:
 	export CONFFILE=$(CONFFILE);
 	cd src/ && $(PY) -m pytest -s -v
-
 .PHONY: run
 ## run: calls run/dev to start the API locally
 run: run/dev
