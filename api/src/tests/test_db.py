@@ -30,7 +30,7 @@ def test_create(session):
 def test_update(session):
     """update the user entry created before, and assert it has the new values"""
 
-    #retrieve user
+    # retrieve user
     upd_user = User.get(id=1)
 
     # update user
@@ -44,12 +44,35 @@ def test_update(session):
 def test_delete(session):
     """ deletes user entry created before and asserts thet it hast been deleted """
 
+    # delete user
+    User.delete(id=1)
 
-    pass
+    # assert no users are returned when querying for all users
+    assert len(User.get_all()) == 0, "still user in DB, deletion not successful"
 
 def test_create_multiple(session):
-    pass
+    """ create and retrieve multiple users """
 
+    # create list of test users
+    ins_users = (
+        {"id": 1, "name": "Jens", "is_bot": False},
+        {"id": 69, "name": "Rudolf", "is_bot": False},
+        {"id": 307, "name": "Dieterbot", "is_bot": True}
+    )
+
+    # insert user object into db
+    for user in ins_users:
+        tmp = User(id=user["id"], name=user["name"], is_bot=user["is_bot"])
+        tmp.save()
+
+    # retrieve all users
+    retr_users = User.get_all()
+
+    for ins_user, retr_user in zip(ins_users, retr_users):
+            assert ins_user["id"] == retr_user.id, f"id does not match for {ins_user}, {retr_user}"
+            assert ins_user["name"] == retr_user.name, f"name does not match for {ins_user}, {retr_user}"
+            assert ins_user["is_bot"] == retr_user.is_bot, f"bot status does not match for {ins_user}, {retr_user}"
+    
 # test cases for the sad path
 
 
