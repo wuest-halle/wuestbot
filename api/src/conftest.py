@@ -5,6 +5,7 @@ import tempfile
 
 import pytest
 from flask import Flask
+from sqlalchemy.orm import sessionmaker, scoped_session
 
 from src import create_app, db
 
@@ -41,27 +42,24 @@ def test_app(request):
 def database(test_app, request):
     """Test database to perform all ops on, cleaned after tests have been finished"""
 
-    # Create all tables
+    # create all tables
     db.create_all()
 
     return db
 
+    # tear down all tables
     db.drop_all()
 
 @pytest.fixture(scope="function")
-def session(test_app, database):
+def session(database):
     """Creates a scoped session for every test"""
-    conn = db.engine.connect()
-    trans = conn.begin()
-
-    session = db.create_scoped_session()
-
-    db.session = session
+    
+    session = scoped_session(sessionmaker(bind=db.engine))
 
     yield session
 
-    trans.rollback()
-    conn.close()
+    # tear down session
+    session.rollback()
     session.remove()
 
 
