@@ -18,21 +18,36 @@ def test_create(session):
     assert ins_user.is_bot is False, "test user's bot status does not match"
 
     # insert into database
-    assert ins_user.save() is not sqlalchemy.exc.SQLAlchemyError, "SQLAlchemy Exception was thrown"
+    session.add(ins_user)
+    session.commit()
 
     # retrieve user
     retr_user = User.get(id=1)
     assert retr_user.id == 1, "test user id does not match"
     assert retr_user.name == "test_user", "test user name does not match"
-    assert retr_user.is_bot is False, "test user is bot, but should not be"
+    assert retr_user.is_bot is False, "test user bot status does not match"
 
-def test_update():
+def test_update(session):
+    """update the user entry created before, and assert it has the new values"""
+
+    #retrieve user
+    upd_user = User.get(id=1)
+
+    # update user
+    upd_user.update(id=1, name="ralph", is_bot=True)
+
+    # assert update is performed correctly
+    retr_user = User.get(id=1)
+    assert retr_user.name == "ralph", "test user name does not match"
+    assert retr_user.is_bot is True, "test user bot status does not match"
+
+def test_delete(session):
+    """ deletes user entry created before and asserts thet it hast been deleted """
+
+
     pass
 
-def test_delete():
-    pass
-
-def test_create_multiple():
+def test_create_multiple(session):
     pass
 
 # test cases for the sad path
