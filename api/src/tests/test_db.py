@@ -8,6 +8,7 @@ from src import db
 from models.users import User
 
 # test cases for the happy path
+
 def test_create(session):
     """Tests the creation and retrieval of a single user"""
 
@@ -74,7 +75,17 @@ def test_create_multiple(session):
             assert ins_user["is_bot"] == retr_user.is_bot, f"bot status does not match for {ins_user}, {retr_user}"
     
 # test cases for the sad path
+def test_invalid_input(session):
+    pass
 
+def test_user_exists(session):
+    # insert first user
+    user_1 = User(id=111, name="Test User", is_bot=False) 
+    
+    # insert second user with same properties
+    # should throw an integrity error
+    user_2 = User(id=111, name="Test User", is_bot=False)
+    assert sqlalchemy.exc.IntegrityError 
 
 #class TestUser():
 #
