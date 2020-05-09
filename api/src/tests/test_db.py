@@ -75,10 +75,20 @@ def test_create_multiple(session):
             assert ins_user["is_bot"] == retr_user.is_bot, f"bot status does not match for {ins_user}, {retr_user}"
     
 # test cases for the sad path
-@pytest.mark.parametrized("input", [pytest.param(1, marks=pytest.mark.xfail)])
+# @pytest.mark.parametrize("input", [pytest.param(1, marks=pytest.mark.xfail)])
 def test_invalid_input(session):
     
-    test_user = User(id=input)
+    user_1 = User(id=1)
+    user_1.save()
+
+    user_2 = User(id=2, name=111, is_bot=22)
+    user_2.save()
+    
+    with pytest.raises(Exception) as e:
+        User.get(id=1)
+        User.get(id=2)
+        print("Invalid data cannot be entered:", e)
+
 
 def test_user_exists(session):
     # insert first user
