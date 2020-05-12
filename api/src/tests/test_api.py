@@ -1,6 +1,4 @@
-import pytest
-import os
-import tempfile
+"""Provides all tests for API-related functions"""
 
 from yaml import safe_load
 
@@ -9,40 +7,15 @@ from openapi_core import create_spec
 from openapi_core.shortcuts import ResponseValidator
 from openapi_core.wrappers.flask import FlaskOpenAPIResponse, FlaskOpenAPIRequest
 
-from src import create_app
-
-# create an app instance on just for tests
-app = create_app()
-
-@pytest.fixture
-def client():
-    # Allow exceptions to propagate
-    app.config['TESTING'] = True
-
-    # Create a temporary sqlite3 database
-    db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-
-    # Create a temporary prometheus_multiproc_dir
-    mpd_fd = tempfile.mkdtemp()
-    os.environ['prometheus_multiproc_dir'] = mpd_fd
-
-    with app.test_client() as client:
-        yield client
-
-    # Cleanup the temporary database and folder
-    os.close(db_fd)
-    os.rmdir(mpd_fd)
-    os.unlink(app.config['DATABASE'])
-
-def test_healthz(client):
+def test_healthz(test_app, client):
     """Test the /healthz endpoint."""
 
     path = '/v1/healthz'
     rv = client.get(path)
 
     # Validate request and response against OpenAPI spec
-    with app.test_request_context(path):
-        with open(app.config['OPENAPI_SPEC']) as stream:
+    with test_app.test_request_context(path):
+        with open(test_app.config['OPENAPI_SPEC']) as stream:
             spec = create_spec(safe_load(stream))
 
         openapi_response = FlaskOpenAPIResponse(rv)

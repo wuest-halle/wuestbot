@@ -9,6 +9,8 @@ from flask import Flask, Blueprint
 from flask_restful import Api
 from prometheus_flask_exporter import PrometheusMetrics
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
+from flask_sqlalchemy import SQLAlchemy
+
 
 from src.log import Logger
 from src.resources.healthz import Healthz
@@ -19,6 +21,7 @@ Logger.LOG_LEVEL = LOG_LEVEL
 LOGGER = Logger("root")
 
 # create extension instances
+db = SQLAlchemy()
 api = Api()
 
 if ENVIRONMENT == 'development':
@@ -40,10 +43,14 @@ def create_app():
     # create app instance and configure it from file
     app = Flask(__name__)
     app.config.from_envvar('CONFFILE')
-    
+
     # initialize extensions
+    db.init_app(app)
     metrics.init_app(app)
     api.init_app(blueprint)
+
+    with app.app_context() as ctx:
+        db.create_all()
 
     # register flask-restful's API endpoints
     api.add_resource(Healthz, "/healthz")
@@ -55,3 +62,17 @@ def create_app():
     app.register_blueprint(blueprint) 
     
     return app
+
+
+"""
+LEGACY CODE - REVIEW AND INTEGRATE
+from models.users import User 
+
+
+if ENVIRONMENT == 'development':
+    metrics = PrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+else:
+    metrics = GunicornInternalPrometheusMetrics(app)
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_DIR or os.path('data.db')
+"""

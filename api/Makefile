@@ -1,7 +1,7 @@
 SH := /bin/sh
 PY := $(shell which python3)
 MULTIPROC_DIR ?= $(shell pwd)/.multiproc_dir
-CONFFILE = devconf.py
+CONFFILE := devconf.py
 
 .PHONY: help
 ## help: prints this help message
@@ -12,9 +12,8 @@ help:
 .PHONY: test
 ## test: run unit tests
 test:
-	export CONFFILE=$(CONFFILE); \
-	cd src/ && $(PY) -m pytest -s -x
-
+	export CONFFILE=$(CONFFILE);
+	cd src/ && $(PY) -m pytest -s -v
 .PHONY: run
 ## run: calls run/dev to start the API locally
 run: run/dev
