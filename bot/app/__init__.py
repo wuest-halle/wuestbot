@@ -218,6 +218,7 @@ def delete(message):
 		else:
 			send_template(u_id, render_template('none.html'))
 
+@bot.message_handler(content_types=['document'])
 @bot.message_handler(commands=['push'])
 def push(message):
 	"""Sends a message to each user in the DB.
@@ -254,12 +255,12 @@ def push(message):
 			logging.debug(f"sending to: {user.u_id}")
 			send_template(user.u_id, render_template('intermediate.html'))
 
-@bot.message_handler(content_types=['document'])
-def receive_document(message):
-
-	""" when the bot receives a document, it returns its id """
-	u_id = message.from_user.id
-	bot.reply_to(message, f'Received Document with ID {message.document.file_id}')
+# @bot.message_handler(content_types=['document'])
+# def receive_document(message):
+#
+#	""" when the bot receives a document, it returns its id """
+#	u_id = message.from_user.id
+#	bot.reply_to(message, f'Received Document with ID {message.document.file_id}')
 
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
@@ -304,27 +305,32 @@ def artist(message, name):
 			logging.error(e)
 			return render_template('none.html')
 
-@bot.message_handler(commands=['authorize'])
-def authorize(message):
-	""" /authorize message handler, checks for user admin
-	status and sends back a markdown keyboard for actions
+
+def authorize(u_id):
+	""" checks for admin authorization 
+
+	Arguments:
+		* u_id (str): user's id
+
+	Returns:
+		* True, if user is admin
+		* False otherwise
 	"""
 
-	caller_id = message.from_user.id
 	with app.app_context():
 		# Admin check. Templates during those checks will be sent to
 		# the caller, not to the users.
 		admins = get_admin_ids(ADMINS)
 		if not admins:
 			logging.error("No admins provided")
-			send_template(caller_id, render_template('none.html'))
-			return
-		if str(caller_id) not in admins:
-			logging.warn(f"Not authorized: '{caller_id}' not in {admins}")
-			send_template(caller_id, render_template('404.html'))
-			return
+			send_template(u_id, render_template('none.html'))
+			return False
+		if str(u_id) not in admins:
+			logging.warn(f"Not authorized: '{u_id}' not in {admins}")
+			send_template(u_id, render_template('404.html'))
+			return False
 
-	bot.send_message(caller_id, "Choose an option", reply_markup=keys('admin'))	
+	return True	
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
