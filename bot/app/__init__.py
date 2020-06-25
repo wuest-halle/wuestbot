@@ -18,7 +18,7 @@ unknown commands, even when providing a default message (not sure y though)
 
 import os
 import logging
-import telebot
+from telebot import TeleBot, types
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
@@ -35,7 +35,7 @@ API_TOKEN = os.getenv('API_TOKEN', '')
 ADMINS = os.getenv('ADMINS', '')
 
 app = Flask(__name__)
-bot = telebot.TeleBot(API_TOKEN)
+bot = TeleBot(API_TOKEN)
 
 img_dir = os.path.abspath('../bot/app/img')
 
@@ -80,6 +80,28 @@ def send_template(u_id, template):
 			text=template,
 			parse_mode='html'
 		)
+
+def keys(status):
+	""" provides markup keyboards for the specified type of user,
+	currently only admins
+
+	Arguments:
+		* status (str): status of the user requesting the keyboard,
+		currently only 'admin' is allowed
+
+	Returns:
+		KeyboardMarkup object if proper status is defined
+	"""
+
+	if status == 'admin':
+		keyb = types.ReplyKeyboardMarkup()
+		opt_1 = types.KeyboardButton('a')
+		opt_2 = types.KeyboardButton('z')
+		keyb.add(opt_1, opt_2)
+		return keyb
+
+	else:
+		logging.error("No proper status for keyboard defined")
 
 def send_next_event(u_id):
 	"""Sends the event with the highest eventID.
@@ -274,6 +296,28 @@ def artist(message, name):
 		except Exception as e:
 			logging.error(e)
 			return render_template('none.html')
+
+@bot.message_handler(commands=['authorize'])
+def authorize(message):
+	""" /authorize message handler, checks for user admin
+	status and sends back a markdown keyboard for actions
+	"""
+
+	caller_id = message.from_user.id
+	with app.app_context():
+		# Admin check. Templates during those checks will be sent to
+		# the caller, not to the users.
+		admins = get_admin_ids(ADMINS)
+		if not admins:
+			logging.error("No admins provided")
+			send_template(caller_id, render_template('none.html'))
+			return
+		if str(caller_id) not in admins:
+			logging.warn(f"Not authorized: '{caller_id}' not in {admins}")
+			send_template(caller_id, render_template('404.html'))
+			return
+
+	bot.send_message(caller_id, "Choose an option", reply_markup=keys('admin'))	
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
