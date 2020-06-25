@@ -23,6 +23,7 @@ from telebot import TeleBot, types
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from traceback import print_exc
+import requests 
 
 from app.database import db_objects
 
@@ -218,7 +219,6 @@ def delete(message):
 		else:
 			send_template(u_id, render_template('none.html'))
 
-@bot.message_handler(content_types=['document'])
 @bot.message_handler(commands=['push'])
 def push(message):
 	"""Sends a message to each user in the DB.
@@ -254,6 +254,33 @@ def push(message):
 		for user in users:
 			logging.debug(f"sending to: {user.u_id}")
 			send_template(user.u_id, render_template('intermediate.html'))
+
+@bot.message_handler(content_types=['document'], commands=['push_doc'])
+def push_doc(message):
+	""" pushs content of a text document """
+
+	u_id = message.from_user.id
+
+	# check for user authorization
+	if not authorize(u_id):
+		bot.reply_to(message, "You cannot do that!")
+		return
+
+	# check mime type
+
+	# get text from message
+	file_id = message.document.file_id
+	with requests.get(f'https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN,file_id)) as f:
+		text = open(f, 'r')
+
+	# send out to all users
+	users = db_objects.User.all_in_db()
+	if not users:
+		send_template(u_id, 'No users found.')
+		return
+	for user in users:
+		logging.debug(f"sending to: {user.u_id}")
+		send_template(user.u_id, render_template(text))
 
 # @bot.message_handler(content_types=['document'])
 # def receive_document(message):
