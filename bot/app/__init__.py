@@ -255,9 +255,10 @@ def push(message):
 			logging.debug(f"sending to: {user.u_id}")
 			send_template(user.u_id, render_template('intermediate.html'))
 
-@bot.message_handler(content_types=['document'], commands=['push_doc'])
+# @bot.message_handler(commands=['push_doc'])
+@bot.message_handler(func=lambda message: message.caption == '/push_doc', content_types=['document'])
 def push_doc(message):
-	""" pushs content of a text document """
+	""" pushes content of a text document """
 
 	u_id = message.from_user.id
 
@@ -270,9 +271,11 @@ def push_doc(message):
 
 	# get text from message
 	file_id = message.document.file_id
-	with requests.get(f'https://api.telegram.org/file/bot{0}/{1}'.format(API_TOKEN,file_id)) as f:
-		text = open(f, 'r')
+	file_info = bot.get_file(file_id)
 
+	with requests.get(f'https://api.telegram.org/file/bot{API_TOKEN}/{file_info.file_path}') as resp:
+		text = resp.content
+	
 	# send out to all users
 	users = db_objects.User.all_in_db()
 	if not users:
@@ -280,14 +283,13 @@ def push_doc(message):
 		return
 	for user in users:
 		logging.debug(f"sending to: {user.u_id}")
-		send_template(user.u_id, render_template(text))
+		send_template(user.u_id, text)
 
 # @bot.message_handler(content_types=['document'])
 # def receive_document(message):
 #
 #	""" when the bot receives a document, it returns its id """
 #	u_id = message.from_user.id
-#	bot.reply_to(message, f'Received Document with ID {message.document.file_id}')
 
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
