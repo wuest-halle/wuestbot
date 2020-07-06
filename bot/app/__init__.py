@@ -268,6 +268,9 @@ def push_doc(message):
 		return
 
 	# check mime type
+	if message.document.mime_type != 'text/html':
+		bot.reply_to(message, "Please provide an HTML formatted document")
+		return
 
 	# get text from message
 	file_id = message.document.file_id
