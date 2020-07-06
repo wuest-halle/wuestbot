@@ -288,12 +288,6 @@ def push_doc(message):
 		logging.debug(f"sending to: {user.u_id}")
 		send_template(user.u_id, text)
 
-# @bot.message_handler(content_types=['document'])
-# def receive_document(message):
-#
-#	""" when the bot receives a document, it returns its id """
-#	u_id = message.from_user.id
-
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
 def artist(message, name):
