@@ -1,0 +1,26 @@
+*, ::before ::after {
+    box-sizing: border-box;
+}
+
+.content {
+    width: 100%;
+}
+
+.content-box {
+    display: flex;
+    background-color: rgba( 0, 0, 0, 0.5);
+}
+
+.content-link a {
+    text-emphasis: none;
+    text-decoration: none;
+}
+
+.content-link {
+    display: flex;
+}
+
+.attach-bottom {
+    position: fixed;
+    bottom: 10px;
+}
