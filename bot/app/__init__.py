@@ -230,7 +230,7 @@ def push(message):
 			return
 		for user in users:
 			logging.debug(f"sending to: {user.u_id}")
-			send_template(user.u_id, render_template('intermediate.html'))
+			send_template(user.u_id, render_template('next_event.html'))
 
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
