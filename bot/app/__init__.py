@@ -170,7 +170,7 @@ def next_event(message):
 	u_id = message.from_user.id
 
 	with app.app_context():
-		bot.send_message(u_id, render_template('intermediate.html'))
+		bot.send_message(u_id, render_template('next_event.html'))
 	# send_next_event(message.from_user.id)
 
 @bot.message_handler(commands=['delete', 'cancel', 'remove'])
