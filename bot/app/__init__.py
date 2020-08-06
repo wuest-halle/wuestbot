@@ -18,11 +18,12 @@ unknown commands, even when providing a default message (not sure y though)
 
 import os
 import logging
-import telebot
+from telebot import TeleBot, types
 
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from traceback import print_exc
+import requests 
 
 from app.database import db_objects
 
@@ -35,7 +36,7 @@ API_TOKEN = os.getenv('API_TOKEN', '')
 ADMINS = os.getenv('ADMINS', '')
 
 app = Flask(__name__)
-bot = telebot.TeleBot(API_TOKEN)
+bot = TeleBot(API_TOKEN)
 
 img_dir = os.path.abspath('../bot/app/img')
 
@@ -80,6 +81,28 @@ def send_template(u_id, template):
 			text=template,
 			parse_mode='html'
 		)
+
+def keys(status):
+	""" provides markup keyboards for the specified type of user,
+	currently only admins
+
+	Arguments:
+		* status (str): status of the user requesting the keyboard,
+		currently only 'admin' is allowed
+
+	Returns:
+		KeyboardMarkup object if proper status is defined
+	"""
+
+	if status == 'admin':
+		keyb = types.ReplyKeyboardMarkup()
+		opt_1 = types.KeyboardButton('a')
+		opt_2 = types.KeyboardButton('z')
+		keyb.add(opt_1, opt_2)
+		return keyb
+
+	else:
+		logging.error("No proper status for keyboard defined")
 
 def send_next_event(u_id):
 	"""Sends the event with the highest eventID.
@@ -231,6 +254,39 @@ def push(message):
 			logging.debug(f"sending to: {user.u_id}")
 			send_template(user.u_id, render_template('intermediate.html'))
 
+# @bot.message_handler(commands=['push_doc'])
+@bot.message_handler(func=lambda message: message.caption == '/push_doc', content_types=['document'])
+def push_doc(message):
+	""" pushes content of a text document """
+
+	u_id = message.from_user.id
+
+	# check for user authorization
+	if not authorize(u_id):
+		bot.reply_to(message, "You cannot do that!")
+		return
+
+	# check mime type
+	if message.document.mime_type != 'text/html':
+		bot.reply_to(message, "Please provide an HTML formatted document")
+		return
+
+	# get text from message
+	file_id = message.document.file_id
+	file_info = bot.get_file(file_id)
+
+	with requests.get(f'https://api.telegram.org/file/bot{API_TOKEN}/{file_info.file_path}') as resp:
+		text = resp.content
+	
+	# send out to all users
+	users = db_objects.User.all_in_db()
+	if not users:
+		send_template(u_id, 'No users found.')
+		return
+	for user in users:
+		logging.debug(f"sending to: {user.u_id}")
+		send_template(user.u_id, text)
+
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
 def artist(message, name):
@@ -273,6 +329,33 @@ def artist(message, name):
 		except Exception as e:
 			logging.error(e)
 			return render_template('none.html')
+
+
+def authorize(u_id):
+	""" checks for admin authorization 
+
+	Arguments:
+		* u_id (str): user's id
+
+	Returns:
+		* True, if user is admin
+		* False otherwise
+	"""
+
+	with app.app_context():
+		# Admin check. Templates during those checks will be sent to
+		# the caller, not to the users.
+		admins = get_admin_ids(ADMINS)
+		if not admins:
+			logging.error("No admins provided")
+			send_template(u_id, render_template('none.html'))
+			return False
+		if str(u_id) not in admins:
+			logging.warn(f"Not authorized: '{u_id}' not in {admins}")
+			send_template(u_id, render_template('404.html'))
+			return False
+
+	return True	
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
