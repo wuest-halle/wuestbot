@@ -23,7 +23,7 @@ from telebot import TeleBot, types
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from traceback import print_exc
-import requests 
+import requests
 
 from app.database import db_objects
 
@@ -77,10 +77,13 @@ def send_template(u_id, template):
 		template_name (str): The randered template to send.
 	"""
 	with app.app_context():
-		bot.send_message(u_id,
-			text=template,
-			parse_mode='html'
-		)
+		try:
+			bot.send_message(u_id,
+				text=template,
+				parse_mode='html'
+			)
+		except Exception as e:
+			pex(f"unable to send message: {e}")
 
 def keys(status):
 	""" provides markup keyboards for the specified type of user,
@@ -277,7 +280,7 @@ def push_doc(message):
 
 	with requests.get(f'https://api.telegram.org/file/bot{API_TOKEN}/{file_info.file_path}') as resp:
 		text = resp.content
-	
+
 	# send out to all users
 	users = db_objects.User.all_in_db()
 	if not users:
@@ -332,7 +335,7 @@ def artist(message, name):
 
 
 def authorize(u_id):
-	""" checks for admin authorization 
+	""" checks for admin authorization
 
 	Arguments:
 		* u_id (str): user's id
@@ -355,7 +358,7 @@ def authorize(u_id):
 			send_template(u_id, render_template('404.html'))
 			return False
 
-	return True	
+	return True
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
