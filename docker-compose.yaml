@@ -1,0 +1,9 @@
+version: '3'
+services: 
+
+  website:
+    build: ./serv
+    image: server
+    ports:
+      - "80:80"
+#      - "443:80"
