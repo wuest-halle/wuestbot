@@ -1,0 +1,599 @@
+.v1 {
+ display:inline-block;
+ vertical-align:top
+}
+.ps1 {
+ position:relative;
+ margin-left:0;
+ margin-top:16px
+}
+.s1 {
+ min-width:274px;
+ width:274px;
+ min-height:270px
+}
+.c1 {
+ z-index:3;
+ pointer-events:auto
+}
+.f1 {
+ padding-top:135px;
+ padding-bottom:135px;
+ margin-top:0;
+ margin-bottom:0;
+ line-height:0
+}
+.btn1 {
+ border:0;
+ background-image:url(../images/cass-insert-single-front-up-_knack-001-274.jpg);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn1:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn1:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.v2 {
+ display:inline-block;
+ overflow:hidden;
+ outline:0
+}
+.s2 {
+ width:274px;
+ padding-right:0;
+ height:0
+}
+.ps2 {
+ position:relative;
+ margin-left:25px;
+ margin-top:30px
+}
+.s3 {
+ min-width:274px;
+ width:274px;
+ min-height:39px
+}
+.ps3 {
+ position:relative;
+ margin-left:0;
+ margin-top:4px
+}
+.s4 {
+ min-width:30px;
+ width:30px;
+ min-height:30px
+}
+.c3 {
+ z-index:4;
+ pointer-events:auto
+}
+.f2 {
+ padding-top:15px;
+ padding-bottom:15px;
+ margin-top:0;
+ margin-bottom:0;
+ line-height:0
+}
+.btn2 {
+ border:0;
+ background-image:url(../images/facebook-app-logo-30.png);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn2:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn2:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.s5 {
+ width:30px;
+ padding-right:0;
+ height:0
+}
+.ps4 {
+ position:relative;
+ margin-left:8px;
+ margin-top:0
+}
+.s6 {
+ min-width:43px;
+ width:43px;
+ min-height:39px
+}
+.c4 {
+ z-index:5;
+ pointer-events:auto
+}
+.f3 {
+ padding-top:20px;
+ padding-bottom:19px;
+ margin-top:0;
+ margin-bottom:0;
+ line-height:0
+}
+.btn3 {
+ border:0;
+ background-image:url(../images/icon-39.png);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn3:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn3:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.s7 {
+ width:43px;
+ padding-right:0;
+ height:0
+}
+.ps5 {
+ position:relative;
+ margin-left:0;
+ margin-top:3px
+}
+.s8 {
+ min-width:43px;
+ width:43px;
+ min-height:31px
+}
+.c5 {
+ z-index:7;
+ pointer-events:auto
+}
+.f4 {
+ padding-top:16px;
+ padding-bottom:15px;
+ margin-top:0;
+ margin-bottom:0;
+ line-height:0
+}
+.btn4 {
+ border:0;
+ background-image:url(../images/sc-31.jpg);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn4:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn4:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.ps6 {
+ position:relative;
+ margin-left:-2px;
+ margin-top:2px
+}
+.s9 {
+ min-width:37px;
+ width:37px;
+ min-height:32px
+}
+.c6 {
+ z-index:8;
+ pointer-events:auto
+}
+.f5 {
+ padding-top:16px;
+ padding-bottom:16px;
+ margin-top:0;
+ margin-bottom:0;
+ line-height:0
+}
+.btn5 {
+ border:0;
+ background-image:url(../images/661d15679423e4f0337be670daa82078_icon-32.jpg);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn5:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn5:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.s10 {
+ width:37px;
+ padding-right:0;
+ height:0
+}
+.ps7 {
+ position:relative;
+ margin-left:5px;
+ margin-top:3px
+}
+.s11 {
+ min-width:32px;
+ width:32px;
+ min-height:31px
+}
+.c7 {
+ z-index:9;
+ pointer-events:auto
+}
+.btn6 {
+ border:0;
+ background-image:url(../images/icon0-vector-458-01-31.jpg);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn6:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn6:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.s12 {
+ width:32px;
+ padding-right:0;
+ height:0
+}
+.s13 {
+ min-width:33px;
+ width:33px;
+ min-height:31px
+}
+.c8 {
+ z-index:10;
+ pointer-events:auto
+}
+.btn7 {
+ border:0;
+ background-image:url(../images/kisspng-computer-icons-icon-design-encapsulated-postscript-more-info-icon-5b4fcee5221525.1405874515319569651396-31.png);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn7:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn7:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+.s14 {
+ width:33px;
+ padding-right:0;
+ height:0
+}
+.ps8 {
+ position:relative;
+ margin-left:7px;
+ margin-top:3px
+}
+.c9 {
+ z-index:11;
+ pointer-events:auto
+}
+.btn8 {
+ border:0;
+ background-image:url(../images/kisspng-computer-icons-icon-design-encapsulated-postscript-more-info-icon-5b4fcee5221525.1405874515319569651396-31.png);
+ background-color:transparent;
+ background-repeat:no-repeat;
+ background-position:50% 50%;
+ background-size:contain;
+ background-clip:padding-box
+}
+.btn8:hover {
+ background-color:#82939e;
+ border-color:#000;
+ color:#000
+}
+.btn8:active {
+ background-color:#52646f;
+ border-color:#000;
+ color:#fff
+}
+@media (-webkit-min-device-pixel-ratio:2), (min-resolution:192dpi) {
+ .btn1 {
+  background-image:url(../images/cass-insert-single-front-up-_knack-001-548.jpg);
+  background-size:contain
+ }
+ .btn2 {
+  background-image:url(../images/facebook-app-logo-60.png);
+  background-size:contain
+ }
+ .btn3 {
+  background-image:url(../images/icon-78.png);
+  background-size:contain
+ }
+ .btn4 {
+  background-image:url(../images/sc-62.jpg);
+  background-size:contain
+ }
+ .btn5 {
+  background-image:url(../images/661d15679423e4f0337be670daa82078_icon-64.jpg);
+  background-size:contain
+ }
+ .btn6 {
+  background-image:url(../images/icon0-vector-458-01-62.jpg);
+  background-size:contain
+ }
+ .btn7 {
+  background-image:url(../images/kisspng-computer-icons-icon-design-encapsulated-postscript-more-info-icon-5b4fcee5221525.1405874515319569651396-62.png);
+  background-size:contain
+ }
+ .btn8 {
+  background-image:url(../images/kisspng-computer-icons-icon-design-encapsulated-postscript-more-info-icon-5b4fcee5221525.1405874515319569651396-62.png);
+  background-size:contain
+ }
+}
+@font-face {
+ font-display:block;
+ font-family:"Lato";
+ src:url('Lato-Regular.woff2') format('woff2'),
+ url('Lato-Regular.woff') format('woff');
+ font-weight:400
+}
+.animated {
+ -webkit-animation-fill-mode:both;
+ animation-fill-mode:both
+}
+.animated.infinite {
+ -webkit-animation-iteration-count:infinite;
+ animation-iteration-count:infinite
+}
+@-webkit-keyframes flash {
+ from,
+ 50%,
+ to {
+  opacity:1
+ }
+ 25%,
+ 75% {
+  opacity:0
+ }
+}
+@keyframes flash {
+ from,
+ 50%,
+ to {
+  opacity:1
+ }
+ 25%,
+ 75% {
+  opacity:0
+ }
+}
+.flash {
+ -webkit-animation-name:flash;
+ animation-name:flash
+}
+@font-face {
+ font-display:block;
+ font-family:"Biryani";
+ src:url('Biryani-Black.woff') format('woff');
+ font-weight:900
+}
+.v16 {
+ display:inline-block;
+ vertical-align:top;
+ overflow:hidden
+}
+.ps23 {
+ position:relative;
+ margin-left:102px;
+ margin-top:418px
+}
+.s35 {
+ min-width:858px;
+ width:858px;
+ min-height:240px;
+ height:240px
+}
+.c18 {
+ z-index:6;
+ pointer-events:auto
+}
+.p2 {
+ padding-top:0;
+ text-indent:0;
+ padding-bottom:0;
+ padding-right:0;
+ text-align:left
+}
+.f9 {
+ font-family:Biryani;
+ font-size:22px;
+ font-weight:900;
+ font-style:normal;
+ text-decoration:none;
+ text-transform:none;
+ color:#000;
+ background-color:initial;
+ line-height:38px;
+ letter-spacing:normal;
+ text-shadow:none
+}
+.p3 {
+ padding-top:0;
+ text-indent:0;
+ padding-bottom:0;
+ padding-right:0;
+ text-align:justify
+}
+.f10 {
+ font-family:Biryani;
+ font-size:15px;
+ font-weight:900;
+ font-style:normal;
+ text-decoration:none;
+ text-transform:none;
+ color:#000;
+ background-color:initial;
+ line-height:27px;
+ letter-spacing:normal;
+ text-shadow:none
+}
+.ps24 {
+ position:relative;
+ margin-left:102px;
+ margin-top:246px
+}
+.s36 {
+ min-width:858px;
+ width:858px;
+ min-height:493px;
+ height:493px
+}
+.c19 {
+ z-index:12;
+ pointer-events:auto
+}
+.ps25 {
+ position:relative;
+ margin-left:102px;
+ margin-top:231px
+}
+.s37 {
+ min-width:848px;
+ width:848px;
+ min-height:93px;
+ height:93px
+}
+.f11 {
+ font-family:Biryani;
+ font-size:11px;
+ font-weight:900;
+ font-style:normal;
+ text-decoration:none;
+ text-transform:none;
+ color:#000;
+ background-color:initial;
+ line-height:19px;
+ letter-spacing:normal;
+ text-shadow:none
+}
+.ps26 {
+ position:relative;
+ margin-left:101px;
+ margin-top:31px
+}
+.s38 {
+ min-width:849px;
+ width:849px;
+ min-height:54px
+}
+.c20 {
+ z-index:13;
+ pointer-events:auto
+}
+.pl1 .plyr {
+ min-width:0
+}
+.pl1 .plyr__controls {
+ border:solid thin #d1dee1
+}
+.pl1 .plyr--audio .plyr__controls {
+ background:rgb(48,48,48)
+}
+.pl1 .plyr__controls button {
+ color:rgb(255,255,255)
+}
+.pl1 .plyr__controls .plyr__time--current {
+ color:rgb(255,255,255)
+}
+.pl1 .plyr--full-ui input[type=range] {
+ color:rgb(0,0,0)
+}
+.pl1 .plyr--audio .plyr__control:hover {
+ background:rgb(0,0,0)
+}
+.audio1 {
+ width:849px;
+ height:54px
+}
+.ps27 {
+ position:relative;
+ margin-left:102px;
+ margin-top:296px
+}
+.s39 {
+ min-width:848px;
+ width:848px;
+ min-height:73px;
+ height:73px
+}
+.c21 {
+ z-index:14;
+ pointer-events:auto
+}
+.ps28 {
+ position:relative;
+ margin-left:102px;
+ margin-top:383px
+}
+.s40 {
+ min-width:848px;
+ width:848px;
+ min-height:119px;
+ height:119px
+}
+.ps29 {
+ position:relative;
+ margin-left:9px;
+ margin-top:621px
+}
+.s41 {
+ min-width:1px;
+ width:1px;
+ min-height:15px
+}
+.c22 {
+ z-index:10;
+ border:0;
+ background-color:#fff;
+ background-clip:padding-box
+}
