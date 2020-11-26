@@ -1,172 +1,727 @@
-<!-- <!DOCTYPE html>
-
+<!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="css/content.css" >
+    <meta charset="UTF-8">
+    <title>wuest</title>
+    <meta name="referrer" content="same-origin">
+    <meta name="viewport" content="width=960">
+    <style>
+        .anim {
+            visibility: hidden;
+            text-decoration: blink;
+        }
+    </style>
+    <style>
+        html,
+        body {
+            -webkit-text-zoom: reset !important;
+            -ms-text-size-adjust: none !important;
+            -moz-text-size-adjust: none !important;
+            -webkit-text-size-adjust: none !important
+        }
+
+        @font-face {
+            font-display: block;
+            font-family: "Biryani";
+            src: url('css/Biryani-Black.woff') format('woff');
+            font-weight: 900
+        }
+
+        body>div {
+            font-size: 0
+        }
+
+        p,
+        span,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+            word-spacing: normal;
+            word-wrap: break-word;
+            -ms-word-wrap: break-word;
+            pointer-events: auto;
+            max-height: 1000000000px
+        }
+
+        sup {
+            font-size: inherit;
+            vertical-align: baseline;
+            position: relative;
+            top: -0.4em
+        }
+
+        sub {
+            font-size: inherit;
+            vertical-align: baseline;
+            position: relative;
+            top: 0.4em
+        }
+
+        ul {
+            display: block;
+            word-spacing: normal;
+            word-wrap: break-word;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            -moz-padding-start: 0;
+            -khtml-padding-start: 0;
+            -webkit-padding-start: 0;
+            -o-padding-start: 0;
+            -padding-start: 0;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0
+        }
+
+        li {
+            display: block;
+            white-space: normal
+        }
+
+        li p {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none
+        }
+
+        form {
+            display: inline-block
+        }
+
+        a {
+            text-decoration: inherit;
+            color: inherit;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        }
+
+        textarea {
+            resize: none
+        }
+
+        .shm-l {
+            float: left;
+            clear: left
+        }
+
+        .shm-r {
+            float: right;
+            clear: right
+        }
+
+        .whitespacefix {
+            word-spacing: -1px
+        }
+
+        html {
+            font-family: sans-serif
+        }
+
+        body {
+            font-size: 0;
+            margin: 0
+        }
+
+        audio,
+        video {
+            display: inline-block;
+            vertical-align: baseline
+        }
+
+        audio:not([controls]) {
+            display: none;
+            height: 0
+        }
+
+        [hidden],
+        template {
+            display: none
+        }
+
+        a {
+            background: 0 0;
+            outline: 0
+        }
+
+        b,
+        strong {
+            font-weight: 700
+        }
+
+        dfn {
+            font-style: italic
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 1em;
+            line-height: 1;
+            margin: 0
+        }
+
+        img {
+            border: 0
+        }
+
+        svg:not(:root) {
+            overflow: hidden
+        }
+
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0
+        }
+
+        button {
+            overflow: visible
+        }
+
+        button,
+        select {
+            text-transform: none
+        }
+
+        button,
+        html input[type=button],
+        input[type=submit] {
+            -webkit-appearance: button;
+            cursor: pointer;
+            box-sizing: border-box;
+            white-space: normal
+        }
+
+        input[type=password],
+        input[type=text],
+        textarea {
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box
+        }
+
+        button[disabled],
+        html input[disabled] {
+            cursor: default
+        }
+
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0
+        }
+
+        input {
+            line-height: normal;
+            border-radius: 0
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            box-sizing: border-box;
+            padding: 0
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            height: auto
+        }
+
+        input[type=search] {
+            -webkit-appearance: textfield;
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box
+        }
+
+        input[type=search]::-webkit-search-cancel-button,
+        input[type=search]::-webkit-search-decoration {
+            -webkit-appearance: none
+        }
+
+        textarea {
+            overflow: auto;
+            box-sizing: border-box;
+            border-color: #ddd
+        }
+
+        optgroup {
+            font-weight: 700
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        td,
+        th {
+            padding: 0
+        }
+
+        :-webkit-full-screen-ancestor:not(iframe) {
+            -webkit-clip-path: initial !important
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @-webkit-keyframes flash {
+
+            from,
+            50%,
+            to {
+                opacity: 1
+            }
+
+            25%,
+            75% {
+                opacity: 0
+            }
+        }
+
+        @keyframes flash {
+
+            from,
+            50%,
+            to {
+                opacity: 1
+            }
+
+            25%,
+            75% {
+                opacity: 0
+            }
+        }
+
+        .flash {
+            -webkit-animation-name: flash;
+            animation-name: flash
+        }
+
+        .animated {
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both
+        }
+
+        .animated.infinite {
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite
+        }
+
+        #b {
+            background-color: #fff
+        }
+
+        .ps30 {
+            position: relative;
+            margin-top: 0
+        }
+
+        .v17 {
+            display: block;
+            *display: block;
+            zoom: 1;
+            vertical-align: top
+        }
+
+        .s42 {
+            pointer-events: none;
+            min-width: 960px;
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .v18 {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            vertical-align: top
+        }
+
+        .ps31 {
+            position: relative;
+            margin-left: 0;
+            margin-top: 0
+        }
+
+        .s43 {
+            min-width: 960px;
+            width: 960px;
+            min-height: 1039px
+        }
+
+        .w1 {
+            line-height: 0
+        }
+
+        .v19 {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            vertical-align: top;
+            overflow: hidden
+        }
+
+        .s44 {
+            min-width: 960px;
+            width: 960px;
+            min-height: 195px;
+            height: 195px
+        }
+
+        .c24 {
+            z-index: 8;
+            pointer-events: auto
+        }
+
+        .p4 {
+            padding-top: 0;
+            padding-bottom: 0;
+            text-align: left;
+            text-indent: 0;
+            padding-right: 0
+        }
+
+        .f12 {
+            font-family: Biryani;
+            font-size: 75px;
+            font-weight: 900;
+            font-style: normal;
+            text-decoration: none;
+            text-transform: none;
+            color: #fff;
+            background-color: initial;
+            line-height: 185px;
+            letter-spacing: normal;
+            text-shadow: none
+        }
+
+        .f13 {
+            font-family: Biryani;
+            font-size: 39px;
+            font-weight: 900;
+            font-style: normal;
+            text-decoration: none;
+            text-transform: none;
+            color: #fff;
+            background-color: initial;
+            line-height: 97px;
+            letter-spacing: normal;
+            text-shadow: none
+        }
+
+        .ps32 {
+            position: relative;
+            margin-left: 0;
+            margin-top: -170px
+        }
+
+        .s45 {
+            min-width: 960px;
+            width: 960px;
+            min-height: 106px
+        }
+
+        .c25 {
+            z-index: 5;
+            border: 0;
+            background-color: #000;
+            background-clip: padding-box
+        }
+
+        .ps33 {
+            position: relative;
+            margin-left: 101px;
+            margin-top: -40px
+        }
+
+        .s46 {
+            min-width: 31px;
+            width: 31px;
+            min-height: 838px;
+            height: 838px
+        }
+
+        .c26 {
+            z-index: 1;
+            pointer-events: auto
+        }
+
+        .p5 {
+            padding-top: 0;
+            text-indent: 0;
+            padding-bottom: 0;
+            padding-right: 0;
+            text-align: center
+        }
+
+        .f14 {
+            font-family: Biryani;
+            font-size: 22px;
+            font-weight: 900;
+            font-style: normal;
+            text-decoration: none;
+            text-transform: none;
+            color: #000;
+            background-color: initial;
+            line-height: 54px;
+            letter-spacing: normal;
+            text-shadow: none
+        }
+
+        .ps34 {
+            position: relative;
+            margin-left: 209px;
+            margin-top: -40px
+        }
+
+        .s47 {
+            min-width: 31px;
+            width: 31px;
+            min-height: 594px;
+            height: 594px
+        }
+
+        .c27 {
+            z-index: 2;
+            pointer-events: auto
+        }
+
+        .s48 {
+            min-width: 31px;
+            width: 31px;
+            min-height: 403px;
+            height: 403px
+        }
+
+        .c28 {
+            z-index: 3;
+            pointer-events: auto
+        }
+
+        .s49 {
+            min-width: 31px;
+            width: 31px;
+            min-height: 756px;
+            height: 756px
+        }
+
+        .c29 {
+            z-index: 4;
+            pointer-events: auto
+        }
+
+        .ps35 {
+            position: relative;
+            margin-left: 108px;
+            margin-top: -573px
+        }
+
+        .s50 {
+            min-width: 778px;
+            width: 778px;
+            min-height: 619px;
+            height: 619px
+        }
+
+        .c30 {
+            z-index: 11;
+            pointer-events: auto
+        }
+
+        .i1 {
+            position: absolute;
+            left: 11px;
+            min-width: 755px;
+            max-width: 755px;
+            min-height: 619px;
+            max-height: 619px;
+            top: 0
+        }
+    </style>
+    <script>function ens(e) { e.setAttribute("onload", null), e.media = "all", e.rel = "stylesheet"; var t = window.location.hash; t.length > 1 && setTimeout(function () { var e = document.querySelectorAll('[name="' + t.slice(1) + '"]')[0], o = 0; if (e.offsetParent) do { o += e.offsetTop } while (e = e.offsetParent); window.scrollTo(0, o) }, 100) }
+    </script>
+    <link as="style" onload="ens(this)" rel="preload" href="css/site.975fe7.css">
+    <noscript>
+        <link rel="stylesheet" href="css/site.975fe7.css"></noscript>
+    <!--[if lte IE 7]>
+<link rel="stylesheet" href="css/site.975fe7-lteIE7.css" type="text/css">
+<![endif]-->
+    <link as="style" onload="ens(this)" rel="preload" href="css/plyr3.4555f4.css">
+    <noscript>
+        <link rel="stylesheet" href="css/plyr3.4555f4.css"></noscript>
+    <script>!function (t) { var e = !1; try { e = t.document.createElement("link").relList.supports("preload") } catch (t) { } if (!e) for (var n = t.document.getElementsByTagName("link"), a = 0; a < n.length; a++) { var r = n[a]; "preload" === r.rel && "style" === r.getAttribute("as") && function (t) { function e() { t.getAttribute("data-l") || (t.setAttribute("data-l", !0), t.addEventListener ? t.removeEventListener("load", e) : t.attachEvent && t.detachEvent("onload", e), ens(t)) } t.addEventListener ? t.addEventListener("load", e) : t.attachEvent && t.attachEvent("onload", e), setTimeout(function () { t.rel = "stylesheet", t.media = "nl x" }), setTimeout(e, 3e3) }(r) } }(this);
+    </script>
 </head>
 
-<body>
-    <div class="content">
-        <div class="content-box">
-            CONTENT
-            <div class="content-link attach-bottom">
-                <a href="imprint.html">IMPRINT</a>
+<body id="b">
+    <div class="ps30 v17 s42">
+        <div class="v18 ps31 s43 c23">
+            <div class="v18 ps31 s43 w1">
+                <div class="js1 v19 ps31 s44 c24">
+                    <a href="#routines">
+                        <p class="p4"><span class="f12"> R  O  U  T  I  N  E  S   </span>
+                            <span class="f13">OPEN CALL</span></p>
+                    </a>
+                </div>
+                <div class="v18 ps32 s45 c25"></div>
+                <div class="v19 ps33 s46 c26">
+                    <a href="#projects">
+                        <p class="p5 f14">P</p>
+                        <p class="p5 f14">R</p>
+                        <p class="p5 f14">O</p>
+                        <p class="p5 f14">J</p>
+                        <p class="p5 f14">E</p>
+                        <p class="p5 f14">C</p>
+                        <p class="p5 f14">T</p>
+                        <p class="p5 f14">S</p>
+                        <p class="p5 f14"><br></p>
+                    </a>
+                </div>
+                <div class="v19 ps34 s47 c27">
+                    <a href="#sound">
+                        <p class="p5 f14">S</p>
+                        <p class="p5 f14">O</p>
+                        <p class="p5 f14">U</p>
+                        <p class="p5 f14">N</p>
+                        <p class="p5 f14">D</p>
+                    </a>
+                </div>
+                <div class="v19 ps34 s48 c28">
+                    <a href="#contact">
+                        <p class="p5 f14">C</p>
+                        <p class="p5 f14">O</p>
+                        <p class="p5 f14">N</p>
+                        <p class="p5 f14">T</p>
+                        <p class="p5 f14">A</p>
+                        <p class="p5 f14">C</p>
+                        <p class="p5 f14">T</p>
+                    </a>
+                </div>
+                <div class="v19 ps34 s49 c29">
+                    <a href="#imprint">
+                        <p class="p5 f14">I<p>
+                        <p class="p5 f14">M<p>
+                        <p class="p5 f14">P<p>
+                        <p class="p5 f14">R<p>
+                        <p class="p5 f14">I<p>
+                        <p class="p5 f14">N<p>
+                        <p class="p5 f14">T<p>
+                    </a>
+                </div>
+                <div class="v18 ps35 s50 c30">
+                    <svg version="1.1" viewBox="0 0 266 218" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="11.34" d="M378.134 702.192l-7.292-108.283 -92.056 138.032 37.859-151.675 -119.548 106.53 25.041-135.887 -66.955 49.245" transform="translate(-134-531)"/>
+                    <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-linecap="square" stroke-linejoin="bevel" stroke-width="11.34" d="M378.134 702.192l-7.292-108.283 -92.056 138.032 37.859-151.675 -119.548 106.53 25.041-135.887 -66.955 49.245" transform="translate(-134-531)"/>
+                    </svg>
+                </div>
             </div>
         </div>
+        <div class="v16 ps23 s35 c18" id=routines>
+            <p class="p2 f9">ROUTINES</p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10">DAS HIER IST EIN PLATZHALTER</p>
+            <p class="p3 f10">DAS HIER IST EIN PLATZHALTER</p>
+            <p class="p3 f10">DAS HIER IST EIN PLATZHALTER</p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10">LINK 1</p>
+            <p class="p3 f10">LINK 2</p>
+        </div>
+        <div class="v16 ps24 s36 c19">
+            <p class="p2 f9" id="projects">P  R  O  J  E  C  T  S</p>
+            <p class="p3 f10"><a href="https://fb.me/e/cEk5VlDRK" target="_blank" rel="noopener">WUK | HALLE (SAALE) |
+                    08 | 08 | 20</a><span class="f10"> | #SEHRKOMISCHEZEITEN</span></p>
+            <p class="p3 f10"><a href="http://laureboer.com" target="_blank" rel="noopener">LAURE BOER</a><span
+                    class="f10"> | </span><span class="f10"><a href="https://npiece.com/judith-crasser?l=de"
+                        target="_blank" rel="noopener">JUDITH CRASSER</a></span><span class="f10"> | </span><span
+                    class="f10"><a href="https://soundcloud.com/alto_bloom" target="_blank" rel="noopener">ALTO
+                        BLOOM</a></span></p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><a href="https://fb.me/e/1RsAmMZP7" target="_blank" rel="noopener">STADTBAD | HALLE
+                    (SAALE) | 07 | 12 | 19 </a></p>
+            <p class="p3 f10"><a href="https://soundcloud.com/ikusakan" target="_blank" rel="noopener">IKU
+                    SAKAN</a><span class="f10"> | </span><span class="f10"><a href="http://asakomusic.com"
+                        target="_blank" rel="noopener">ASAKO FUJIMOTO</a></span><span class="f10"> | </span><span
+                    class="f10"><a href="soundcloud.com/neelie-3/" target="_blank" rel="noopener">NEELIE</a></span><span
+                    class="f10"> | </span><span class="f10"><a href="https://soundcloud.com/timrosenbaum"
+                        target="_blank" rel="noopener">TIM ROSENBAUM</a></span><span class="f10"> | </span><span
+                    class="f10"><a href="https://soundcloud.com/philippmatalla" target="_blank" rel="noopener">PHILIPP
+                        MATALLA</a></span></p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><a href="https://fb.me/e/34Ql5GfR6" target="_blank" rel="noopener">WUK | HALLE (SAALE) |
+                    07 | 06 | 19</a><span class="f10"> | #FUTURIII</span></p>
+            <p class="p3 f10"><a href="http://www.calumgunn.com" target="_blank" rel="noopener">CALUM GUNN</a><span
+                    class="f10"> | </span><span class="f10"><a href="https://soundcloud.com/fmpause" target="_blank"
+                        rel="noopener">FM PAUSE </a></span><span class="f10">| </span><span class="f10"><a
+                        href="https://ethbo.bandcamp.com/album/eel-hdd-ep" target="_blank" rel="noopener">EEL</a></span>
+            </p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><a href="https://fb.me/e/5868Tg1o9" target="_blank" rel="noopener"><br></a></p>
+            <p class="p3 f10"><a href="https://fb.me/e/5868Tg1o9" target="_blank" rel="noopener">WUK | HALLE (SAALE) |
+                    16 | 03 | 19</a><span class="f10"> | #BESSERLEBEN</span></p>
+            <p class="p3 f10"><a href="https://cass0.bandcamp.com" target="_blank" rel="noopener">CASS.</a><span
+                    class="f10"> | </span><span class="f10"><a href="https://soundcloud.com/rzrblds" target="_blank"
+                        rel="noopener">RZRBLDS</a></span><span class="f10"> | </span><span class="f10"><a
+                        href="https://soundcloud.com/jochen-lomidhigh" target="_blank"
+                        rel="noopener">LOMIDHIGH</a></span><span class="f10"> | </span><span class="f10"><a
+                        href="https://soundcloud.com/timrosenbaum" target="_blank" rel="noopener">TIM
+                        ROSENBAUM</a></span></p>
+            <p class="p3 f10"><br></p>
+        </div>
+        <div class="v16 ps25 s37 c5">
+            <p class="p2 f9" id="sound">S  O  U  N  D</p>
+            <p class="p2 f11"><br></p>
+            <p class="p3 f10">ASAKO FUJIMOTO | STADTBAD RECONSTRUCTED</p>
+        </div>
+        <div class="v1 ps26 s38 c20">
+            <div class="player js2 pl1">
+                <audio controls src="static/Asako Stadtbad JH Mastered 40min.wav" type="audio/mpeg3"
+                    preload="metadata" class="audio1">
+                </audio>
+            </div>
+        </div>
+        <div class="v16 ps27 s39 c21">
+            <p class="p2 f9" id="contact">C  O  N  T  A  C  T</p>
+            <p class="p3 f10">MAIL[AT]WUESTWUEST.DE | WWW.WUESTWUEST.DE | TELEGRAM: @WUESTBOT | IG: WUEST_HALLE</p>
+        </div>
+        <div class="v16 ps28 s40 c7">
+            <p class="p2 f9" id="imprint">I  M  P  R  I  N  T</p>
+            <p class="p2 f11"><br></p>
+            <p class="p3 f10">WUEST E.V. GEISTSTRASSE 20 06108 HALLE | REGISTERNR. VR 5746 | AMTSGERICHT STENDAL | SITZ
+                HALLE (SAALE) STEUERNR. Tab</p>
+        </div>
+        <div class="v1 ps29 s41 c22"></div>
     </div>
-    
+    <script>dpth = "/"; !function () { var s = ["js/jquery.4555f4.js", "js/woolite.4555f4.js", "js/plyr3.4555f4.js", "js/wuest.975fe7.js"], n = {}, j = 0, e = function (e) { var o = new XMLHttpRequest; o.open("GET", s[e], !0), o.onload = function () { if (n[e] = o.responseText, 4 == ++j) for (var t in s) { var i = document.createElement("script"); i.textContent = n[t], document.body.appendChild(i) } }, o.send() }; for (var o in s) e(o) }();
+    </script>
+    <script type="text/javascript">
+        var ver = RegExp(/Mozilla\/5\.0 \(Linux; .; Android ([\d.]+)/).exec(navigator.userAgent); if (ver && parseFloat(ver[1]) < 5) { document.getElementsByTagName('body')[0].className += ' whitespacefix'; }
+    </script>
+    <script type="text/javascript">
+        function flasher () {
+            var targ = document.getElementsByClassName('anim')
+        }
+    </script>
 </body>
-</html> -->
 
-<!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>wuestwuest</title>
-            <meta name="referrer" content="same-origin">
-            <script type="text/javascript" src=""></script>
-            <script type="text/javascript">
-                //<![CDATA[
-                !function()
-                    {var n,o=0,e=function(){window.history.replaceState({},"Sparkle Vorschau","/"),a(),n.onopen=function(n){window.clearInterval(o),o=0},n.onclose=function(n){t()},n.onmessage=function(n){parseFloat(n.data)>parseFloat("627920100.733345")&&document.location.reload()},n.onerror=function(n){t()}},t=function(){o||(o=setInterval(function(){n.close(),e()},500))},a=function(){clearInterval(o),o=0;var e=window.location,a="ws://"+e.hostname+(e.port?":"+e.port:"")+"/ws";n=new WebSocket(a),t()};window.addEventListener("load",e,!1)}();
-                //]]>
-            </script>
-            <meta name="viewport" content="width=960">
-            <style>.anim{visibility:hidden}</style>
-            <style>
-                html,body{
-                        -webkit-text-zoom:reset !important;
-                        -ms-text-size-adjust:none !important;
-                        -moz-text-size-adjust:none !important;
-                        -webkit-text-size-adjust:none !important}
-                @font-face{
-                        font-display:block;
-                        font-family:"Biryani";
-                        src:url('css/Biryani-Black.woff2') format('woff2'),url('css/Biryani-Black.woff') format('woff');
-                        font-weight:900}
-                        
-                body>div{font-size:0}
-                p, span,h1,h2,h3,h4,h5,h6{margin:0;word-spacing:normal;word-wrap:break-word;-ms-word-wrap:break-word;pointer-events:auto;max-height:1000000000px}sup{font-size:inherit;vertical-align:baseline;position:relative;top:-0.4em}sub{font-size:inherit;vertical-align:baseline;position:relative;top:0.4em}ul{display:block;word-spacing:normal;word-wrap:break-word;list-style-type:none;padding:0;margin:0;-moz-padding-start:0;-khtml-padding-start:0;-webkit-padding-start:0;-o-padding-start:0;-padding-start:0;-webkit-margin-before:0;-webkit-margin-after:0}li{display:block;white-space:normal}li p{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}form{display:inline-block}a{text-decoration:inherit;color:inherit;-webkit-tap-highlight-color:rgba(0,0,0,0)}textarea{resize:none}.shm-l{float:left;clear:left}.shm-r{float:right;clear:right}.whitespacefix{word-spacing:-1px}html{font-family:sans-serif}body{font-size:0;margin:0}audio,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background:0 0;outline:0}b,strong{font-weight:700}dfn{font-style:italic}h1,h2,h3,h4,h5,h6{font-size:1em;line-height:1;margin:0}img{border:0}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=submit]{-webkit-appearance:button;cursor:pointer;box-sizing:border-box;white-space:normal}input[type=password],input[type=text],textarea{-webkit-appearance:none;appearance:none;box-sizing:border-box}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal;border-radius:0}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}textarea{overflow:auto;box-sizing:border-box;border-color:#ddd}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}:-webkit-full-screen-ancestor:not(iframe){-webkit-clip-path:initial !important}
-            html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }@-webkit-keyframes flash{from,50%,to{opacity:1}25%,75%{opacity:0}}@keyframes flash{from,50%,to{opacity:1}25%,75%{opacity:0}}.flash{-webkit-animation-name:flash;animation-name:flash}.animated{-webkit-animation-fill-mode:both;animation-fill-mode:both}.animated.infinite{-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite}#b{background-color:#fff}.ps13{position:relative;margin-top:4px}.v13{display:block;*display:block;zoom:1;vertical-align:top}.s13{pointer-events:none;min-width:960px;width:960px;margin-left:auto;margin-right:auto}.v14{display:inline-block;*display:inline;zoom:1;vertical-align:top}.ps14{position:relative;margin-left:0;margin-top:0}.s14{min-width:960px;width:960px;min-height:1039px}.v15{display:inline-block;*display:inline;zoom:1;vertical-align:top}.ps15{position:relative;margin-left:0;margin-top:0}.s15{min-width:960px;width:960px;min-height:1039px}.w1{line-height:0}.v16{display:inline-block;*display:inline;zoom:1;vertical-align:top;overflow:hidden}.ps16{position:relative;margin-left:0;margin-top:0}.s16{min-width:960px;width:960px;min-height:195px;height:195px}.c9{z-index:8;pointer-events:auto}.p33{padding-top:0;padding-bottom:0;text-align:left;text-indent:0;padding-right:0}.f58{font-family:Biryani;font-size:75px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#fff;background-color:initial;line-height:185px;letter-spacing:normal;text-shadow:none}.f59{font-family:Biryani;font-size:39px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#fff;background-color:initial;line-height:97px;letter-spacing:normal;text-shadow:none}.v17{display:inline-block;*display:inline;zoom:1;vertical-align:top}.ps17{position:relative;margin-left:0;margin-top:-170px}.s17{min-width:960px;width:960px;min-height:106px}.c10{z-index:5;border:0;background-color:#000;background-clip:padding-box}.v18{display:inline-block;*display:inline;zoom:1;vertical-align:top;overflow:hidden}.ps18{position:relative;margin-left:101px;margin-top:-40px}.s18{min-width:31px;width:31px;min-height:838px;height:838px}.c11{z-index:1;pointer-events:auto}.p34{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f60{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p35{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f61{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p36{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f62{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p37{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f63{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p38{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f64{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p39{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f65{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p40{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f66{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p41{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f67{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p42{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f68{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.v19{display:inline-block;*display:inline;zoom:1;vertical-align:top;overflow:hidden}.ps19{position:relative;margin-left:209px;margin-top:-40px}.s19{min-width:31px;width:31px;min-height:594px;height:594px}.c12{z-index:2;pointer-events:auto}.p43{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f69{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p44{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f70{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p45{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f71{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p46{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f72{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p47{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f73{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.v20{display:inline-block;*display:inline;zoom:1;vertical-align:top;overflow:hidden}.ps20{position:relative;margin-left:209px;margin-top:-40px}.s20{min-width:31px;width:31px;min-height:403px;height:403px}.c13{z-index:3;pointer-events:auto}.p48{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f74{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p49{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f75{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p50{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f76{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p51{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f77{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p52{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f78{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p53{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f79{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p54{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f80{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.v21{display:inline-block;*display:inline;zoom:1;vertical-align:top;overflow:hidden}.ps21{position:relative;margin-left:209px;margin-top:-40px}.s21{min-width:31px;width:31px;min-height:756px;height:756px}.c14{z-index:4;pointer-events:auto}.p55{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f81{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p56{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f82{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p57{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f83{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p58{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f84{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p59{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f85{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p60{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f86{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.p61{padding-top:0;text-indent:0;padding-bottom:0;padding-right:0;text-align:center}.f87{font-family:Biryani;font-size:22px;font-weight:900;font-style:normal;text-decoration:none;text-transform:none;color:#000;background-color:initial;line-height:54px;letter-spacing:normal;text-shadow:none}.v22{display:inline-block;*display:inline;zoom:1;vertical-align:top}.ps22{position:relative;margin-left:108px;margin-top:-573px}.s22{min-width:778px;width:778px;min-height:619px;height:619px}.c15{z-index:11;pointer-events:auto}.i1{position:absolute;left:11px;min-width:755px;max-width:755px;min-height:619px;max-height:619px;top:0}</style>
-<script>function ens(e){e.setAttribute("onload",null),e.media="all",e.rel="stylesheet";var t=window.location.hash;t.length>1&&setTimeout(function(){var e=document.querySelectorAll('[name="'+t.slice(1)+'"]')[0],o=0;if(e.offsetParent)do{o+=e.offsetTop}while(e=e.offsetParent);window.scrollTo(0,o)},100)}
-</script>
-<link rel="stylesheet" href="" type="text/css">
-</head>
-<body id="b">
-<base href="">
-<link rel="stylesheet" href="" type="text/css">
-<!--[if lte IE 7]>
-<link rel="stylesheet" href="css/site.5804d6-lteIE7.css" type="text/css">
-<![endif]-->
-<div class="ps13 v13 s13">
-<div class="v14 ps14 s14 c8">
-<div class="v15 ps15 s15 w1">
-<div class="anim flash js1 v16 ps16 s16 c9">
-<p class="p33"><span class="f58"><a href=""> R  O  U  T  I  N  E  S   </a></span><span class="f59"><a href="">OPEN CALL</a></span></p>
-</div>
-<div class="v17 ps17 s17 c10"></div>
-<div class="v18 ps18 s18 c11">
-<p class="p34 f60"><a href="">P</a></p>
-<p class="p35 f61"><a href="">R</a></p>
-<p class="p36 f62"><a href="">O</a></p>
-<p class="p37 f63"><a href="">J</a></p>
-<p class="p38 f64"><a href="">E</a></p>
-<p class="p39 f65"><a href="">C</a></p>
-<p class="p40 f66"><a href="">T</a></p>
-<p class="p41 f67"><a href="">S</a></p>
-<p class="p42 f68"><a href=""><br></a></p>
-</div>
-<div class="v19 ps19 s19 c12">
-<p class="p43 f69"><a href="">S</a></p>
-<p class="p44 f70"><a href="">O</a></p>
-<p class="p45 f71"><a href="">U</a></p>
-<p class="p46 f72"><a href="">N</a></p>
-<p class="p47 f73"><a href="">D</a></p>
-</div>
-<div class="v20 ps20 s20 c13">
-<p class="p48 f74"><a href="">C</a></p>
-<p class="p49 f75"><a href="">O</a></p>
-<p class="p50 f76"><a href="">N</a></p>
-<p class="p51 f77"><a href="">T</a></p>
-<p class="p52 f78"><a href="">A</a></p>
-<p class="p53 f79"><a href="">C</a></p>
-<p class="p54 f80"><a href="">T</a></p>
-</div>
-<div class="v21 ps21 s21 c14">
-<p class="p55 f81"><a href="">I</a></p>
-<p class="p56 f82"><a href="">M</a></p>
-<p class="p57 f83"><a href="">P</a></p>
-<p class="p58 f84"><a href="">R</a></p>
-<p class="p59 f85"><a href="">I</a></p>
-<p class="p60 f86"><a href="">N</a></p>
-<p class="p61 f87"><a href="">T</a></p>
-</div>
-<div class="v22 ps22 s22 c15">
-<img src="" class="i1">
-</div>
-</div>
-</div>
-<a name="anchor5" class="v1 ps1 s1"></a>
-<div class="v2 ps2 s2 c1">
-<p class="p1 f1">ROUTINES</p>
-<p class="p2 f2"><br></p>
-<p class="p3 f3">DAS HIER IST EIN PLATZHALTER</p>
-<p class="p4 f4">DAS HIER IST EIN PLATZHALTER</p>
-<p class="p5 f5">DAS HIER IST EIN PLATZHALTER</p>
-<p class="p6 f6"><br></p>
-<p class="p7 f7">LINK 1</p>
-<p class="p8 f8">LINK 2</p>
-</div>
-<a name="anchor4" class="v3 ps3 s3"></a>
-<div class="v4 ps4 s4 c2">
-<p class="p9 f9">P  R  O  J  E  C  T  S</p>
-<p class="p10 f10"><a href="" target="_blank" rel="noopener">WUK | HALLE (SAALE) | 08 | 08 | 20</a><span class="f11"> | #SEHRKOMISCHEZEITEN</span></p>
-<p class="p11 f12"><a href="" target="_blank" rel="noopener">LAURE BOER</a><span class="f13"> | </span><span class="f14"><a href="" target="_blank" rel="noopener">JUDITH CRASSER</a></span><span class="f15"> | </span><span class="f16"><a href="" target="_blank" rel="noopener">ALTO BLOOM</a></span></p>
-<p class="p12 f17"><br></p>
-<p class="p13 f18"><br></p>
-<p class="p14 f19"><a href="" target="_blank" rel="noopener">STADTBAD | HALLE (SAALE) | 07 | 12 | 19 </a></p>
-<p class="p15 f20"><a href="" target="_blank" rel="noopener">IKU SAKAN</a><span class="f21"> | </span><span class="f22"><a href="" target="_blank" rel="noopener">ASAKO FUJIMOTO</a></span><span class="f23"> | </span><span class="f24"><a href="" target="_blank" rel="noopener">NEELIE</a></span><span class="f25"> | </span><span class="f26"><a href="" target="_blank" rel="noopener">TIM ROSENBAUM</a></span><span class="f27"> | </span><span class="f28"><a href="" target="_blank" rel="noopener">PHILIPP MATALLA</a></span></p>
-<p class="p16 f29"><br></p>
-<p class="p17 f30"><br></p>
-<p class="p18 f31"><a href="" target="_blank" rel="noopener">WUK | HALLE (SAALE) | 07 | 06 | 19</a><span class="f32"> | #FUTURIII</span></p>
-<p class="p19 f33"><a href="" target="_blank" rel="noopener">CALUM GUNN</a><span class="f34"> | </span><span class="f35"><a href="" target="_blank" rel="noopener">FM PAUSE </a></span><span class="f36">| </span><span class="f37"><a href="" target="_blank" rel="noopener">EEL</a></span></p>
-<p class="p20 f38"><br></p>
-<p class="p21 f39"><a href="" target="_blank" rel="noopener"><br></a></p>
-<p class="p22 f40"><a href="" target="_blank" rel="noopener">WUK | HALLE (SAALE) | 16 | 03 | 19</a><span class="f41"> | #BESSERLEBEN</span></p>
-<p class="p23 f42"><a href="" target="_blank" rel="noopener">CASS.</a><span class="f43"> | </span><span class="f44"><a href="" target="_blank" rel="noopener">RZRBLDS</a></span><span class="f45"> | </span><span class="f46"><a href="" target="_blank" rel="noopener">LOMIDHIGH</a></span><span class="f47"> | </span><span class="f48"><a href="" target="_blank" rel="noopener">TIM ROSENBAUM</a></span></p>
-<p class="p24 f49"><br></p>
-</div>
-<a name="anchor3" class="v5 ps5 s5"></a>
-<div class="v6 ps6 s6 c3">
-<p class="p25 f50">S  O  U  N  D</p>
-<p class="p26 f51"><br></p>
-<p class="p27 f52">ASAKO FUJIMOTO | STADTBAD RECONSTRUCTED</p>
-</div>
-<div class="v7 ps7 s7 c4">
-<div class="player js2 pl1">
-<audio style="display:none" controls src="" type="audio/mpeg3" preload="metadata" class="audio1">
-</audio>
-</div>
-</div>
-<a name="anchor2" class="v8 ps8 s8"></a>
-<div class="v9 ps9 s9 c5">
-<p class="p28 f53">C  O  N  T  A  C  T</p>
-<p class="p29 f54">WUESTWUEST AT GMX . DE | WWW.WUESTWUEST.DE | TELEGRAM: @WUESTBOT | IG: WUEST_HALLE</p>
-</div>
-<a name="anchor1" class="v10 ps10 s10"></a>
-<div class="v11 ps11 s11 c6">
-<p class="p30 f55">I  M  P  R  I  N  T</p>
-<p class="p31 f56"><br></p>
-<p class="p32 f57">WUEST E.V. GEISTSTRASSE 20 06108 HALLE | REGISTERNR. VR 5746 | AMTSGERICHT STENDAL | SITZ HALLE (SAALE) STEUERNR. Tab</p>
-</div>
-<div class="v12 ps12 s12 c7"></div>
-</div>
-<script>dpth="/"</script>
-<script type="text/javascript" src=""></script>
-<script type="text/javascript" src=""></script>
-<script type="text/javascript" src=""></script>
-<script type="text/javascript">
-var ver=RegExp(/Mozilla\/5\.0 \(Linux; .; Android ([\d.]+)/).exec(navigator.userAgent);if(ver&&parseFloat(ver[1])<5){document.getElementsByTagName('body')[0].className+=' whitespacefix';}
-</script>
-</body>
 </html>
