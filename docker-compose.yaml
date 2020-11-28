@@ -3,7 +3,7 @@ services:
 
   website:
     build: ./serv
-    image: server
+    image: server:latest
     ports:
       - "80:80"
 #      - "443:80"
