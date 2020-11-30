@@ -420,7 +420,7 @@
 .v16 {
  display:inline-block;
  vertical-align:top;
- overflow:hidden
+ /* overflow:hidden */
 }
 .ps23 {
  position:relative;
