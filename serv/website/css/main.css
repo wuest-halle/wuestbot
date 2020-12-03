@@ -1,0 +1,16 @@
+@font-face {
+    font-family: "Biryani";
+    src: url("Biryani-Black.woff") format("woff");
+}
+
+body {
+    font-family: "Biryani";
+}
+
+.hdr-evt {
+    margin: auto;
+    min-height: 150px;
+    width: 66.7vw;
+    background-color: black;
+    color: white;
+}
