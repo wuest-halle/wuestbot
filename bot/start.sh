@@ -19,6 +19,9 @@ DB_DIR=app/database
 # create database
 # source $DB_DIR/db_create.py
 
+# create venv
+source venv/bin/activate
+
 # startup server
 exec gunicorn $NAME:app \
     -b $HOST:$PORT \
