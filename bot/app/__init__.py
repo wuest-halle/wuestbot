@@ -18,8 +18,9 @@ unknown commands, even when providing a default message (not sure y though)
 
 import os
 import logging
-from telebot import TeleBot, types
+import time 
 
+from telebot import TeleBot, types
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from traceback import print_exc
@@ -27,14 +28,23 @@ import requests
 
 from app.database import db_objects
 
-# load env variables from .env
-
+# set logging
 logging.basicConfig(filename=os.path.abspath('../log.txt'), level=logging.DEBUG)
 
+# load env variables from .env file
 load_dotenv()
 API_TOKEN = os.getenv('API_TOKEN', '')
 ADMINS = os.getenv('ADMINS', '')
+HOST = os.getenv('HOST', '')
+PORT = os.getenv('PORT', '8443')
+LISTEN_ON = os.getenv('LISTEN ON', '')
+SSL_CERT = os.getenv('SSL_CERT', '')
+SSL_PRIV = os.getenv('SSL_PRIV', '')
 
+# define the URL to listen on
+WEBHOOK_URL = f"https://{HOST}:{PORT}/{API_TOKEN}"
+
+# create global instances of Flask and Telebot objcts
 app = Flask(__name__)
 bot = TeleBot(API_TOKEN)
 
@@ -365,5 +375,17 @@ def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
 
-logging.info("Polling ...")
-bot.polling()
+# Remove webhook, it fails sometimes the set if there is a previous webhook
+bot.remove_webhook()
+
+time.sleep(0.1)
+
+# Set webhook
+bot.set_webhook(url=WEBHOOK_URL,
+                certificate=open(SSL_CERT, 'r'))
+
+# Start flask server
+app.run(host=LISTEN_ON,
+        port=PORT,
+        ssl_context=(SSL_CERT, SSL_PRIV),
+        debug=True)
