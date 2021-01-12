@@ -362,8 +362,7 @@ def authorize(u_id):
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
-	u_id = message.from_user.id
-	send_template(u_id, render_template("no_command.html"))
+	bot.reply_to(message, "Sorry, I do not understand. Click on /help to see what I can do.")
 
 
 logging.info("Polling ...")
