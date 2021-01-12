@@ -236,22 +236,22 @@ def push(message):
 		>>> /push artist <name>
 	"""
 
-	caller_id = message.from_user.id
+	u_id = message.from_user.id
 	with app.app_context():
 		# Admin check. Templates during those checks will be sent to
 		# the caller, not to the users.
 		admins = get_admin_ids(ADMINS)
 		if not admins:
 			logging.error("No admins provided")
-			send_template(caller_id, render_template('none.html'))
-		if str(caller_id) not in admins:
-			logging.warn(f"Not authorized: '{caller_id}' not in {admins}")
-			send_template(caller_id, render_template('404.html'))
+			send_template(u_id, render_template('none.html'))
+		if str(u_id) not in admins:
+			logging.warn(f"Not authorized: '{u_id}' not in {admins}")
+			send_template(u_id, render_template('404.html'))
 
 		# Retrieve all users and send a message to them.
 		users = db_objects.User.all_in_db()
 		if not users:
-			send_template(caller_id, 'No users found.')
+			send_template(u_id, 'No users found.')
 			return
 		for user in users:
 			logging.debug(f"sending to: {user.u_id}")
@@ -288,7 +288,7 @@ def push_doc(message):
 		return
 	for user in users:
 		logging.debug(f"sending to: {user.u_id}")
-		send_template(user.u_id, text)
+		send_template(u_id, text)
 
 # TODO: remove this comment when /artist is properly implemented
 # @bot.message_handler(commands=['artist'])
@@ -362,7 +362,8 @@ def authorize(u_id):
 
 @bot.message_handler(func=lambda message: True)
 def default(message):
-	bot.reply_to(message, 'Sorry, message not understood')
+	u_id = message.from_user.id
+	send_template(u_id, render_template("no_command.html"))
 
 
 logging.info("Polling ...")
