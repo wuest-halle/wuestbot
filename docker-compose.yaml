@@ -6,4 +6,4 @@ services:
     image: server:latest
     ports:
       - "80:80"
-#      - "443:80"
+      - "443:443"
