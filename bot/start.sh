@@ -5,13 +5,13 @@
 NAME="wuestbot"
 
 # Host to listen on
-HOST=127.0.0.1
+# HOST=127.0.0.1
 
 # Port to listen on
-PORT=5000
+# PORT=5000
 
 # Number of gunicorn Workers
-NUM_WORKERS=1
+# NUM_WORKERS=1
 
 # Databank directory
 DB_DIR=app/database
@@ -23,6 +23,6 @@ DB_DIR=app/database
 source venv/bin/activate
 
 # startup server
-exec gunicorn $NAME:app \
-    -b $HOST:$PORT \
-    -w $NUM_WORKERS \
+# exec gunicorn $NAME:app \
+#     -b $HOST:$PORT \
+#     -w $NUM_WORKERS \
