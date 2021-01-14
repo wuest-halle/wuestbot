@@ -42,7 +42,8 @@ SSL_CERT = os.getenv('SSL_CERT', '')
 SSL_PRIV = os.getenv('SSL_PRIV', '')
 
 # define the URL to listen on
-WEBHOOK_URL = f"https://{HOST}:{PORT}/{API_TOKEN}"
+WEBHOOK_PATH = f"/{API_TOKEN}/"
+WEBHOOK_URL = f"https://{HOST}:{PORT}/{API_TOKEN}/"
 
 # create global instances of Flask and Telebot objcts
 app = Flask(__name__)
@@ -375,10 +376,21 @@ def default(message):
 	bot.reply_to(message, 'Sorry, message not understood')
 
 
+# Process webhook calls
+@app.route(WEBHOOK_PATH, methods=['POST'])
+def webhook():
+    if flask.request.headers.get('content-type') == 'application/json':
+        json_string = flask.request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return ''
+    else:
+        flask.abort(403)
+
 # Remove webhook, it fails sometimes the set if there is a previous webhook
 bot.remove_webhook()
 
-time.sleep(0.1)
+time.sleep(2)
 
 # Set webhook
 bot.set_webhook(url=WEBHOOK_URL,
