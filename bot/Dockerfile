@@ -5,4 +5,6 @@ ADD . /app
 
 RUN pip install -r requirements.txt
 
-CMD ./start.sh
+EXPOSE 8080
+
+CMD python wuestbot.py

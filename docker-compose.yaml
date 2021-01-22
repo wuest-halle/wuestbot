@@ -3,7 +3,15 @@ services:
 
   website:
     build: ./serv
-    image: server:latest
+#    image: server:latest
     ports:
       - "80:80"
       - "443:443"
+
+  bot:
+    build: ./bot
+#    image: bot:latest
+    volumes:
+      - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
+    ports:
+      - "8080"
