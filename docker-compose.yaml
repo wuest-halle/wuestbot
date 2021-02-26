@@ -3,7 +3,17 @@ services:
 
   website:
     build: ./serv
-    image: server:latest
+    container_name: serv
+#    image: server:latest
     ports:
       - "80:80"
-#      - "443:80"
+      - "443:443"
+
+  bot:
+    build: ./bot
+    container_name: bot
+#     image: wuestbotprod_bot:latest
+    volumes:
+      - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
+    ports:
+      - "8443:8443"
