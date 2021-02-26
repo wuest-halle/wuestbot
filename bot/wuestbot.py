@@ -1,11 +1,11 @@
 import os
 import logging
+from traceback import print_exc
 
 import flask
-import telebot
+import requests
 
-from telebot import apihelper
-
+from telebot import TeleBot, types
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -19,7 +19,7 @@ WEBHOOK_URL = f"https://{HOST}:{PORT}/bot{API_TOKEN}"
 
 logging.basicConfig(filename='log.txt', encoding='utf-8', level=logging.DEBUG)
 
-bot = telebot.TeleBot(API_TOKEN)
+bot = TeleBot(API_TOKEN)
 
 app = flask.Flask(__name__)
 
