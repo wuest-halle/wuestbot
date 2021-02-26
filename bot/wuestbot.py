@@ -1,7 +1,5 @@
 import os
 import logging
-import time
-from datetime import datetime
 
 import flask
 import telebot
