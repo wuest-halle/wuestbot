@@ -7,6 +7,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+<<<<<<< HEAD
 
   bot:
     build: ./bot
@@ -15,3 +16,5 @@ services:
       - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
     ports:
       - "8443:8443"
+=======
+>>>>>>> origin/main
