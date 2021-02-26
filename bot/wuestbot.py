@@ -1,31 +1,30 @@
+#!/usr/bin/env python3
+
 import os
 import logging
-from traceback import print_exc
+import time
+from datetime import datetime
 
 import flask
-import requests
-from telebot import TeleBot, types
+import telebot
+
+from telebot import apihelper
+
 from dotenv import load_dotenv
 
-from app.database import db_objects
-
-# set logger
-logging.basicConfig(filename='log.txt', encoding='utf-8', level=logging.DEBUG)
-
-# load env variables from .env file
 load_dotenv()
+
 API_TOKEN = os.getenv('API_TOKEN', '')
 HOST = os.getenv('HOST', '')
 PORT = os.getenv('PORT', '8443')
-ADMINS = os.getenv('ADMINS', '')
 
-# URL to let telegram know where we are 
-WEBHOOK_URL = f"https://{HOST}:{PORT}/bot"
+WEBHOOK_URL = f"https://{HOST}:{PORT}/bot{API_TOKEN}"
 
-bot = TeleBot(API_TOKEN)
+logging.basicConfig(filename='log.txt', encoding='utf-8', level=logging.DEBUG)
+
+bot = telebot.TeleBot(API_TOKEN)
+
 app = flask.Flask(__name__)
-
-img_dir = os.path.abspath('../bot/app/img')
 
 # Process webhook calls
 @app.route(f'/bot', methods=['POST'])
@@ -38,15 +37,13 @@ def webhook():
     else:
         flask.abort(403)
 
-# Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
-def send_welcome(message):
-    bot.reply_to(message, message.text)
-
 # Handle all other messages
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
-    bot.reply_to(message, message.text)
+    logging.debug(message)
+    bot.reply_to(message, """Hi, I'm currently undergoing maintenance and all 
+        features are disabled. Please check back in a week or two.""")
+
 #
 #
 #def pex(msg):
@@ -372,3 +369,4 @@ def echo_message(message):
 #@bot.message_handler(func=lambda message: True)
 #def default(message):
 #	bot.reply_to(message, 'Sorry, message not understood')
+
