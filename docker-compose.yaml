@@ -7,14 +7,12 @@ services:
     ports:
       - "80:80"
       - "443:443"
-<<<<<<< HEAD
 
   bot:
+#     image: d2bc806cf339
     build: ./bot
     container_name: bot
     volumes:
       - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
     ports:
       - "8443:8443"
-=======
->>>>>>> origin/main
