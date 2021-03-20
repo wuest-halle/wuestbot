@@ -3,7 +3,7 @@ services:
 
   website:
     build: ./serv
-    container_name: serv
+    container_name: server
     ports:
       - "80:80"
       - "443:443"
