@@ -6,566 +6,11 @@
     <title>WUEST</title>
     <meta name="referrer" content="same-origin">
     <meta name="viewport" content="width=960">
-    <style>
-        .anim {
-            visibility: hidden;
-            text-decoration: blink;
-        }
-    </style>
-    <style>
-        html,
-        body {
-            -webkit-text-zoom: reset !important;
-            -ms-text-size-adjust: none !important;
-            -moz-text-size-adjust: none !important;
-            -webkit-text-size-adjust: none !important
-        }
-
-        @font-face {
-            font-display: block;
-            font-family: "Biryani";
-            src: url('css/Biryani-Black.woff') format('woff');
-            font-weight: 900
-        }
-
-        body>div {
-            font-size: 0
-        }
-
-        p,
-        span,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            margin: 0;
-            word-spacing: normal;
-            word-wrap: break-word;
-            -ms-word-wrap: break-word;
-            pointer-events: auto;
-            max-height: 1000000000px
-        }
-
-        sup {
-            font-size: inherit;
-            vertical-align: baseline;
-            position: relative;
-            top: -0.4em
-        }
-
-        sub {
-            font-size: inherit;
-            vertical-align: baseline;
-            position: relative;
-            top: 0.4em
-        }
-
-        ul {
-            display: block;
-            word-spacing: normal;
-            word-wrap: break-word;
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            -moz-padding-start: 0;
-            -khtml-padding-start: 0;
-            -webkit-padding-start: 0;
-            -o-padding-start: 0;
-            -padding-start: 0;
-            -webkit-margin-before: 0;
-            -webkit-margin-after: 0
-        }
-
-        li {
-            display: block;
-            white-space: normal
-        }
-
-        li p {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -o-user-select: none;
-            user-select: none
-        }
-
-        form {
-            display: inline-block
-        }
-
-        a {
-            text-decoration: inherit;
-            color: inherit;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-        }
-
-        textarea {
-            resize: none
-        }
-
-        .shm-l {
-            float: left;
-            clear: left
-        }
-
-        .shm-r {
-            float: right;
-            clear: right
-        }
-
-        .whitespacefix {
-            word-spacing: -1px
-        }
-
-        html {
-            font-family: sans-serif
-        }
-
-        body {
-            font-size: 0;
-            margin: 0
-        }
-
-        audio,
-        video {
-            display: inline-block;
-            vertical-align: baseline
-        }
-
-        audio:not([controls]) {
-            display: none;
-            height: 0
-        }
-
-        [hidden],
-        template {
-            display: none
-        }
-
-        a {
-            background: 0 0;
-            outline: 0
-        }
-
-        b,
-        strong {
-            font-weight: 700
-        }
-
-        dfn {
-            font-style: italic
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-size: 1em;
-            line-height: 1;
-            margin: 0
-        }
-
-        img {
-            border: 0
-        }
-
-        svg:not(:root) {
-            overflow: hidden
-        }
-
-        button,
-        input,
-        optgroup,
-        select,
-        textarea {
-            color: inherit;
-            font: inherit;
-            margin: 0
-        }
-
-        button {
-            overflow: visible
-        }
-
-        button,
-        select {
-            text-transform: none
-        }
-
-        button,
-        html input[type=button],
-        input[type=submit] {
-            -webkit-appearance: button;
-            cursor: pointer;
-            box-sizing: border-box;
-            white-space: normal
-        }
-
-        input[type=password],
-        input[type=text],
-        textarea {
-            -webkit-appearance: none;
-            appearance: none;
-            box-sizing: border-box
-        }
-
-        button[disabled],
-        html input[disabled] {
-            cursor: default
-        }
-
-        button::-moz-focus-inner,
-        input::-moz-focus-inner {
-            border: 0;
-            padding: 0
-        }
-
-        input {
-            line-height: normal;
-            border-radius: 0
-        }
-
-        input[type=checkbox],
-        input[type=radio] {
-            box-sizing: border-box;
-            padding: 0
-        }
-
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            height: auto
-        }
-
-        input[type=search] {
-            -webkit-appearance: textfield;
-            -moz-box-sizing: content-box;
-            -webkit-box-sizing: content-box;
-            box-sizing: content-box
-        }
-
-        input[type=search]::-webkit-search-cancel-button,
-        input[type=search]::-webkit-search-decoration {
-            -webkit-appearance: none
-        }
-
-        textarea {
-            overflow: auto;
-            box-sizing: border-box;
-            border-color: #ddd
-        }
-
-        optgroup {
-            font-weight: 700
-        }
-
-        table {
-            border-collapse: collapse;
-            border-spacing: 0
-        }
-
-        td,
-        th {
-            padding: 0
-        }
-
-        :-webkit-full-screen-ancestor:not(iframe) {
-            -webkit-clip-path: initial !important
-        }
-
-        html {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        @-webkit-keyframes flash {
-
-            from,
-            50%,
-            to {
-                opacity: 1
-            }
-
-            25%,
-            75% {
-                opacity: 0
-            }
-        }
-
-        @keyframes flash {
-
-            from,
-            50%,
-            to {
-                opacity: 1
-            }
-
-            25%,
-            75% {
-                opacity: 0
-            }
-        }
-
-        .flash {
-            -webkit-animation-name: flash;
-            animation-name: flash
-        }
-
-        .animated {
-            -webkit-animation-fill-mode: both;
-            animation-fill-mode: both
-        }
-
-        .animated.infinite {
-            -webkit-animation-iteration-count: infinite;
-            animation-iteration-count: infinite
-        }
-
-        #b {
-            background-color: #fff
-        }
-
-        .ps30 {
-            position: relative;
-            margin-top: 0
-        }
-
-        .v17 {
-            display: block;
-            *display: block;
-            zoom: 1;
-            vertical-align: top
-        }
-
-        .s42 {
-            pointer-events: none;
-            min-width: 960px;
-            width: 960px;
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .v18 {
-            display: inline-block;
-            *display: inline;
-            zoom: 1;
-            vertical-align: top
-        }
-
-        .ps31 {
-            position: relative;
-            margin-left: 0;
-            margin-top: 0
-        }
-
-        .s43 {
-            min-width: 960px;
-            width: 960px;
-            min-height: 1039px
-        }
-
-        .w1 {
-            line-height: 0
-        }
-
-        .v19 {
-            display: inline-block;
-            *display: inline;
-            zoom: 1;
-            vertical-align: top;
-            overflow: hidden
-        }
-
-        .s44 {
-            min-width: 960px;
-            width: 960px;
-            min-height: 195px;
-            height: 195px
-        }
-
-        .c24 {
-            z-index: 8;
-            pointer-events: auto
-        }
-
-        .p4 {
-            padding-top: 0;
-            padding-bottom: 0;
-            text-align: left;
-            text-indent: 0;
-            padding-right: 0
-        }
-
-        .f12 {
-            font-family: Biryani;
-            font-size: 75px;
-            font-weight: 900;
-            font-style: normal;
-            text-decoration: none;
-            text-transform: none;
-            color: #fff;
-            background-color: initial;
-            line-height: 185px;
-            letter-spacing: normal;
-            text-shadow: none
-        }
-
-        .f13 {
-            font-family: Biryani;
-            font-size: 39px;
-            font-weight: 900;
-            font-style: normal;
-            text-decoration: none;
-            text-transform: none;
-            color: #fff;
-            background-color: initial;
-            line-height: 97px;
-            letter-spacing: normal;
-            text-shadow: none
-        }
-
-        .ps32 {
-            position: relative;
-            margin-left: 0;
-            margin-top: -170px
-        }
-
-        .s45 {
-            min-width: 960px;
-            width: 960px;
-            min-height: 106px
-        }
-
-        .c25 {
-            z-index: 5;
-            border: 0;
-            background-color: #000;
-            background-clip: padding-box
-        }
-
-        .ps33 {
-            position: relative;
-            margin-left: 101px;
-            margin-top: -40px
-        }
-
-        .s46 {
-            min-width: 31px;
-            width: 31px;
-            min-height: 838px;
-            height: 838px
-        }
-
-        .c26 {
-            z-index: 1;
-            pointer-events: auto
-        }
-
-        .p5 {
-            padding-top: 0;
-            text-indent: 0;
-            padding-bottom: 0;
-            padding-right: 0;
-            text-align: center
-        }
-
-        .f14 {
-            font-family: Biryani;
-            font-size: 22px;
-            font-weight: 900;
-            font-style: normal;
-            text-decoration: none;
-            text-transform: none;
-            color: #000;
-            background-color: initial;
-            line-height: 54px;
-            letter-spacing: normal;
-            text-shadow: none
-        }
-
-        .ps34 {
-            position: relative;
-            margin-left: 209px;
-            margin-top: -40px
-        }
-
-        .s47 {
-            min-width: 31px;
-            width: 31px;
-            min-height: 594px;
-            height: 594px
-        }
-
-        .c27 {
-            z-index: 2;
-            pointer-events: auto
-        }
-
-        .s48 {
-            min-width: 31px;
-            width: 31px;
-            min-height: 403px;
-            height: 403px
-        }
-
-        .c28 {
-            z-index: 3;
-            pointer-events: auto
-        }
-
-        .s49 {
-            min-width: 31px;
-            width: 31px;
-            min-height: 756px;
-            height: 756px
-        }
-
-        .c29 {
-            z-index: 4;
-            pointer-events: auto
-        }
-
-        .ps35 {
-            position: relative;
-            margin-left: 108px;
-            margin-top: -573px
-        }
-
-        .s50 {
-            min-width: 778px;
-            width: 778px;
-            min-height: 619px;
-            height: 619px
-        }
-
-        .c30 {
-            z-index: 11;
-            pointer-events: auto
-        }
-
-        .i1 {
-            position: absolute;
-            left: 11px;
-            min-width: 755px;
-            max-width: 755px;
-            min-height: 619px;
-            max-height: 619px;
-            top: 0
-        }
-    </style>
     <script>function ens(e) { e.setAttribute("onload", null), e.media = "all", e.rel = "stylesheet"; var t = window.location.hash; t.length > 1 && setTimeout(function () { var e = document.querySelectorAll('[name="' + t.slice(1) + '"]')[0], o = 0; if (e.offsetParent) do { o += e.offsetTop } while (e = e.offsetParent); window.scrollTo(0, o) }, 100) }
     </script>
     <link as="style" onload="ens(this)" rel="preload" href="css/styles.css">
     <noscript>
         <link rel="stylesheet" href="css/styles.css"></noscript>
-    <!--[if lte IE 7]>
-<link rel="stylesheet" href="css/site.975fe7-lteIE7.css" type="text/css">
-<![endif]-->
     <link as="style" onload="ens(this)" rel="preload" href="css/plyr3.4555f4.css">
     <noscript>
         <link rel="stylesheet" href="css/plyr3.4555f4.css"></noscript>
@@ -574,24 +19,31 @@
 </head>
 
 <body id="b">
-    <div class="ps30 v17 s42">
+    <div class="content">
         <div class="v18 ps31 s43 c23">
             <div class="v18 ps31 s43 w1">
                 <div class="v18 ps32 s45 c25"></div>
                 <div class="v19 ps33 s46 c26">
-                    <a href="#projects">
+                    <a href="#present">
                         <p class="p5 f14">P</p>
                         <p class="p5 f14">R</p>
-                        <p class="p5 f14">O</p>
-                        <p class="p5 f14">J</p>
                         <p class="p5 f14">E</p>
-                        <p class="p5 f14">C</p>
-                        <p class="p5 f14">T</p>
                         <p class="p5 f14">S</p>
+                        <p class="p5 f14">E</p>
+                        <p class="p5 f14">N</p>
+                        <p class="p5 f14">T</p>
                         <p class="p5 f14"><br></p>
                     </a>
                 </div>
                 <div class="v19 ps34 s47 c27">
+                    <a href="#past">
+                        <p class="p5 f14">P</p>
+                        <p class="p5 f14">A</p>
+                        <p class="p5 f14">S</p>
+                        <p class="p5 f14">T</p>
+                    </a>
+                </div>
+                <div class="v19 ps34 s48 c28">
                     <a href="#sound">
                         <p class="p5 f14">S</p>
                         <p class="p5 f14">O</p>
@@ -600,26 +52,15 @@
                         <p class="p5 f14">D</p>
                     </a>
                 </div>
-                <div class="v19 ps34 s48 c28">
-                    <a href="#contact">
-                        <p class="p5 f14">C</p>
-                        <p class="p5 f14">O</p>
-                        <p class="p5 f14">N</p>
-                        <p class="p5 f14">T</p>
-                        <p class="p5 f14">A</p>
-                        <p class="p5 f14">C</p>
-                        <p class="p5 f14">T</p>
-                    </a>
-                </div>
                 <div class="v19 ps34 s49 c29">
-                    <a href="#imprint">
-                        <p class="p5 f14">I<p>
-                        <p class="p5 f14">M<p>
-                        <p class="p5 f14">P<p>
-                        <p class="p5 f14">R<p>
-                        <p class="p5 f14">I<p>
+                    <a href="#contact">
+                        <p class="p5 f14">C<p>
+                        <p class="p5 f14">O<p>
                         <p class="p5 f14">N<p>
                         <p class="p5 f14">T<p>
+                        <p class="p5 f14">A<p>
+                        <p class="p5 f14">C</p>
+                        <p class="p5 f14">T</p>
                     </a>
                 </div>
                 <div class="v18 ps35 s50 c30">
@@ -629,34 +70,67 @@
                 </div>
             </div>
         </div>
-        <div class="v16 ps23 s35 c18 marg-418" id=routines>
-            <p class="p2 f9">R O U T I N E S</p>
-            <p class="p3 f10">
-                WUEST is looking for individuals and groups to be a part of the inaugural edition of ROUTINES. This week-long exhibition
-                will be spread over different locations throughout the city of Halle/Saale, Germany.
-                Everyday life is driven by numerous guidelines, 
-                partly self-imposed and of various kinds in individual ways. 
-                This might be more true now than ever. In 2020 it became 
-                clear that circumstances may change quickly and significantly 
-                so ROUTINES need to be adapted or given up on. 
-                What we are looking for is a creative conversation with and 
-                about the term to explore its layers of meaning and context. </p>
-            <p class="p3 f10"> 
-                <a href="/static/ROUTINES_2021_open_call.pdf" download>OPEN CALL</a>
+        <div class="v16 ps23 s35 c18 marg-418" id="present">
+            <p class="p2 f9">R O U T I N E S » MAY 08 - JUNE 02 - HR. FLEISCHER KIOSK - REILECK</p>
+            <p class="p2 f9"></p>
+            <p class="p2 f9">Sven Bergelt - THE INNER CIRCLE</p>
+            <p class="p2 f10">
+                »The Inner Circle« shows the artist walking in a rectangular 
+                shape on a field. Over and over, one hour a day for 30 days 
+                straight. The monotonous and repetitive action results in a 
+                trail, which becomes visible more and more, indicating that 
+                time has passed. <br>
+                After studying media arts in Kiel and Leipzig, Sven teaches 
+                at The University for Fine Arts in Leipzig. He is interested 
+                in remembrance, society and how they get interpreted in 
+                public space. More info: <a href="www.svenbergelt.de">svenbergelt.de</a>
+
+<!--                <img class="" src="static/SBergelt_TheInnerCircle_mDV-Video_25h30min_2008_01.jpg" alt="">
+                <img class="" src="static/SBergelt_TheInnerCircle_mDV-Video_25h30min_2008_02.jpg" alt=""> -->
             </p>
-            <p class="p3 f10">
-                <a href="/static/ROUTINES_2021_app_form.pdf" download>APPLICATION FORM</a>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><br></p>
+            <p class="p2 f9">John Horton - PERIPHERY</p>
+            <p class="p2 f10">
+                Periphery (I-IV) is an auditive reaction parallel to »The Inner 
+                Circle« using processed field recordings. Starting with sounds 
+                collected in the countryside in its initial version, the piece 
+                develops during the exhibition itself, gradually layering and 
+                manipulating recordings made regularly at the kiosk back into 
+                the piece. The unseen border between the natural and urban space, 
+                coincidence and intent, micro- and macrocosm is drawn into focus. 
+                <br>
+                <a href="https://soundcloud.com/johnhorton/">John Horton</a> is a 
+                sound artist and producer hailing from London 
+                and living in Leipzig. Periphery will be audible throughout the 
+                exhibition on Saturdays 3-7 pm.               
             </p>
+            <p class="p3 f10"><br></p>
+            <p class="p3 f10"><br></p>
+            <p class="p2 f9">R O U T I N E S » SEP 20 - SEP 26 - VARIOUS PLACES</p> 
+            <p class="p3 f10">
+                TBA
+            </p>
+<!--            <p class="p2 f9">S O U N D O F M B G » OCT 08/09</p>
+            <p class="p3 f10">
+                There isn’t a lot for young folk to do in a small german 
+                town apart from football and athletics if you’re not actively 
+                looking for it. For Heranwachsende vertonen Merseburg we 
+                cooperate with adolescents for a soundwalk through their small 
+                town home. Queue Raspberry Pi’s, Audacity, open source audio 
+                - they’ll bring home what is hopefully their first soundscape. 
+            </p> -->
         </div>
         <div class="v16 ps23 s36 c19 marg-246">
-            <p class="p2 f9" id="projects">P  R  O  J  E  C  T  S</p>
+            <p class="p2 f9" id="past">P A S T</p>
+            <p class="p3 f10"></p>
             <p class="p3 f10"><a href="https://fb.me/e/cEk5VlDRK" target="_blank" rel="noopener">WUK | HALLE (SAALE) |
                     08 | 08 | 20</a><span class="f10"> | #SEHRKOMISCHEZEITEN</span></p>
             <p class="p3 f10"><a href="http://laureboer.com" target="_blank" rel="noopener">LAURE BOER</a><span
                     class="f10"> | </span><span class="f10"><a href="https://npiece.com/judith-crasser?l=de"
                         target="_blank" rel="noopener">JUDITH CRASSER</a></span><span class="f10"> | </span><span
                     class="f10"><a href="https://soundcloud.com/alto_bloom" target="_blank" rel="noopener">ALTO
-                        BLOOM</a></span></p>
+                        BLOOM</a></span></p>wq
             <p class="p3 f10"><br></p>
             <p class="p3 f10"><br></p>
             <p class="p3 f10"><a href="https://fb.me/e/1RsAmMZP7" target="_blank" rel="noopener">STADTBAD | HALLE
@@ -711,7 +185,6 @@
             <p class="p3 f10">WUEST E.V. GEISTSTRASSE 20 06108 HALLE | REGISTERNR. VR 5746 | AMTSGERICHT STENDAL | SITZ
                 HALLE (SAALE) | STEUERNR. 110/142/48996</p>
         </div>
-        <div class="v1 ps29 s41 c22"></div>
     </div>
     <script>dpth = "/"; !function () { var s = ["js/jquery.4555f4.js", "js/woolite.4555f4.js", "js/plyr3.4555f4.js", "js/wuest.975fe7.js"], n = {}, j = 0, e = function (e) { var o = new XMLHttpRequest; o.open("GET", s[e], !0), o.onload = function () { if (n[e] = o.responseText, 4 == ++j) for (var t in s) { var i = document.createElement("script"); i.textContent = n[t], document.body.appendChild(i) } }, o.send() }; for (var o in s) e(o) }();
     </script>
