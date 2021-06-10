@@ -7,6 +7,9 @@ venv/
 log.txt
 api/.multiproc_dir/*
 api/data/*
+*.pem
+*.jpg
+*.ico
 
 
 # This NEEDS to be the last line of this file
