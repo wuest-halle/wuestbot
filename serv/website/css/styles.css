@@ -30,8 +30,8 @@ p {
 
 #content-box {
     border: 2px solid black;
-    margin: 10px;
-    max-width: 98%;
+    margin: 2% auto;
+   
 }
 .container-fluid {
     max-width: 98%;
