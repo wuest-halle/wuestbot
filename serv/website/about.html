@@ -20,7 +20,7 @@
         <!-- START HEADER -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="index.html">
                     <img src="svg/wuestes_we.svg" alt="" width="50" height="50" class="d-inline-block align-text-top">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +28,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav text-uppercase">
-                        <a class="nav-link" href="index.html">Routines</a> </li>
-                        <a class="nav-link" href="say.html">Sound around you</a> </li>
+                        <a class="nav-link" href="index.html">Routines</a>
+                        <a class="nav-link" href="sound.html">Sound</a>
                         <a class="nav-link" href="past.html">Past</a>
                         <a class="nav-link active" aria-current="page" href="about.html">About</a>
                     </div>
@@ -37,6 +37,11 @@
             </div> <!-- END OF CONTAINER-FLUID -->
         </nav> <!-- END OF NAVBAR-EXPAND -->
     </header> <!-- END OF HEADER -->
+    <section id="intro">
+    <p> WUEST is an association involved with transdisciplinary events in Halle, Germany and the city’s surroundings. While we all have origins in electronic and club music of various iterations, this project is meant to find new connections between forms of expression and event concepts within the city. We seek out unconventional venues for our projects to engage with meanings of different spaces.</p>
+        <p> Our initiatives are aimed at asking questions rather than providing ready-made answers. We believe in the importance of free expression for a healthy society and discourse. WUEST is meant as a platform for discussion as well as an interface between our region to the outside and vice-versa.</p>
+        <p> WUEST actively promotes diversity in arts, culture and life. This endeavour is meant to shape our surroundings as much as developing ourselves as members of society. We acknowledge that this is an ongoing process and hope to contribute to reach a more equal future.</p>
+    </section>
     <main>
         <div id="content-box" class="container-fluid">
             <!-- START CONTENT BOX #1 -->
@@ -73,39 +78,45 @@
             </div>
         </div>
     </main>
-    <footer>
-        <!-- class="fixed-bottom" -->
-        <div class="container-fluid">
+    <footer class="footer container-fluid">
             <div class="row">
-                <div id="contact" class="text-center col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <h3>Contact</h3>
-                    <p> mail[at]wuestwuest.de<br>
-                        Telegram:&commat;wuestbot
-                        <br>
-                        IG: Wuest-Halle </p>
+                <div id="contact" class="text-center col-2">
+                    <a href="#"><h3>Contact</h3></a>
                 </div>
-                <div id="support" class="text-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                    <h3 class="text-center">Support</h3><br>
-                    <div class="row">
-                        <!-- 3x3 Grid -->
-                        <img src="svg/blacktowild_HALLIANZ_Logo_RGB.svg" class="col-6 img-fluid" alt="Logo Hallianz">
-                        <img src="svg/Halle_(Saale)_Logo.svg" class="col-6 img-fluid" alt="Logo Stadt Halle/Saale">
-                        <img src="svg/logo-data.svg" class="col-6 img-fluid" alt="Logo Bundesministerium fuer Familie, Senioren, Frauen und Jugend">
-                        <img src="svg/Umr_quer_oR_4c.svg" class="col-6 img-fluid" alt="Logo Lotto Sachsen-Anhalt">
+                <div id="support" class="text-center col-8">
+                    <div id="logos" class="row">
+                        <img class="col-3 logo" src="svg/blacktowild_HALLIANZ_Logo_RGB.svg" alt="Logo Hallianz">
+                        <img class="col-3 logo" src="svg/Halle_(Saale)_Logo.svg" alt="Logo Stadt Halle/Saale">
+                        <img class="col-3 logo" src="svg/logo-data.svg" alt="Logo Bundesministerium fuer Familie, Senioren, Frauen und Jugend">
+                        <img class="col-3 logo" src="svg/Umr_quer_oR_4c.svg" alt="Logo Lotto Sachsen-Anhalt">
                     </div>
                 </div>
-                <div id="imprint" class="text-center col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <h3>Imprint</h3>
-                    <p>Wuest e.V. <br>
-                        Geiststrasse 20, 06108 Halle (Saale)</p>
-                    <p>Registernr. VR 5746 <br>
-                        Amtsgericht Stendal <br>
-                        Sitz Halle (Saale) Steuernr. 110/142/48966</p>
-                </div>
-                <div class="text-center">&copy; Copyright WUEST e.V. 2021</div>
+                <div id="imprint" class="text-center col-2">
+                    <a href="#"><h3>Imprint</h3></a>
+                </div>                
             </div>
-        </div>
+   
+   
     </footer>
+
+    <script type="text/javascript">
+        let prevScrollpos = window.pageYOffset;
+        const header = document.querySelector("header");
+        window.onscroll = function(){
+            let current = window.pageYOffset;
+            if(prevScrollpos > current){
+                header.style.top = "0";
+                
+            }else{
+                header.style.top = `-${header.offsetHeight}px`;
+            }
+            prevScrollpos = current;
+            if(prevScrollpos === 0){
+                
+            }
+        }
+    </script>
+
 </body>
 
 </html>
