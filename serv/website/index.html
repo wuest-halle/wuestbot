@@ -41,20 +41,30 @@
             </div> <!-- END OF CONTAINER-FLUID -->
         </nav> <!-- END OF NAVBAR-EXPAND -->
     </header> <!-- END OF HEADER -->
-        <section id="intro" class="text-center">
-            <img src="images/banner.png" id="banner" class="img-fluid" alt="open country">         
-            <p>ROUTINES questions normality and everyday life in its variety and repetitiveness by showcasing three works of individual artists and groups in Spätshops spread across Halle. With each project taking a different angle on the subject, it embeds critically engaging art into our ordinary running for errands and opens an account to creative work for everybody - outside of galleries and museums. The Exhibition enters with and about the term unfolds to explore its layers of meaning and context.</p>
-        </section>
+
+    
     
     <main>
+        <!-- START INTRO -->
+
+        <div class="container-fluid intro content text-center">
+            <img src="images/banner.png" class="banner img-fluid" alt="open country">         
+            <p class="intro-text">ROUTINES questions normality and everyday life in its variety and repetitiveness by showcasing three works of individual artists and groups in Spätshops spread across Halle. With each project taking a different angle on the subject, it embeds critically engaging art into our ordinary running for errands and opens an account to creative work for everybody - outside of galleries and museums. The Exhibition enters with and about the term unfolds to explore its layers of meaning and context.</p>
+        </div>
+
+    <!-- END INTRO -->
+    
+    <!-- START CONTENT BOX #1 -->
 
         
-        <div id="content-box" class="container-fluid">
-            <!-- START CONTENT BOX #1 -->
+        <div id="content-box" class="container-fluid content">
+            
             <h2 class="text-uppercase">EXHIBITION <br> SEP 10 - 25 </h2>
             <div class="row">
                
-                <img src="images/exhibition.png" id="cp" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img-fluid" alt="open country"> <!-- col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img-fluid -->
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center img-col"> 
+                    <img src="images/exhibition.png" id="cp" class="square  img-fluid" alt="open country"> <!-- col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img-fluid -->
+                </div>
                 <div id="text-col" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <p>Maxime Lethelier & Asako Fujimoto - HU/AU Bacus - Späti 007</p>
                     <p>Emma-Louise Meyer & Melanie Schulz - Room With A View - Scherins Markt</p>
@@ -62,11 +72,13 @@
                 </div>
             </div>
         </div>
-        <div id="content-box" class="container-fluid">
+        <div id="content-box" class="container-fluid content">
             <h2 class="text-uppercase">INTERVENTION <br></h2>
-            <div class="row">      
-                <img id="cp" src="images/intervention.png" id="cp" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img-fluid" alt="open country">
-                <div id="text-col" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+            <div class="row">
+                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center img-col"> 
+                <img id="cp" src="images/intervention.png" id="cp" class="square img-fluid" alt="open country">  
+                </div>   
+                 <div id="text-col" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <p>SEP 16 - SPÄTI 007 - Dj Residue aka Kassem Mosse | TBA</p>
                     <p>SEP 23 - SCHERINS MARKT - TBA</p>
                 </div>
@@ -76,7 +88,9 @@
             <!-- START CONTENT BOX #1 -->
             <h2 class="text-uppercase">CLOSING <br> SCHWEMME | SEP 25 </h2>
             <div class="row">
-                <img id="cp" src="images/closing.png" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img-fluid" alt="open country">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center img-col"> 
+                <img id="cp" src="images/closing.png" class="square img-fluid" alt="open country">
+            </div>
                 <div id="text-col" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <p>John Horton - The Sum Of Its Parts - Sound Installation</p>
                     <p>Vanessa Bettina - Dj Set</p>
@@ -85,9 +99,9 @@
             </div>
         </div>
     </main>
-    <footer class="footer container-fluid">
+    <footer>
         <!-- class="fixed-bottom" -->
-        <!-- <div class="container-fluid"> -->
+        <div class="footer container-fluid content">
             <div class="row">
                 <div id="contact" class="text-center col-2">
                     <a href="#"><h3>Contact</h3></a>
@@ -117,6 +131,7 @@
                 </div>
                 <!-- <div class="text-center">&copy; Copyright WUEST e.V. 2021</div> -->
             </div>
+        </div>
    
    
     </footer>
