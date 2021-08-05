@@ -18,9 +18,17 @@ h3 {
     padding-bottom: 0;
 
 }
+.container-fluid.main {
+    margin: 0;
+    padding: 0;
+
+}
 .container-fluid.content {
     max-width: 80vw;
 
+}
+div.row.wrapper {
+    margin: 0;
 }
 /***************** END GENERAL RULES **************/
 
@@ -124,6 +132,9 @@ img.img-fluid {
 .portait {
 
 }
+audio {
+    width: 100%;
+}
 /***************** END MAIN ********************/
 
 
@@ -142,6 +153,7 @@ div.footer {
     right: 9vw;
     bottom: 0;
     overflow: hide;
+
     /*width: 82vw;*/
  
 }
@@ -150,18 +162,36 @@ p.col-2 {
     margin: 0;
 }
 
-.footer > a {
+.footer  a {
     text-decoration: none;
+    color: inherit;
+}
+.footer a:hover {
+    color: slategrey;
 }
 
 .footer img {
     width: 1;
     height: 2em;
     /*margin-top: 12px;*/
-
 }
-#logos, #imprint, #contact {
-    margin-top: 1%;
+svg.contact {
+    width: 2em;
+    height: 2em;
+    
+}
+/*.imprint {
+    display: inline;
+    margin: auto;
+}*/
+.fc {
+    margin: 2px 20px;
+    display: inline;
+   /* line-height: 1;*/
+}
+p.imprint {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 /***************** END FOOTER ********************/
@@ -185,7 +215,9 @@ p.col-2 {
 
 /********** Medium devices only **********/
 @media (min-width: 768px) and (max-width: 991px) {
-
+    .fc {
+    margin: 4px 20px;
+   }
   
  }
 
@@ -198,56 +230,22 @@ p.col-2 {
 
 
 
-#cp.square {
-     
-    width: 100%;
-    height: auto;
-    
-}
     }
  
 
 /********** Extra small devices only **********/
   @media (max-width: 575px) { 
-    #cp.square {
-     
-    width: 100%;
-    height: auto;
+        .fc {
+    margin: 2px 10px;
+    display: inline-block;
+        }
+        svg.contact {
+    width: 1.25em;
+    height: 1.25em;
     
+}
+p.imprint {
+    font-size: 0.75em;
 }
     }
-   /* footer.footer {
-
-   /* left: 8.75%;
-    right: 11.25%;*/
-    }
-    /*footer.footer > h3{
-        font-size: .8em;
-           
-    left: 8.75%;
-    right: 11.25%;
-    }   
-}
-@media (max-width: 350px) {
-    h3 {
-        font-size: 0.7em;
-    }
-}
-@media (min-height: 650px) {
-    footer.footer {
-
-    
-    height: 5vh;    
-    
- 
-}
-@media (min-height: 900px) {
-    footer.footer {
-
-    
-    height: 4vh;    
-    
- 
-}
-
-}*/
+   
