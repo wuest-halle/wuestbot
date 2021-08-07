@@ -63,6 +63,22 @@ def start(message):
 		except:
 			logging.error('cannot send template:', message.text)
 
+@bot.message_handler(commands=['next'])
+def next_event(message):
+
+	"""/next message handler function
+	Upon sending the /next command the event's graphic and all available
+	info from the db are returned.
+	Artists are represented with hyperlinks. By pressing one of those,
+	the artist message handler is triggered
+	Arguments:
+		message: telebot's message object
+	"""
+	u_id = message.from_user.id
+
+	with app.app_context():
+		send_next_event(u_id)
+
 # Handle all other messages
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
@@ -90,3 +106,53 @@ def pex(msg):
 	logging.error(msg)
 	print_exc()
 
+def send_next_event(u_id):
+	"""Sends the event with the highest eventID.
+	Args:
+		u_id (str): The chat ID to send the event to.
+	"""
+	bot.send_message(u_id, text="""The next event is going to be ROUTINES in September. Watch this space for more info in a few days""")
+
+#	with app.app_context():
+#		try:
+#			event = db_objects.Event.next()
+#		except Exception as e:
+#			pex(f"unable to retrieve next event: {e}")
+#			send_template(u_id, flask.render_template('none.html'))
+#			return
+#
+#		# Nothing scheduled.
+#		if not event:
+#			send_template(u_id, flask.render_template('404.html'))
+#			return
+#
+#		# Send the picture, if possible.
+#		# TODO: refactor, this should not throw an exception if the
+#		# picture can't be found.
+#		event.pic_id = os.path.join(img_dir, event.pic_id)
+#		try:
+#			bot.send_photo(
+#				chat_id=u_id,
+#				photo=open(event.pic_id, 'rb')
+#			)
+#		except Exception as e:
+#			pex(f"Unable to send photo: {e}")
+#
+#		try:
+#			send_template(
+#				u_id,
+#				flask.render_template(
+#					'next_event.html',
+#					e_name=event.name,
+#					date=event.date,
+#					time=event.time,
+#					admission=event.admission,
+#					location=event.location,
+#					description=event.description,
+#					artists=event.artists
+#				)
+#			)
+#		except Exception as e:
+#			pex(f"unable to send message: {e}")
+#			send_template(u_id, flask.render_template('none.html'))
+#
