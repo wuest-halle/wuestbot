@@ -29,20 +29,30 @@ app = flask.Flask(__name__)
 # Process webhook calls
 @app.route(f'/bot', methods=['POST'])
 def webhook():
-    if flask.request.headers.get('content-type') == 'application/json':
-        json_string = flask.request.get_data().decode('utf-8')
-        update = telebot.types.Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return "!", 200
-    else:
-        flask.abort(403)
+	""" default route to process webhook updates
+
+	The function takes POST requests to the url and processes the JSON string
+
+	returns:
+		none
+
+	"""
+	if flask.request.headers.get('content-type') == 'application/json':
+		json_string = flask.request.get_data().decode('utf-8')
+		update = telebot.types.Update.de_json(json_string)
+		bot.process_new_updates([update])
+		return "!", 200
+	else:
+		flask.abort(403)
 
 @bot.message_handler(commands=['start', 'help'])
 def start(message):
 	"""Start and help message handler function
+
 	Upon sending /start or /help all available commands are returned.
 	In the background the user's id is checked against the db and added,
 	if there is no entry for the user yet.
+	
 	Arguments:
 		message: telebot's message object
 	"""
