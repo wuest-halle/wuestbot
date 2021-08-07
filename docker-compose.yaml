@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services: 
 
   website:
@@ -15,6 +15,7 @@ services:
     build: ./bot
     container_name: bot
     volumes:
-      - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
+      - ./bot:/app
+#    command: exec gunicorn wuestbot:app -b 0.0.0.0:8443 -w 1 --access-logfile -
     ports:
       - "8443:8443"
