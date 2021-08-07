@@ -11,11 +11,11 @@ services:
       - "./serv/certs:/var/www/certs"
 
   bot:
-#     image: d2bc806cf339
-    build: ./bot
+    image: python:3
     container_name: bot
+    working_dir: /app
     volumes:
       - ./bot:/app
-#    command: exec gunicorn wuestbot:app -b 0.0.0.0:8443 -w 1 --access-logfile -
+    entrypoint: /app/docker-entrypoint.sh
     ports:
       - "8443:8443"
