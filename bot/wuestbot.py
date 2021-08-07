@@ -46,7 +46,6 @@ def start(message):
 	Arguments:
 		message: telebot's message object
 	"""
-	logging.debug("/start handler executed")
 	u_id = message.from_user.id
 	name = message.from_user.first_name
 	is_bot = message.from_user.is_bot
@@ -83,8 +82,7 @@ def next_event(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
     logging.debug(message)
-    bot.reply_to(message, """Hi, I'm currently undergoing maintenance and all 
-        features are disabled. Please check back in a week or two.""")
+    bot.reply_to(message, """Sorry, I don't know this :( try /help to see what I can understand""")
 
 def send_template(u_id, template):
 	"""Sends a template message via Telebot.
