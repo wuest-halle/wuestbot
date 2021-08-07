@@ -7,6 +7,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - "./serv/certs:/var/www/certs"
 
   bot:
 #     image: d2bc806cf339
