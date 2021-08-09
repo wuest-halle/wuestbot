@@ -2,6 +2,12 @@
 html {
     scroll-behavior: smooth;
 }
+/*.navbar {
+    width: 80vw;
+}*/
+header {
+    background-color: #fff;
+}
 
 body {
     font-family: 'biryani', sans-serif;
@@ -13,10 +19,10 @@ p {
     font-size: 16px;
 }
 h3 {
+    clear: both;
     font-size: 1em;
     margin-bottom: 0;
     padding-bottom: 0;
-
 }
 .container-fluid.main {
     margin: 0;
@@ -25,10 +31,12 @@ h3 {
 }
 .container-fluid.content {
     max-width: 80vw;
+   
 
 }
 div.row.wrapper {
     margin: 0;
+    max-width: ;
 }
 /***************** END GENERAL RULES **************/
 
@@ -41,21 +49,35 @@ header {
     left: 0;
     overflow: hidden;   
     transition: 0.5s ease;
+    
 }
 
-a.nav-link {
-    font-size: 1.2em;
-    font-weight: 500;
+
+
+.navbar-brand {
+  padding: 0;
+}
+.navbar-nav .nav-link {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 50px;
+  line-height: 60px;
+  font-size: 1.2em;
+  font-weight: 500; 
 }
 /***************** END HEADER ********************/
 
 /***************** START INTRO ********************/
 
-.intro {
+.container-fluid.intro {
     /*padding: 0;*/
-    padding-top: 15vh;
-    margin: 0 auto;
-    height: auto; 
+    /*padding-top: 15vh;  */
+    max-width: 80vw;
+    border: 5px solid #fff;
+   /* left: 9vw;
+    right: 9vw;*/
+    margin: 15vh 9vw;
+    /*height: auto; */
     
 }
 
@@ -83,9 +105,10 @@ p.intro-text {
 /***************** START MAIN ********************/
 #content-box.container-fluid {
     border: 5px solid black;
-    box-shadow: 2px 3px 3px slategrey;
+    /*box-shadow: 2px 3px 3px slategrey;*/
     margin: 15vh 9vw;
     max-width: 80vw;
+    
     /*right: 10%;
     left: 10%;*/
     /*margin: 10vh 9vw;*/
@@ -95,6 +118,10 @@ p.intro-text {
 
 h2 {
     margin: 12px 0 12px 0;
+
+}
+.subheadercb {
+    font-size: .8em;
 }
 
 /*h3 {
@@ -122,7 +149,7 @@ img.img-fluid {
 
 }*/
 
-.square {
+/*.square {
 
     width: 100%;
     height: 100%;
@@ -131,7 +158,7 @@ img.img-fluid {
 }
 .portait {
 
-}
+}*/
 audio {
     width: 100%;
 }
@@ -147,7 +174,7 @@ div.footer {
     height: auto;    
     position: fixed;
     max-width: 80vw;
-    /*padding: 0 10vw 0 10vw;*/
+    padding: 0;
     margin: 0;
     left: 9vw;
     right: 9vw;
@@ -167,34 +194,26 @@ p.col-2 {
     color: inherit;
 }
 .footer a:hover {
+
     color: slategrey;
 }
 
-.footer img {
-    width: 1;
+
+/*svg.contact {
+    width: 2em;
     height: 2em;
-    /*margin-top: 12px;*/
-}
+    margin: 2px 50px;
+    display: inline;    
+}*/
 svg.contact {
     width: 2em;
     height: 2em;
-    
-}
-/*.imprint {
-    display: inline;
-    margin: auto;
-}*/
-.fc {
-    margin: 2px 20px;
-    display: inline;
-   /* line-height: 1;*/
-}
-p.imprint {
-    font-size: 1.5em;
-    font-weight: bold;
+    margin: .3vh auto;
+    display: inline;    
 }
 
-/***************** END FOOTER ********************/
+
+/***************** END FOOTER *******************
 
 
 /********** Extra extra Large devices only **********/
@@ -206,20 +225,25 @@ p.imprint {
 @media (min-width: 1200px) and (max-width: 1399px) {
 
 
+
 }
 
 /********** Large devices only **********/
 @media (min-width: 992px) and (max-width: 1199px) {
+    #text-col > p {
+    font-size: 0.9em;
   
   }
 
 /********** Medium devices only **********/
 @media (min-width: 768px) and (max-width: 991px) {
-    .fc {
-    margin: 4px 20px;
-   }
   
- }
+   #text-col > p {
+    font-size: 0.8em;
+  
+  }
+
+}
 
  
 
@@ -228,24 +252,19 @@ p.imprint {
 @media (min-width: 576px) and (max-width: 767px) { 
    
 
-
+ #text-col > p {
+    font-size: 0.7em;
+  
+  }
 
     }
  
 
 /********** Extra small devices only **********/
   @media (max-width: 575px) { 
-        .fc {
-    margin: 2px 10px;
-    display: inline-block;
-        }
-        svg.contact {
-    width: 1.25em;
-    height: 1.25em;
-    
+    div#text-col > p {   
+    font-size: 0.6em;
 }
-p.imprint {
-    font-size: 0.75em;
-}
+
     }
    
