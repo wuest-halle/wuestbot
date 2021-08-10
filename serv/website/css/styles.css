@@ -41,18 +41,17 @@ div.row.wrapper {
 /***************** END GENERAL RULES **************/
 
 /***************** START HEADER ********************/
-header {
-    min-height: 80px;
-    width: 100%;    
-    position: sticky;
-    top: 0;
-    left: 0;
-    overflow: hidden;   
-    transition: 0.5s ease;
-    
+
+
+/****** thankfull for the solution by vosidity https://bootstrap-menu.com/detail-autohide.html ****/
+
+.scrolled-down{
+  transform:translateY(-100%); transition: all 0.5s ease-in-out;
 }
-
-
+.scrolled-up{
+  transform:translateY(0); transition: all 0.5s ease-in-out;
+}
+/********* navbar scroll solution end *******/
 
 .navbar-brand {
   padding: 0;
