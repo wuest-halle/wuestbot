@@ -162,6 +162,25 @@ img.img-fluid {
 audio {
     width: 100%;
 }
+/******** About Picture sizing ******/
+
+.hallianz {
+    height: 66.7%;
+}
+.stadtHalle {
+    height: 27.6%;
+}
+.BMFSFJ {
+    height: 37.7%;
+}
+.lotto {
+    height: 75.6%;
+}
+.stadtMerseburg {
+    
+    height: 50%;
+}
+
 /***************** END MAIN ********************/
 
 
