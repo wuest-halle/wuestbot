@@ -2,42 +2,24 @@
 html {
     scroll-behavior: smooth;
 }
-/*.navbar {
-    width: 80vw;
-}*/
 header {
     background-color: #fff;
 }
-
 body {
     font-family: 'biryani', sans-serif;
 }
-
 p {
-  /*  padding-top: 12px;*/
     text-align: justify;
     font-size: 16px;
-}
-h3 {
-    clear: both;
-    font-size: 1em;
-    margin-bottom: 0;
-    padding-bottom: 0;
 }
 .container-fluid.main {
     margin: 0;
     padding: 0;
-
 }
 .container-fluid.content {
     max-width: 80vw;
-   
+}
 
-}
-div.row.wrapper {
-    margin: 0;
-    max-width: ;
-}
 /***************** END GENERAL RULES **************/
 
 /***************** START HEADER ********************/
@@ -64,22 +46,24 @@ div.row.wrapper {
   font-size: 1.2em;
   font-weight: 500; 
 }
+.navbar {
+    border: 0 5px solid #fff;
+    width: 80vw;
+    margin: 0 9vw;
+}
+.bg-custom {
+    background-color: #fff;
+}
+
 /***************** END HEADER ********************/
 
 /***************** START INTRO ********************/
 
 .container-fluid.intro {
-    /*padding: 0;*/
-    /*padding-top: 15vh;  */
     max-width: 80vw;
     border: 5px solid #fff;
-   /* left: 9vw;
-    right: 9vw;*/
-    margin: 15vh 9vw;
-    /*height: auto; */
-    
+    margin: 15vh 9vw;    
 }
-
 .banner.img-fluid {
     height: auto;
     padding: 0;
@@ -87,77 +71,33 @@ div.row.wrapper {
     width: 100%;
     margin-bottom: 12vh;
 }
-
 p.intro-text {
- /*/* //** margin:  auto;*/
    padding: 0;
    font-size: 1em;
-   /*font-weight: 500;*/
-   
-   /*padding-right: 12px;
-   padding-left: 12px;*/
-
-   /*text-shadow: .5px .5px #FEE24F;*/
 }
 /***************** END INTRO **************/
 
 /***************** START MAIN ********************/
 #content-box.container-fluid {
     border: 5px solid black;
-    /*box-shadow: 2px 3px 3px slategrey;*/
     margin: 15vh 9vw;
-    max-width: 80vw;
-    
-    /*right: 10%;
-    left: 10%;*/
-    /*margin: 10vh 9vw;*/
-    /*width: 70vw;
-    height: 70vh;*/   
+    max-width: 80vw; 
 }
-
 h2 {
     margin: 12px 0 12px 0;
-
 }
 .subheadercb {
     font-size: .8em;
 }
-
-/*h3 {
-    padding-top: 5px;
-}*/
-
 img.img-fluid {
     padding: 12px;
 }
 .img-col {
     padding: 0;
 }
-#cp.square {
-     
-    width: 100%;
-    height: auto;
-    margin: ;  
-}
 #text-col {
     padding: 12px;
 }
-/*#content-box > img {
-   
-    margin: 0 auto;
-
-}*/
-
-/*.square {
-
-    width: 100%;
-    height: 100%;
-    aspect-ratio: attr(width) / attr(height);
-
-}
-.portait {
-
-}*/
 audio {
     width: 100%;
 }
@@ -176,7 +116,6 @@ audio {
     height: 75.6%;
 }
 .stadtMerseburg {
-    
     height: 50%;
 }
 
@@ -185,7 +124,6 @@ audio {
 
 /***************** START FOOTER ********************/
 div.footer {
-
     background-color: #FEE24F;
     border: 5px solid black;
     border-bottom: 0px;
@@ -198,31 +136,14 @@ div.footer {
     right: 9vw;
     bottom: 0;
     overflow: hide;
-
-    /*width: 82vw;*/
- 
 }
-p.col-2 {
-    padding: 0;
-    margin: 0;
-}
-
 .footer  a {
     text-decoration: none;
     color: inherit;
 }
 .footer a:hover {
-
     color: slategrey;
 }
-
-
-/*svg.contact {
-    width: 2em;
-    height: 2em;
-    margin: 2px 50px;
-    display: inline;    
-}*/
 svg.contact {
     width: 2em;
     height: 2em;
@@ -230,59 +151,29 @@ svg.contact {
     display: inline;    
 }
 
-
 /***************** END FOOTER *******************
 
+/********** START MEDIA QUERIES *********************/
 
 /********** Extra extra Large devices only **********/
 @media (min-width: 1400px) {
-
 }
 
 /********** Extra large devices only **********/
 @media (min-width: 1200px) and (max-width: 1399px) {
-
-
-
 }
 
 /********** Large devices only **********/
 @media (min-width: 992px) and (max-width: 1199px) {
-    #text-col > p {
-    font-size: 0.9em;
-  
-  }
+}
 
 /********** Medium devices only **********/
 @media (min-width: 768px) and (max-width: 991px) {
-  
-   #text-col > p {
-    font-size: 0.8em;
-  
-  }
-
 }
-
- 
-
-
 /********** Small devices only **********/
 @media (min-width: 576px) and (max-width: 767px) { 
-   
-
- #text-col > p {
-    font-size: 0.7em;
-  
-  }
-
-    }
- 
-
-/********** Extra small devices only **********/
-  @media (max-width: 575px) { 
-    div#text-col > p {   
-    font-size: 0.6em;
 }
-
-    }
+/********** Extra small devices only **********/
+@media (max-width: 575px) { 
+}
    
