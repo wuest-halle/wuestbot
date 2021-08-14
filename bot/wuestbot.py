@@ -27,6 +27,7 @@ bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
 
 next_event = {
+	"photo": "routines_2021_general.png",
 	"name": "ROUTINES 2021",
 	"date": "SEP 12 - SEPT 25 2021",
 	"description": """ROUTINES questions normality and everyday life in\
@@ -43,7 +44,21 @@ next_event = {
 		"Emma-Louise Meyer, Melanie Schulz": "",
 		"Nancy Dewhurst": ""
 	},
-	"music": {}
+	"interventions": {
+		"SPAETI 007": {
+			"date": "SEP 16 2021",
+			"musicians": ""
+		},
+		"SHERINS MARKT": {
+			"date": "SEP 23 2021",
+			"musicians": ""
+		},
+		"SCHWEMME": {
+			"date": "SEP 25 2021",
+			"musicians": ""
+		}
+	}, 
+	"admission": "Free (donations appreciated)"
 }
 
 # Process webhook calls
@@ -109,9 +124,8 @@ def next(message):
 		send_next_event(u_id)
 
 # Handle all other messages
-@bot.message_handler(func=lambda message: True, content_types=['text'])
+@bot.message_handler(func=lambda message: True)
 def echo_message(message):
-    logging.debug(time.now(), message)
     bot.reply_to(message, """Sorry, I don't know this :( try /help to 
 	see what I can understand""")
 
@@ -142,24 +156,27 @@ def send_next_event(u_id):
 	"""
 	
 	try:
+		photo = open(f"""./app/img/{next_event["photo"]}""", "rb")
 		name = next_event["name"]
 		date = next_event["date"]
 		description = next_event["description"]
 		artists = [artist for artist in next_event["artists"]]
+		interventions = [intervention for intervention in next_event["interventions"]]
+		admission = next_event["admission"]
 	except Exception as e:
 		logging.error(time.now(), e)
 		print(e)
 
 	try:
+		bot.send_photo(u_id, photo)
 		bot.send_message(u_id, text=flask.render_template("next_event.html", 
-			name=name, date=date, description=description, artists=artists), 
+			name=name, date=date, description=description, artists=artists,
+			interventions=interventions, admission=admission), 
 			parse_mode="html")
-	except Exception as e:
+	except:
 		logging.error(time.now(), e)
 		print(e)
 	
-	
-
 #	with app.app_context():
 #		try:
 #			event = db_objects.Event.next()

@@ -4,8 +4,14 @@
 {% if description %}{{ description -}}{% endif %}
 {% if artists %}
 With works by:
-{%  for artist in artists -%}
+{% for artist in artists %}
 > {{ artist-}}
-{%  endfor %}
+{% endfor %}
+{% endif %}
+{% if interventions %}
+See you for these interventions:
+{% for intervention in interventions %}
+> {{ intervention-}}
+{% endfor %}
 {% endif %}
 {% if admission %}<b>Admission: </b>{{ admission }}{% endif %}
