@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services: 
 
   website:
@@ -11,10 +11,11 @@ services:
       - "./serv/certs:/var/www/certs"
 
   bot:
-#     image: d2bc806cf339
-    build: ./bot
+    image: python:3
     container_name: bot
+    working_dir: /app
     volumes:
-      - "./bot/app/database/data.sqlite:/app/database/data.sqlite"
+      - ./bot:/app
+    entrypoint: /app/docker-entrypoint.sh
     ports:
       - "8443:8443"
