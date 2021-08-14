@@ -1,8 +1,9 @@
-<b>{{ e_name }}</b>
+<b>{{ name }}</b>
 <b>Date: </b> {{ date }} {% if time %}<b>Time: </b> {{ time }} {% endif %}
 {% if location %}<b>Location: </b> {{ location }} {% endif %}
 {% if description %}{{ description -}}{% endif %}
 {% if artists %}
+With works by:
 {%  for artist in artists -%}
 > {{ artist-}}
 {%  endfor %}

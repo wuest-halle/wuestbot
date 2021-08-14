@@ -26,6 +26,26 @@ bot = telebot.TeleBot(API_TOKEN)
 
 app = flask.Flask(__name__)
 
+next_event = {
+	"name": "ROUTINES 2021",
+	"date": "SEP 12 - SEPT 25 2021",
+	"description": """ROUTINES questions normality and everyday life in\
+		its variety and repetitiveness by showcasing three works of individual\
+		artists and groups in Spätshops spread across Halle. With each project\
+		taking a different angle on the subject, it embeds critically engaging\
+		art into our ordinary running for errands and opens an account to creative\
+		work for everybody - outside of galleries and museums. Ultimately,\
+		the exhibition engages in a dialogue with the subject which you are warmly\
+		welcome to join into.
+ 		""",
+	"artists": {
+		"Asako Fujimoto, Maxime Lethelier": "",
+		"Emma-Louise Meyer, Melanie Schulz": "",
+		"Nancy Dewhurst": ""
+	},
+	"music": {}
+}
+
 # Process webhook calls
 @app.route(f'/bot', methods=['POST'])
 def webhook():
@@ -73,7 +93,7 @@ def start(message):
 			logging.error('cannot send template:', message.text)
 
 @bot.message_handler(commands=['next'])
-def next_event(message):
+def next(message):
 
 	"""/next message handler function
 	Upon sending the /next command the event's graphic and all available
@@ -91,8 +111,9 @@ def next_event(message):
 # Handle all other messages
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_message(message):
-    logging.debug(message)
-    bot.reply_to(message, """Sorry, I don't know this :( try /help to see what I can understand""")
+    logging.debug(time.now(), message)
+    bot.reply_to(message, """Sorry, I don't know this :( try /help to 
+	see what I can understand""")
 
 def send_template(u_id, template):
 	"""Sends a template message via Telebot.
@@ -119,7 +140,25 @@ def send_next_event(u_id):
 	Args:
 		u_id (str): The chat ID to send the event to.
 	"""
-	bot.send_message(u_id, text="""The next event is going to be ROUTINES in September. Watch this space for more info in a few days""")
+	
+	try:
+		name = next_event["name"]
+		date = next_event["date"]
+		description = next_event["description"]
+		artists = [artist for artist in next_event["artists"]]
+	except Exception as e:
+		logging.error(time.now(), e)
+		print(e)
+
+	try:
+		bot.send_message(u_id, text=flask.render_template("next_event.html", 
+			name=name, date=date, description=description, artists=artists), 
+			parse_mode="html")
+	except Exception as e:
+		logging.error(time.now(), e)
+		print(e)
+	
+	
 
 #	with app.app_context():
 #		try:
