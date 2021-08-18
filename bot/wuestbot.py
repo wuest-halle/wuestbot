@@ -8,9 +8,10 @@ from datetime import datetime
 import flask
 import telebot
 
-from telebot import apihelper
+from telebot import apihelper, types
 from dotenv import load_dotenv
 from traceback import print_exc
+from flask import render_template
 
 load_dotenv()
 
@@ -40,16 +41,46 @@ next_event = {
 		welcome to join into.
  		""",
 	"artists": {
-		"Asako Fujimoto, Maxime Lethelier": "",
-		"Emma-Louise Meyer, Melanie Schulz": "",
-		"Nancy Dewhurst": ""
+		"Asako Fujimoto, Maxime Lethelier": {
+			"photo": "",
+			"description": """Asako Fujimoto is a sound artist and musician\
+				interested in sonic representations of nature as well as algorithmic\
+				composition. Maxime Lethelier is a mixed media artist who works\
+				on representations of modern society.\n
+				Their work HU/AU Bacus is an audiovisual encounter with metadata\
+				of daily human movement collected by the market. Eventually, this\
+				data would become more valuable than gold or steel. The installation\
+				shows the flow of customers in relation to stock market prices\
+				accompanied by looped audio of the spot."""
+		},
+		"Emma Louise Meyer, Melanie Schulz": {
+			"photo": "",
+			"description": """Melanie Schulz casts repetitiveness and physicalness in\
+				photography. Emma Louise Meyer analyses power mechanisms and creates\
+				performances and multimedia pieces from her findings.\n
+				Room With A View is their first collaboration that deals with the\
+				uncanny and challenging situation we all faced during the Covid-19\
+				pandemic. Objects and images of artists are meant to encourage fellow\
+				creators to keep working under unusual circumstances. The work integrates\
+				with the Spaeti’s environment and offers room for discovery."""
+		},
+		"Nancy Dewhurst": {
+			"photo": "",
+			"description": """Nancy Dewhurst’s work focuses on participatory pieces, playful\
+			encounters to research-based topics. The pieces usually evolve from a small seed\
+			she finds by chance and evolves through interaction.\n
+			Seashell Resonance is a collection of seashells - put them to your ear and you may\
+			hear the ocean or else. It questions how we deal with the environment for our own\
+			pleasure and the need to keep up with routines even though our world is in a crisis\
+			as with the pandemic we are still experiencing."""
+		}
 	},
 	"interventions": {
 		"SPAETI 007": {
 			"date": "SEP 16 2021",
 			"musicians": ""
 		},
-		"SHERINS MARKT": {
+		"SCHERINS MARKT": {
 			"date": "SEP 23 2021",
 			"musicians": ""
 		},
@@ -102,7 +133,7 @@ def start(message):
 
 	with app.app_context():
 		try:
-			template = flask.render_template('start.html')
+			template = render_template('start.html')
 			send_template(u_id, template)
 		except:
 			logging.error('cannot send template:', message.text)
@@ -123,11 +154,22 @@ def next(message):
 	with app.app_context():
 		send_next_event(u_id)
 
+@bot.message_handler(commands=['artist'])
+def send_artist(message):
+	""" send info and picture of artist to requesting user
+
+	args:
+	    * u_id (str): user id who requested the info
+	    * name (str): name of the artist
+	"""
+
+	bot.reply_to(message, 'hi')
+
 # Handle all other messages
 @bot.message_handler(func=lambda message: True)
 def echo_message(message):
-    bot.reply_to(message, """Sorry, I don't know this :( try /help to 
-	see what I can understand""")
+    bot.reply_to(message, """Sorry, I don't know this :( try /help to
+    see what I can understand""")
 
 def send_template(u_id, template):
 	"""Sends a template message via Telebot.
@@ -154,7 +196,7 @@ def send_next_event(u_id):
 	Args:
 		u_id (str): The chat ID to send the event to.
 	"""
-	
+
 	try:
 		photo = open(f"""./app/img/{next_event["photo"]}""", "rb")
 		name = next_event["name"]
@@ -169,54 +211,80 @@ def send_next_event(u_id):
 
 	try:
 		bot.send_photo(u_id, photo)
-		bot.send_message(u_id, text=flask.render_template("next_event.html", 
-			name=name, date=date, description=description, artists=artists,
-			interventions=interventions, admission=admission), 
-			parse_mode="html")
-	except:
-		logging.error(time.now(), e)
+	except Exception as e:
 		print(e)
 	
-#	with app.app_context():
-#		try:
-#			event = db_objects.Event.next()
-#		except Exception as e:
-#			pex(f"unable to retrieve next event: {e}")
-#			send_template(u_id, flask.render_template('none.html'))
-#			return
-#
-#		# Nothing scheduled.
-#		if not event:
-#			send_template(u_id, flask.render_template('404.html'))
-#			return
-#
-#		# Send the picture, if possible.
-#		# TODO: refactor, this should not throw an exception if the
-#		# picture can't be found.
-#		event.pic_id = os.path.join(img_dir, event.pic_id)
-#		try:
-#			bot.send_photo(
-#				chat_id=u_id,
-#				photo=open(event.pic_id, 'rb')
-#			)
-#		except Exception as e:
-#			pex(f"Unable to send photo: {e}")
-#
-#		try:
-#			send_template(
-#				u_id,
-#				flask.render_template(
-#					'next_event.html',
-#					e_name=event.name,
-#					date=event.date,
-#					time=event.time,
-#					admission=event.admission,
-#					location=event.location,
-#					description=event.description,
-#					artists=event.artists
-#				)
-#			)
-#		except Exception as e:
-#			pex(f"unable to send message: {e}")
-#			send_template(u_id, flask.render_template('none.html'))
-#
+	try:
+		bot.send_message(
+			u_id, 
+			text=render_template(
+				"next_event.html", 
+				name=name, 
+				date=date, 
+				description=description, 
+				artists=artists,
+				interventions=interventions, 
+				admission=admission), 
+			reply_markup=artist_keyboard(),
+			parse_mode="html")
+	except Exception as e:
+		print(e)
+
+@bot.callback_query_handler(func=lambda call:True)
+def send_info(call):
+	""" returns info
+	"""
+	name = call.data
+
+#	with app.context():
+	if name in next_event["artists"]:
+		try:
+			artists = next_event["artists"]
+			photo = artists[name]["photo"]
+			description = artists[name]["description"]
+			print(description)
+			if description:
+				try:
+					with app.app_context():
+						text=render_template(
+							'artist.html',
+							name=name,
+							description=description)
+						print(text)
+				except Exception as e:
+					print('cannot render template:', e)
+				
+				bot.edit_message_text(
+					chat_id=call.message.chat.id,
+					message_id=call.message.message_id, 
+					text=text,
+					parse_mode='html',
+					reply_markup=artist_keyboard())
+		except Exception as e:
+			print(e)
+	else:
+		print("name not found in dict")
+
+def artist_keyboard():
+	""" constructs inline keyboard"""
+		# construct the inline keyoard
+	
+	try:
+		inline = types.InlineKeyboardMarkup(row_width=1)
+		btn1 = types.InlineKeyboardButton(
+			text='Asako Fujimoto, Maxime Lethelier', 
+			callback_data='Asako Fujimoto, Maxime Lethelier')
+		btn2 = types.InlineKeyboardButton(
+			text='Emma Louise Meyer, Melanie Schulz', 
+			callback_data='Emma Louise Meyer, Melanie Schulz')
+		btn3 = types.InlineKeyboardButton(
+			text='Nancy Dewhurst', 
+			callback_data='Nancy Dewhurst')
+#		btn4 = types.InlineKeyboardButton(
+#			text='Go Back', 
+#			callback_data='Go Back')
+		inline.add(btn1, btn2, btn3)
+	except Exception as e:
+		print('cannot compile keyboard:', e)
+
+	return inline
