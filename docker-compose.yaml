@@ -1,9 +1,21 @@
-version: '3'
+version: "3"
 services: 
 
   website:
     build: ./serv
-    image: server:latest
+    container_name: server
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - "./serv/certs:/var/www/certs"
+
+  bot:
+    image: python:3
+    container_name: bot
+    working_dir: /app
+    volumes:
+      - ./bot:/app
+    entrypoint: /app/docker-entrypoint.sh
+    ports:
+      - "8443:8443"
