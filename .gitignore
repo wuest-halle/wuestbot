@@ -10,7 +10,7 @@ api/data/*
 *.pem
 *.jpg
 *.ico
-
+*.png
 
 # This NEEDS to be the last line of this file
 !.gitkeep
