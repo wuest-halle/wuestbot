@@ -30,49 +30,49 @@ app = flask.Flask(__name__)
 next_event = {
 	"photo": "routines_2021_general.png",
 	"name": "ROUTINES 2021",
-	"date": "SEP 12 - SEPT 25 2021",
+	"date": "SEP 10 - 25",
 	"description": """ROUTINES questions normality and everyday life in\
-		its variety and repetitiveness by showcasing three works of individual\
-		artists and groups in Spätshops spread across Halle. With each project\
-		taking a different angle on the subject, it embeds critically engaging\
-		art into our ordinary running for errands and opens an account to creative\
-		work for everybody - outside of galleries and museums. Ultimately,\
-		the exhibition engages in a dialogue with the subject which you are warmly\
-		welcome to join into.
- 		""",
+	its variety and repetitiveness by showcasing three works of individual\
+	artists and groups in Spätshops spread across Halle. With each project\
+	taking a different angle on the subject, it embeds critically engaging\
+	art into our ordinary running for errands and opens an account to creative\
+	work for everybody - outside of galleries and museums. Ultimately,\
+	the exhibition engages in a dialogue with the subject which you are warmly\
+	welcome to join into.""",
 	"artists": {
 		"Asako Fujimoto, Maxime Lethelier": {
 			"photo": "",
 			"description": """Asako Fujimoto is a sound artist and musician\
-				interested in sonic representations of nature as well as algorithmic\
-				composition. Maxime Lethelier is a mixed media artist who works\
-				on representations of modern society.\n
-				Their work HU/AU Bacus is an audiovisual encounter with metadata\
-				of daily human movement collected by the market. Eventually, this\
-				data would become more valuable than gold or steel. The installation\
-				shows the flow of customers in relation to stock market prices\
-				accompanied by looped audio of the spot."""
+			interested in sonic representations of nature as well as algorithmic\
+			composition. Maxime Lethelier is a mixed media artist who works\
+			on representations of modern society.\n
+			Their work HU/AU Bacus is an audiovisual encounter with metadata\
+			of daily human movement collected by the market. Eventually, this\
+			data would become more valuable than gold or steel. The installation\
+			shows the flow of customers in relation to stock market prices\
+			accompanied by looped audio of the spot."""
 		},
 		"Emma Louise Meyer, Melanie Schulz": {
 			"photo": "",
 			"description": """Melanie Schulz casts repetitiveness and physicalness in\
-				photography. Emma Louise Meyer analyses power mechanisms and creates\
-				performances and multimedia pieces from her findings.\n
-				Room With A View is their first collaboration that deals with the\
-				uncanny and challenging situation we all faced during the Covid-19\
-				pandemic. Objects and images of artists are meant to encourage fellow\
-				creators to keep working under unusual circumstances. The work integrates\
-				with the Spaeti’s environment and offers room for discovery."""
+			photography. Emma Louise Meyer analyses power mechanisms and creates\
+			performances and multimedia pieces from her findings.\n
+			Room With A View is their first collaboration that deals with the\
+			uncanny and challenging situation we all faced during the Covid-19\
+			pandemic. Objects and images of artists are meant to encourage fellow\
+			creators to keep working under unusual circumstances. The work integrates\
+			with the Spaeti’s environment and offers room for discovery."""
 		},
 		"Nancy Dewhurst": {
 			"photo": "",
-			"description": """Nancy Dewhurst’s work focuses on participatory pieces, playful\
-			encounters to research-based topics. The pieces usually evolve from a small seed\
-			she finds by chance and evolves through interaction.\n
-			Seashell Resonance is a collection of seashells - put them to your ear and you may\
-			hear the ocean or else. It questions how we deal with the environment for our own\
-			pleasure and the need to keep up with routines even though our world is in a crisis\
-			as with the pandemic we are still experiencing."""
+			"description": """Nancy Dewhurst’s work focuses on participatory pieces,\
+			playful encounters to research-based topics. She is interested in\
+			systems and the way these might change in the future.\n
+			Left-Hand Turn is a collection of giant shells - press them to your\
+			ear and you may hear their daily doing as you would hear the ocean\
+			through seashell resonance. It questions how we deal with the environment\
+			for our own pleasure and the need to keep up with routines even though\
+			our world is in a crisis as with the pandemic we are still experiencing."""
 		}
 	},
 	"interventions": {
