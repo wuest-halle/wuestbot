@@ -225,13 +225,11 @@ def send_info(call):
 	"""
 	name = call.data
 
-#	with app.context():
 	if name in next_event["artists"]:
 		try:
 			artists = next_event["artists"]
 			photo = artists[name]["photo"]
 			description = artists[name]["description"]
-			print(description)
 			if description:
 				try:
 					with app.app_context():
@@ -239,7 +237,36 @@ def send_info(call):
 							'artist.html',
 							name=name,
 							description=description)
-						print(text)
+				except Exception as e:
+					print('cannot render template:', e)				
+				bot.edit_message_text(
+					chat_id=call.message.chat.id,
+					message_id=call.message.message_id, 
+					text=text,
+					parse_mode='html',
+					reply_markup=artist_keyboard())
+		except Exception as e:
+			print(e)
+	
+	elif name == "Go Back":
+		try:
+			name = next_event["name"]
+			date = next_event["date"]
+			description = next_event["description"]
+			artists = [artist for artist in next_event["artists"]]
+			interventions = [intervention for intervention in next_event["interventions"]]
+			admission = next_event["admission"]
+			if description:
+				try:
+					with app.app_context():
+						text = render_template(
+							"next_event.html", 
+							name=name, 
+							date=date, 
+							description=description, 
+							artists=artists,
+							interventions=interventions, 
+							admission=admission)
 				except Exception as e:
 					print('cannot render template:', e)
 				
@@ -266,10 +293,10 @@ def artist_keyboard():
 		btn2 = types.InlineKeyboardButton(
 			text='Nancy Dewhurst', 
 			callback_data='Nancy Dewhurst')
-#		btn4 = types.InlineKeyboardButton(
-#			text='Go Back', 
-#			callback_data='Go Back')
-		inline.add(btn1, btn2)
+		btn3 = types.InlineKeyboardButton(
+			text='Go Back', 
+			callback_data='Go Back')
+		inline.add(btn1, btn2, btn3)
 	except Exception as e:
 		print('cannot compile keyboard:', e)
 
