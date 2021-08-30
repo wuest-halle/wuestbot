@@ -52,17 +52,6 @@ next_event = {
 			shows the flow of customers in relation to stock market prices\
 			accompanied by looped audio of the spot."""
 		},
-		"Emma Louise Meyer, Melanie Schulz": {
-			"photo": "",
-			"description": """Melanie Schulz casts repetitiveness and physicalness in\
-			photography. Emma Louise Meyer analyses power mechanisms and creates\
-			performances and multimedia pieces from her findings.\n
-			Room With A View is their first collaboration that deals with the\
-			uncanny and challenging situation we all faced during the Covid-19\
-			pandemic. Objects and images of artists are meant to encourage fellow\
-			creators to keep working under unusual circumstances. The work integrates\
-			with the Spaeti’s environment and offers room for discovery."""
-		},
 		"Nancy Dewhurst": {
 			"photo": "",
 			"description": """Nancy Dewhurst’s work focuses on participatory pieces,\
@@ -275,15 +264,12 @@ def artist_keyboard():
 			text='Asako Fujimoto, Maxime Lethelier', 
 			callback_data='Asako Fujimoto, Maxime Lethelier')
 		btn2 = types.InlineKeyboardButton(
-			text='Emma Louise Meyer, Melanie Schulz', 
-			callback_data='Emma Louise Meyer, Melanie Schulz')
-		btn3 = types.InlineKeyboardButton(
 			text='Nancy Dewhurst', 
 			callback_data='Nancy Dewhurst')
 #		btn4 = types.InlineKeyboardButton(
 #			text='Go Back', 
 #			callback_data='Go Back')
-		inline.add(btn1, btn2, btn3)
+		inline.add(btn1, btn2)
 	except Exception as e:
 		print('cannot compile keyboard:', e)
 
