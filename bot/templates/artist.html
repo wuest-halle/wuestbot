@@ -1,5 +1,7 @@
 <b>{{ name }}</b>
+
+{% if description %}{{ description }}{% endif %}
+
 {% if website %} <b>web: </b>{{ website }} {% endif %}
 {% if soundcloud %} <b>soundcloud: </b>{{ soundcloud }} {% endif %}
 {% if bandcamp %} <b>bandcamp: </b>{{ bandcamp }} {% endif %}
-{% if description %} {{ description }} {% endif %}

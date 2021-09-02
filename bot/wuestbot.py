@@ -50,7 +50,8 @@ next_event = {
 			of daily human movement collected by the market. Eventually, this\
 			data would become more valuable than gold or steel. The installation\
 			shows the flow of customers in relation to stock market prices\
-			accompanied by looped audio of the spot."""
+			accompanied by looped audio of the spot.""",
+			"website": ""
 		},
 		"Rose Magee": {
 			"photo": "",
@@ -63,7 +64,8 @@ next_event = {
 			waste, which became even more impactful on our environment through\
 			people mass-acquiring supplies during the pandemic. Watch out of\
 			her plastics spread throughout the shop.
-			"""
+			""",
+			"website": ""
 		}, 
 		"Nancy Dewhurst": {
 			"photo": "",
@@ -74,18 +76,20 @@ next_event = {
 			ear and you may hear their daily doing as you would hear the ocean\
 			through seashell resonance. It questions how we deal with the environment\
 			for our own pleasure and the need to keep up with routines even though\
-			our world is in a crisis as with the pandemic we are still experiencing."""
+			our world is in a crisis as with the pandemic we are still experiencing.""",
+			"website": ""
 		}
 	},
 	"interventions": {
 		"Späti 007": {
 			"date": "SEP 16 2021",
-			"description": "",
-			"lat": """DJ Residue’s stripped down utilitarianism will be framed via Asako’s\
+			"description": """DJ Residue’s stripped down utilitarianism will be framed via Asako’s\
 			and Maxime’s piece on the data economy. His live set feels like an antidote\
 			of sorts to the shiny appearance of city centers in late capitalism. The\
 			evening will be started off with sure-shot electronics by DJ Lara Palmer.""",
-			"lon": ""
+			"lat": "",
+			"lon": "",
+			"location": "https://www.openstreetmap.org/node/890216896#map=19/51.48624/11.97503"
 		},
 		"Scherins Markt": {
 			"date": "SEP 23 2021",
@@ -95,7 +99,8 @@ next_event = {
 			Jlululu gets you up to operating temperature with two hours of red hot\
 			post club music from the digital decks.""",
 			"lat": "",
-			"lon": ""
+			"lon": "",
+			"location": "https://www.openstreetmap.org/node/3870926327#map=19/51.50152/11.95545"
 		},
 		"Schwemme": {
 			"date": "SEP 25 2021",
@@ -109,7 +114,8 @@ next_event = {
 			collected oddities, outliers of what we routinely hear. WUEST’s own GREGOR.\
 			will connect the dots with records from all spheres of electronics.""",
 			"lat": "",
-			"lon": ""
+			"lon": "",
+			"location": "https://www.openstreetmap.org/way/181008066"
 		}
 	}, 
 	"admission": "Free (donations appreciated)"
@@ -306,15 +312,19 @@ def send_info(call):
 		try:
 			interventions = next_event["interventions"]
 			description = interventions[data]["description"]
+			date = interventions[data]["date"]
 			lat = interventions[data]["lat"]
 			lon = interventions[data]["lon"]
+			location = interventions[data]["location"]
 			if description:
 				try:
 					with app.app_context():
 						text=render_template(
 							'interventions.html',
 							name=data,
-							description=description)
+							date=date,
+							description=description,
+							location=location)
 				except Exception as e:
 					print('cannot render template:', e)				
 				bot.edit_message_text(
