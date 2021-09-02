@@ -172,20 +172,20 @@ def send_artist(message):
 
 	bot.reply_to(message, 'hi')
 
-@bot.message_handler(commands=['location'])
-def location(message):
-	"""
-	"""
-	bot.reply_to(message, message)
-	text = message.text
-	name = text - 'location '
-	try:
-		lat = next_event["locations"]["SPÄTI TO GO"]["lat"]
-		lon = next_event["locations"]["SPÄTI TO GO"]["lon"]
-		print(lat, lon)
-	except Exception as e:
-		print(e)
-	bot.send_location(message.from_user.id, lat, lon)
+#@bot.message_handler(commands=['location'])
+#def location(message):
+#	"""
+#	"""
+#	bot.reply_to(message, message)
+#	text = message.text
+#	name = text - 'location '
+#	try:
+#		lat = next_event["locations"]["SPÄTI TO GO"]["lat"]
+#		lon = next_event["locations"]["SPÄTI TO GO"]["lon"]
+#		print(lat, lon)
+#	except Exception as e:
+#		print(e)
+#	bot.send_location(message.from_user.id, lat, lon)
 
 # Handle all other messages
 @bot.message_handler(func=lambda message: True)
