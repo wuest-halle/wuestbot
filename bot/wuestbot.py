@@ -78,21 +78,43 @@ next_event = {
 		}
 	},
 	"interventions": {
-		"SPAETI 007": {
+		"Späti 007": {
 			"date": "SEP 16 2021",
-			"musicians": ""
+			"description": "",
+			"lat": """DJ Residue’s stripped down utilitarianism will be framed via Asako’s\
+			and Maxime’s piece on the data economy. His live set feels like an antidote\
+			of sorts to the shiny appearance of city centers in late capitalism. The\
+			evening will be started off with sure-shot electronics by DJ Lara Palmer.""",
+			"lon": ""
 		},
-		"SCHERINS MARKT": {
+		"Scherins Markt": {
 			"date": "SEP 23 2021",
-			"musicians": ""
+			"description": """alobhe’s overdriven tenderness will be visible amidst\
+			Rose’s warped wrappings of our everyday occupations. Brutal and hell-bent,\
+			her music is as broken as our society became in 2020. She will play live.\
+			Jlululu gets you up to operating temperature with two hours of red hot\
+			post club music from the digital decks.""",
+			"lat": "",
+			"lon": ""
 		},
-		"SCHWEMME": {
+		"Schwemme": {
 			"date": "SEP 25 2021",
-			"musicians": ""
+			"description": """We will draw ROUTINES to a conclusion at Schwemme.\
+			Ana Bogner’s liberated neo-acoustics draw influence from many musics.\
+			The style of her live sets could be described as collected and iterative.\
+			Iterative is also John Horton’s approach to “The Sum Of Its Parts -\
+			the auditive documentation of ROUTINES. He will present live snippets\
+			recorded throughout the whole of the event - layered and morphed. Both\
+			live artists will receive DJ support from Vanessa Bettina who present\
+			collected oddities, outliers of what we routinely hear. WUEST’s own GREGOR.\
+			will connect the dots with records from all spheres of electronics.""",
+			"lat": "",
+			"lon": ""
 		}
 	}, 
 	"admission": "Free (donations appreciated)"
 }
+
 
 # Process webhook calls
 @app.route(f'/bot', methods=['POST'])
@@ -199,6 +221,8 @@ def send_next_event(u_id):
 		u_id (str): The chat ID to send the event to.
 	"""
 
+	keys = keyboards()
+
 	try:
 		photo = open(f"""./app/img/{next_event["photo"]}""", "rb")
 		name = next_event["name"]
@@ -227,7 +251,7 @@ def send_next_event(u_id):
 				artists=artists,
 				interventions=interventions, 
 				admission=admission), 
-			reply_markup=artist_keyboard(),
+			reply_markup=keys[2],
 			parse_mode="html")
 	except Exception as e:
 		print(e)
@@ -236,19 +260,36 @@ def send_next_event(u_id):
 def send_info(call):
 	""" returns info
 	"""
-	name = call.data
+	data = call.data
+	keys = keyboards()
 
-	if name in next_event["artists"]:
+	if data == "Artists":
+		bot.edit_message_text(
+			chat_id=call.message.chat.id,
+			message_id=call.message.message_id,
+			text="Click on the buttons below to get more info on artists", 
+			parse_mode='html',
+			reply_markup=keys[0])
+	
+	if data == "Interventions":
+		bot.edit_message_text(
+			chat_id=call.message.chat.id,
+			message_id=call.message.message_id, 
+			text="Click on the buttons below to get more info on what's happening at each location",
+			parse_mode='html',
+			reply_markup=keys[1])
+
+	if data in next_event["artists"]:
 		try:
 			artists = next_event["artists"]
-			photo = artists[name]["photo"]
-			description = artists[name]["description"]
+			photo = artists[data]["photo"]
+			description = artists[data]["description"]
 			if description:
 				try:
 					with app.app_context():
 						text=render_template(
 							'artist.html',
-							name=name,
+							name=data,
 							description=description)
 				except Exception as e:
 					print('cannot render template:', e)				
@@ -257,11 +298,36 @@ def send_info(call):
 					message_id=call.message.message_id, 
 					text=text,
 					parse_mode='html',
-					reply_markup=artist_keyboard())
+					reply_markup=keys[0])
 		except Exception as e:
 			print(e)
+
+	if data in next_event["interventions"]:
+		try:
+			interventions = next_event["interventions"]
+			description = interventions[data]["description"]
+			lat = interventions[data]["lat"]
+			lon = interventions[data]["lon"]
+			if description:
+				try:
+					with app.app_context():
+						text=render_template(
+							'interventions.html',
+							name=data,
+							description=description)
+				except Exception as e:
+					print('cannot render template:', e)				
+				bot.edit_message_text(
+					chat_id=call.message.chat.id,
+					message_id=call.message.message_id, 
+					text=text,
+					parse_mode='html',
+					reply_markup=keys[1])
+		except Exception as e:
+			print(e)
+
 	
-	elif name == "Go Back":
+	if data == "Go Back":
 		try:
 			name = next_event["name"]
 			date = next_event["date"]
@@ -274,7 +340,7 @@ def send_info(call):
 					with app.app_context():
 						text = render_template(
 							"next_event.html", 
-							name=name, 
+							name=data, 
 							date=date, 
 							description=description, 
 							artists=artists,
@@ -288,18 +354,17 @@ def send_info(call):
 					message_id=call.message.message_id, 
 					text=text,
 					parse_mode='html',
-					reply_markup=artist_keyboard())
+					reply_markup=keys[2])
 		except Exception as e:
 			print(e)
 	else:
 		print("name not found in dict")
 
-def artist_keyboard():
+def keyboards():
 	""" constructs inline keyboard"""
-		# construct the inline keyoard
 	
 	try:
-		inline = types.InlineKeyboardMarkup(row_width=1)
+		artists = types.InlineKeyboardMarkup(row_width=1)
 		btn1 = types.InlineKeyboardButton(
 			text='Asako Fujimoto, Maxime Lethelier', 
 			callback_data='Asako Fujimoto, Maxime Lethelier')
@@ -312,8 +377,38 @@ def artist_keyboard():
 		btn4 = types.InlineKeyboardButton(
 			text='Go Back',
 			callback_data='Go Back')
-		inline.add(btn1, btn2, btn3, btn4)
+		artists.add(btn1, btn2, btn3, btn4)
 	except Exception as e:
-		print('cannot compile keyboard:', e)
+		print('cannot compile artists keyboard:', e)
 
-	return inline
+	try:
+		locations = types.InlineKeyboardMarkup(row_width=1)
+		btn5 = types.InlineKeyboardButton(
+			text='Späti 007', 
+			callback_data='Späti 007')
+		btn6 = types.InlineKeyboardButton(
+			text='Scherins Markt', 
+			callback_data='Scherins Markt')
+		btn7 = types.InlineKeyboardButton(
+			text='Schwemme', 
+			callback_data='Schwemme')
+		btn8 = types.InlineKeyboardButton(
+			text='Go Back',
+			callback_data='Go Back')
+		locations.add(btn5, btn6, btn7, btn8)
+	except Exception as e:
+		print('cannot compile locations keyboard:', e)	
+	
+	try:
+		overview = types.InlineKeyboardMarkup(row_width=1)
+		btn9 = types.InlineKeyboardButton(
+			text='Artists', 
+			callback_data='Artists')
+		btn10 = types.InlineKeyboardButton(
+			text='Interventions', 
+			callback_data='Interventions')
+		overview.add(btn9, btn10)
+	except Exception as e:
+		print('cannot compile artists keyboard:', e)
+
+	return [artists, locations, overview]
