@@ -52,6 +52,19 @@ next_event = {
 			shows the flow of customers in relation to stock market prices\
 			accompanied by looped audio of the spot."""
 		},
+		"Rose Magee": {
+			"photo": "",
+			"description": """Rose Magee’s work is her impression of reality,\
+			offering room for opinion and interpretation. She aims to create\
+			space for political discussion through her creative output.\n
+			The work she has devised for ROUTINES critically engages with\
+			the repercussions of our grocery shopping pattern. Through using\
+			recycled materials she asks for consciousness around packaging and\
+			waste, which became even more impactful on our environment through\
+			people mass-acquiring supplies during the pandemic. Watch out of\
+			her plastics spread throughout the shop.
+			"""
+		}, 
 		"Nancy Dewhurst": {
 			"photo": "",
 			"description": """Nancy Dewhurst’s work focuses on participatory pieces,\
@@ -294,9 +307,12 @@ def artist_keyboard():
 			text='Nancy Dewhurst', 
 			callback_data='Nancy Dewhurst')
 		btn3 = types.InlineKeyboardButton(
-			text='Go Back', 
+			text='Rose Magee', 
+			callback_data='Rose Magee')
+		btn4 = types.InlineKeyboardButton(
+			text='Go Back',
 			callback_data='Go Back')
-		inline.add(btn1, btn2, btn3)
+		inline.add(btn1, btn2, btn3, btn4)
 	except Exception as e:
 		print('cannot compile keyboard:', e)
 
