@@ -19,6 +19,12 @@ p {
 .container-fluid.content {
     max-width: 80vw;
 }
+a {
+    color: inherit;
+}
+a:hover {
+    color: inherit;
+}
 
 /***************** END GENERAL RULES **************/
 
@@ -168,12 +174,39 @@ svg.contact {
 }
 
 /********** Medium devices only **********/
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 576px) and (max-width: 991px) {
+    h2 {
+        font-size: 1.45em;
+    }
+    p {
+        font-size: 0.95em;
+    }  
+    p.intro-text {
+        font-size: 0.95em;
+    }
+    svg.contact { 
+        width: 1.75em;
+        height: 1.75em;
+    }
 }
 /********** Small devices only **********/
 @media (min-width: 576px) and (max-width: 767px) { 
 }
 /********** Extra small devices only **********/
 @media (max-width: 575px) { 
+    h2 {
+        font-size: 1.4em;
+    }
+    p {
+        font-size: 0.9em;    
+    }    
+    p.intro-text {
+        font-size: 0.9em;
+    }
+    svg.contact { 
+        width: 1.5em;
+        height: 1.5em;
+    }
 }
+
    
