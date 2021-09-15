@@ -13,11 +13,14 @@ from dotenv import load_dotenv
 from traceback import print_exc
 from flask import render_template
 
+from app.database import db_objects
+
 load_dotenv()
 
 API_TOKEN = os.getenv('API_TOKEN', '')
 HOST = os.getenv('HOST', '')
 PORT = os.getenv('PORT', '8443')
+ADMINS = os.getenv('ADMINS')
 
 WEBHOOK_URL = f"https://{HOST}:{PORT}/bot{API_TOKEN}"
 
@@ -133,10 +136,9 @@ def start(message):
 	name = message.from_user.first_name
 	is_bot = message.from_user.is_bot
 
-	# user = db_objects.User(u_id, name, is_bot)
-
-	# if not user.exists_in_db(u_id):
-	# 	user.add_user()
+	user = db_objects.User(u_id, name, is_bot)
+	if not user.exists_in_db(u_id):
+		user.add_user()
 
 	with app.app_context():
 		try:
@@ -171,6 +173,54 @@ def send_artist(message):
 	"""
 
 	bot.reply_to(message, 'hi')
+
+@bot.message_handler(commands=['delete', 'cancel', 'remove'])
+def delete(message):
+	"""Deletes a user from the database."""
+	error = "Sorry, something went wrong..."
+	with app.app_context():
+		user = db_objects.User.get_user(message.from_user.id)
+
+		# Check if user exists.
+		if not user:
+			bot.reply_to(message, error)
+			return
+
+		bye = ('We\'re sad to see you go! :(\n'
+				'You have been deleted from our message list '
+				'and will not be informed about future events. If you '
+				'would like to subscribe again, please ping me with /start')
+		# Delete user.
+		if user.delete_from_db():
+			bot.reply_to(message, bye)
+		else:
+			bot.reply_to(message, error)
+
+@bot.message_handler(commands=['push'])
+def push_event(message):
+	""" push the next event message to users in db"""
+	caller_id = message.from_user.id
+	admins = get_admin_ids(ADMINS) 
+	
+	if caller_id not in admins:
+		bot.reply_to(message, "Sorry, you are not allowed to do this")
+	
+	else:
+		try:
+			users = db_objects.all_in_db()
+			try:
+				for user in users:
+					photo = open(f"""./app/img/routines_2021_events.jpg""", "rb")
+					bot.send_photo(user, photo=photo)
+					with app.app_context():
+						bot.send_message(
+							user.uID, 
+							text=render_template("push.html"),
+							parse_mode='html')
+			except Exception as e:
+				logging.error(f"pushing to user {user.uID} not possible: ", e)
+		except Exception as e:
+			logging.error("pushing not possible: ", e)
 
 #@bot.message_handler(commands=['location'])
 #def location(message):
@@ -334,3 +384,25 @@ def artist_keyboard():
 		print('cannot compile keyboard:', e)
 
 	return inline
+
+def get_admin_ids(env):
+	"""Extracts admin IDs from a string.
+
+	Admin IDs should be passed as environment variables like so:
+	ADMINS=12345,812354,123013
+
+	This function will split the string and return the IDs as a list. Empty
+	parts of the string will be ignored.
+
+	Args:
+		env (str): A string containing the admin IDs, separated by commas.
+
+	Returns:
+		ids (list): A list of Telegram IDs of the Admins, or an empty list if
+			parsing was unsuccessful.
+	"""
+
+	if not env or not isinstance(env, str):
+		return []
+
+	return [int(i) for i in env.split(',') if i]
