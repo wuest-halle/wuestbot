@@ -207,18 +207,18 @@ def push_event(message):
 	
 	else:
 		try:
-			users = db_objects.all_in_db()
-			try:
-				for user in users:
+			users = db_objects.User.all_in_db()
+			for user in users:
+				try:
 					photo = open(f"""./app/img/routines_2021_events.jpg""", "rb")
-					bot.send_photo(user, photo=photo)
+					bot.send_photo(user.u_id, photo)
 					with app.app_context():
 						bot.send_message(
-							user.uID, 
+							user.u_id, 
 							text=render_template("push.html"),
 							parse_mode='html')
-			except Exception as e:
-				logging.error(f"pushing to user {user.uID} not possible: ", e)
+				except Exception as e:
+					logging.error(f"pushing to user {user.u_id} not possible: ", e)
 		except Exception as e:
 			logging.error("pushing not possible: ", e)
 
