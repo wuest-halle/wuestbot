@@ -19,6 +19,12 @@ p {
 .container-fluid.content {
     max-width: 80vw;
 }
+a {
+    color: inherit;
+}
+a:hover {
+    color: inherit;
+}
 
 /***************** END GENERAL RULES **************/
 
@@ -43,7 +49,7 @@ p {
   padding-bottom: 0;
   height: 50px;
   line-height: 60px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 500; 
 }
 .navbar {
@@ -157,23 +163,75 @@ svg.contact {
 
 /********** Extra extra Large devices only **********/
 @media (min-width: 1400px) {
+     .navbar-nav .nav-link {
+        font-size: 1.4em;
+    }
 }
 
 /********** Extra large devices only **********/
 @media (min-width: 1200px) and (max-width: 1399px) {
+     .navbar-nav .nav-link {
+        font-size: 1.3em;
+    }
 }
 
 /********** Large devices only **********/
 @media (min-width: 992px) and (max-width: 1199px) {
+     .navbar-nav .nav-link {
+        font-size: 1.2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
 }
 
 /********** Medium devices only **********/
 @media (min-width: 768px) and (max-width: 991px) {
+    h2 {
+        font-size: 1.4em;
+    }
+    p {
+        font-size: 0.95em;
+    }  
+    p.intro-text {
+        font-size: 0.95em;
+    }
+    svg.contact { 
+        width: 1.75em;
+        height: 1.75em;
+    }
 }
 /********** Small devices only **********/
 @media (min-width: 576px) and (max-width: 767px) { 
+    h2 {
+        font-size: 1.35em;
+    }
+    p {
+        font-size: 0.93em;
+    }  
+    p.intro-text {
+        font-size: 0.93em;
+    }
+     svg.contact { 
+        width: 1.6em;
+        height: 1.6em;
+    }
 }
 /********** Extra small devices only **********/
 @media (max-width: 575px) { 
+    h2 {
+        font-size: 1.3em;
+    }
+    p {
+        font-size: 0.9em;
+    }  
+    p.intro-text {
+        font-size: 0.9em;
+    }
+    svg.contact { 
+        width: 1.5em;
+        height: 1.5em;
+    }
 }
+
    
