@@ -77,25 +77,7 @@ next_event = {
 			"website": "https://soundcloud.com/sirko-mueller "
 		}
 	},
-	"admission": "8€",
-	"locations": {
-		"SPÄTI TO GO": {
-			"lat":"51.4902",
-			"lon":"11.9659",
-		},
-		"SCHERINS MARKT": {
-			"lat":"",
-			"lon":"",
-		},
-		"SPÄTI 007": {
-			"lat":"",
-			"lon":"",
-		},
-		"SCHWEMME": {
-			"lat":"",
-			"lon":"",
-		}
-	}
+	"admission": "8€"
 }
 
 
@@ -442,7 +424,7 @@ def keyboards():
 		print('cannot compile artists keyboard:', e)
 
 
-	return [artists, locations, overview]
+	return [artists, overview]
 
 def get_admin_ids(env):
 	"""Extracts admin IDs from a string.
