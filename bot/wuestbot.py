@@ -33,7 +33,7 @@ app = flask.Flask(__name__)
 next_event = {
 	"photo": "wuest_strives_general.png",
 	"name": "WUEST STRIVES",
-	"date": "NOV 10",
+	"date": "NOV 19",
 	"description": """Come to join WUEST on a boat""",
 	"artists": {
 		"Somali Vendetta": {
@@ -45,7 +45,7 @@ next_event = {
 			dancing.""",
 			"website": "https://soundcloud.com/somalivendetta"
 		},
-		".neelie aka colluvisol": {
+		"neelie. aka colluvisol": {
 			"photo": "",
 			"description": """neelie. places a strong focus on contemporary web culture\
 			in different areas of her work - be it while playing records or pushing\
@@ -404,12 +404,9 @@ def keyboards():
 			text='JLULULU', 
 			callback_data='JLULULU')
 		btn4 = types.InlineKeyboardButton(
-			text='SIRKO MUELLER', 
-			callback_data='SIRKO MUELLER')
-		btn5 = types.InlineKeyboardButton(
-			text='Go Back',
-			callback_data='Go Back')
-		artists.add(btn1, btn2, btn3, btn4, btn5)
+			text='Sirko Mueller', 
+			callback_data='Sirko Mueller')
+		artists.add(btn1, btn2, btn3, btn4)
 	except Exception as e:
 		print('cannot compile artists keyboard:', e)
 	
