@@ -210,10 +210,7 @@ def push_event(message):
 					photo = open(f"""./app/img/wuest_strives_general.png""", "rb")
 					bot.send_photo(user.u_id, photo)
 					with app.app_context():
-						bot.send_message(
-							user.u_id, 
-							text=render_template("next_event.html"),
-							parse_mode='html')
+						bot.send_next_event()
 				except Exception as e:
 					logging.error(f"pushing to user {user.u_id} not possible: ", e)
 		except Exception as e:
@@ -431,34 +428,13 @@ def keyboards():
 		artists.add(btn1, btn2, btn3, btn4, btn5)
 	except Exception as e:
 		print('cannot compile artists keyboard:', e)
-
-	try:
-		locations = types.InlineKeyboardMarkup(row_width=1)
-		btn5 = types.InlineKeyboardButton(
-			text='Späti 007', 
-			callback_data='Späti 007')
-		btn6 = types.InlineKeyboardButton(
-			text='Scherins Markt', 
-			callback_data='Scherins Markt')
-		btn7 = types.InlineKeyboardButton(
-			text='Schwemme', 
-			callback_data='Schwemme')
-		btn8 = types.InlineKeyboardButton(
-			text='Go Back',
-			callback_data='Go Back')
-		locations.add(btn5, btn6, btn7, btn8)
-	except Exception as e:
-		print('cannot compile locations keyboard:', e)	
 	
 	try:
 		overview = types.InlineKeyboardMarkup(row_width=1)
 		btn9 = types.InlineKeyboardButton(
 			text='Artists', 
 			callback_data='Artists')
-		btn10 = types.InlineKeyboardButton(
-			text='Interventions', 
-			callback_data='Interventions')
-		overview.add(btn9, btn10)
+		overview.add(btn9)
 	except Exception as e:
 		print('cannot compile artists keyboard:', e)
 
