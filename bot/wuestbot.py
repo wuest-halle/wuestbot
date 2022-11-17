@@ -157,8 +157,11 @@ def next(message):
 	"""
 	u_id = message.from_user.id
 
-	with app.app_context():
-		send_next_event(u_id)
+	try:
+		with app.app_context():
+			send_next_event(u_id)
+	except Exception as e:
+			print(e)
 
 @bot.message_handler(commands=['artist'])
 def send_artist(message):
