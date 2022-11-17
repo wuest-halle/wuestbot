@@ -258,7 +258,7 @@ def send_next_event(u_id):
 		artists = [artist for artist in next_event["artists"]]
 		admission = next_event["admission"]
 	except Exception as e:
-		logging.error(time.now(), e)
+		logging.error(e)
 		print(e)
 
 	try:
