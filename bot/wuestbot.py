@@ -31,97 +31,53 @@ bot = telebot.TeleBot(API_TOKEN)
 app = flask.Flask(__name__)
 
 next_event = {
-	"photo": "routines_2021_general.png",
-	"name": "ROUTINES 2021",
-	"date": "SEP 10 - 25",
-	"description": """ROUTINES questions normality and everyday life in\
-	its variety and repetitiveness by showcasing three works of individual\
-	artists and groups in Spätshops spread across Halle. With each project\
-	taking a different angle on the subject, it embeds critically engaging\
-	art into our ordinary running for errands and opens an account to creative\
-	work for everybody - outside of galleries and museums. Ultimately,\
-	the exhibition engages in a dialogue with the subject which you are warmly\
-	welcome to join into.""",
+	"photo": "wuest_strives_general.png",
+	"name": "WUEST STRIVES",
+	"date": "NOV 10",
+	"description": """Come to join WUEST on a boat""",
 	"artists": {
-		"Asako Fujimoto, Maxime Lethelier": {
+		"Somali Vendetta": {
 			"photo": "",
-			"description": """Asako Fujimoto is a sound artist and musician\
-			interested in sonic representations of nature as well as algorithmic\
-			composition. Maxime Lethelier is a mixed media artist who works\
-			on representations of modern society.\n
-			Their work HU/AU Bacus is an audiovisual encounter with metadata\
-			of daily human movement collected by the market. Eventually, this\
-			data would become more valuable than gold or steel. The installation\
-			shows the flow of customers in relation to stock market prices\
-			accompanied by looped audio of the spot.""",
-			"website": ""
+			"description": """somali vendetta (they/them/king) is a queer Somali DJ\
+			based in Leipzig. The genres of music they play are rather eclectic and\
+			depend on the vibe. It ranges from Amapiano to Afrobeats or UK Garage\
+			to UK Bass and Techno. The selections are good because they are made for\
+			dancing.""",
+			"website": "https://soundcloud.com/somalivendetta"
 		},
-		"Rose Magee": {
+		".neelie aka colluvisol": {
 			"photo": "",
-			"description": """Rose Magee’s work is her impression of reality,\
-			offering room for opinion and interpretation. She aims to create\
-			space for political discussion through her creative output.\n
-			The work she has devised for ROUTINES critically engages with\
-			the repercussions of our grocery shopping pattern. Through using\
-			recycled materials she asks for consciousness around packaging and\
-			waste, which became even more impactful on our environment through\
-			people mass-acquiring supplies during the pandemic. Watch out of\
-			her plastics spread throughout the shop.
+			"description": """neelie. places a strong focus on contemporary web culture\
+			in different areas of her work - be it while playing records or pushing\
+			her project called oh mochi.\
+			Her sound got influenced by beat tapes, vaporwave, and low-fidelity hip hop\
+			and takes its twists with UK bass and her deep love for Soundsystem culture.\
+			Besides curating and playing events, neelie. aka colluvisol is part of\
+			II.Reihe for Tarmac Festival and you can hear her mixes in shows on Bristol\
+			Radio Noods, London-based Threads, or Frankfurts EOS Radio, to name some.
 			""",
-			"website": ""
+			"website": "https://soundcloud.com/neelie-3"
 		}, 
-		"Nancy Dewhurst": {
+		"JLULULU": {
 			"photo": "",
-			"description": """Nancy Dewhurst’s work focuses on participatory pieces,\
-			playful encounters to research-based topics. She is interested in\
-			systems and the way these might change in the future.\n
-			Left-Hand Turn is a collection of giant shells - press them to your\
-			ear and you may hear their daily doing as you would hear the ocean\
-			through seashell resonance. It questions how we deal with the environment\
-			for our own pleasure and the need to keep up with routines even though\
-			our world is in a crisis as with the pandemic we are still experiencing.""",
-			"website": ""
+			"description": """JLULULU [dʒeɪ lululu] creates a coupling of post-club\
+			enigmas and percussive, quirky art pop questioning contemporary restrictions.\
+			Get involved in a wide dynamic range of deconstructed bangers and shaky beats\
+			– presented with a fresh provocative streak.""",
+			"website": "https://soundcloud.com/jlululu"
+		},
+		"Sirko Mueller": {
+			"photo": "",
+			"description": """One half of the Tokomak Records company and former a main\
+			founding member of Tokomak. He is well known for his diversity in music, where\
+			he draws many influences from tha big D(etroit). Several high-quality releases\
+			for some exciting labels like the well-known Milnor Modern imprint or Rewired\
+			Records have proven his skills and taste. A master of funky rhythm patterns\
+			without losing sight of the deepness and power of his productions. """,
+			"website": "https://soundcloud.com/sirko-mueller "
 		}
 	},
-	"interventions": {
-		"Späti 007": {
-			"date": "SEP 16 2021",
-			"description": """DJ Residue’s stripped down utilitarianism will be framed via Asako’s\
-			and Maxime’s piece on the data economy. His live set feels like an antidote\
-			of sorts to the shiny appearance of city centers in late capitalism. The\
-			evening will be started off with sure-shot electronics by DJ Lara Palmer.""",
-			"lat": "",
-			"lon": "",
-			"location": "https://www.openstreetmap.org/node/890216896#map=19/51.48624/11.97503"
-		},
-		"Scherins Markt": {
-			"date": "SEP 23 2021",
-			"description": """alobhe’s overdriven tenderness will be visible amidst\
-			Rose’s warped wrappings of our everyday occupations. Brutal and hell-bent,\
-			her music is as broken as our society became in 2020. She will play live.\
-			Jlululu gets you up to operating temperature with two hours of red hot\
-			post club music from the digital decks.""",
-			"lat": "",
-			"lon": "",
-			"location": "https://www.openstreetmap.org/node/3870926327#map=19/51.50152/11.95545"
-		},
-		"Schwemme": {
-			"date": "SEP 25 2021",
-			"description": """We will draw ROUTINES to a conclusion at Schwemme.\
-			Ana Bogner’s liberated neo-acoustics draw influence from many musics.\
-			The style of her live sets could be described as collected and iterative.\
-			Iterative is also John Horton’s approach to “The Sum Of Its Parts -\
-			the auditive documentation of ROUTINES. He will present live snippets\
-			recorded throughout the whole of the event - layered and morphed. Both\
-			live artists will receive DJ support from Vanessa Bettina who present\
-			collected oddities, outliers of what we routinely hear. WUEST’s own GREGOR.\
-			will connect the dots with records from all spheres of electronics.""",
-			"lat": "",
-			"lon": "",
-			"location": "https://www.openstreetmap.org/way/181008066"
-		}
-	}, 
-	"admission": "Free (donations appreciated)",
+	"admission": "8€",
 	"locations": {
 		"SPÄTI TO GO": {
 			"lat":"51.4902",
@@ -251,7 +207,7 @@ def push_event(message):
 			users = db_objects.User.all_in_db()
 			for user in users:
 				try:
-					photo = open(f"""./app/img/routines_2021_events.jpg""", "rb")
+					photo = open(f"""./app/img/wuest_strives_general.png""", "rb")
 					bot.send_photo(user.u_id, photo)
 					with app.app_context():
 						bot.send_message(
@@ -459,18 +415,21 @@ def keyboards():
 	try:
 		artists = types.InlineKeyboardMarkup(row_width=1)
 		btn1 = types.InlineKeyboardButton(
-			text='Asako Fujimoto, Maxime Lethelier', 
-			callback_data='Asako Fujimoto, Maxime Lethelier')
+			text='Somali Vendetta', 
+			callback_data='Somali Vendetta')
 		btn2 = types.InlineKeyboardButton(
-			text='Nancy Dewhurst', 
-			callback_data='Nancy Dewhurst')
+			text='.neelie aka colluvisol', 
+			callback_data='.neelie aka colluvisol')
 		btn3 = types.InlineKeyboardButton(
-			text='Rose Magee', 
-			callback_data='Rose Magee')
+			text='JLULULU', 
+			callback_data='JLULULU')
 		btn4 = types.InlineKeyboardButton(
+			text='SIRKO MUELLER', 
+			callback_data='SIRKO MUELLER')
+		btn5 = types.InlineKeyboardButton(
 			text='Go Back',
 			callback_data='Go Back')
-		artists.add(btn1, btn2, btn3, btn4)
+		artists.add(btn1, btn2, btn3, btn4, btn5)
 	except Exception as e:
 		print('cannot compile artists keyboard:', e)
 
