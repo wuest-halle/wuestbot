@@ -9,6 +9,7 @@ api/.multiproc_dir/*
 api/data/*
 *.pem
 *.jpg
+*.jpeg
 *.ico
 *.png
 
