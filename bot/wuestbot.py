@@ -212,7 +212,7 @@ def push_event(message):
 					with app.app_context():
 						bot.send_message(
 							user.u_id, 
-							text=render_template("push.html"),
+							text=render_template("next_event.html"),
 							parse_mode='html')
 				except Exception as e:
 					logging.error(f"pushing to user {user.u_id} not possible: ", e)
@@ -274,7 +274,6 @@ def send_next_event(u_id):
 		date = next_event["date"]
 		description = next_event["description"]
 		artists = [artist for artist in next_event["artists"]]
-		interventions = [intervention for intervention in next_event["interventions"]]
 		admission = next_event["admission"]
 	except Exception as e:
 		logging.error(time.now(), e)
