@@ -259,12 +259,12 @@ def send_next_event(u_id):
 		admission = next_event["admission"]
 	except Exception as e:
 		logging.error(e)
-		print(e)
+		print('assignment error', e)
 
 	try:
 		bot.send_photo(u_id, photo)
 	except Exception as e:
-		print(e)
+		print('picture error', e)
 	
 	try:
 		bot.send_message(
@@ -280,7 +280,7 @@ def send_next_event(u_id):
 			reply_markup=keys[2],
 			parse_mode="html")
 	except Exception as e:
-		print(e)
+		print('sending error', e)
 
 @bot.callback_query_handler(func=lambda call:True)
 def send_info(call):
