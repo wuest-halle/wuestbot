@@ -275,7 +275,6 @@ def send_next_event(u_id):
 				date=date, 
 				description=description, 
 				artists=artists,
-				interventions=interventions, 
 				admission=admission), 
 			reply_markup=keys[2],
 			parse_mode="html")
