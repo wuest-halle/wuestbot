@@ -276,7 +276,7 @@ def send_next_event(u_id):
 				description=description, 
 				artists=artists,
 				admission=admission), 
-			reply_markup=keys[2],
+			reply_markup=keys[1],
 			parse_mode="html")
 	except Exception as e:
 		print('sending error', e)
